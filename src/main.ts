@@ -1,9 +1,7 @@
+import { loadFromStorage } from './app.storage';
 import { renderApp } from './components/App';
-import { loadState } from './app.storage';
 
 document.addEventListener('DOMContentLoaded', () => {
-  loadState();
+  loadFromStorage();
   renderApp();
 });
-
-
