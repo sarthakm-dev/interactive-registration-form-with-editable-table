@@ -3,13 +3,12 @@ import { renderApp } from './App';
 
 export function ThemeToggle(): HTMLButtonElement {
   const btn = document.createElement('button');
-  btn.textContent = state.theme === 'light' ? 'Dark' : 'Light';
+  btn.textContent = state.theme === 'light' ? 'Dark Mode' : 'Light Mode';
 
-  btn.addEventListener('click', () => {
+  btn.onclick = () => {
     state.theme = state.theme === 'light' ? 'dark' : 'light';
-    document.body.className = `theme-${state.theme}`;
     renderApp();
-  });
+  };
 
   return btn;
 }
