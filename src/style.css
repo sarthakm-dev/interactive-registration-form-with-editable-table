@@ -1,34 +1,76 @@
-:root {
-  --bg: #ffffff;
-  --text: #111;
-  --primary: #2563eb;
-  --space: 12px;
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  padding: 24px;
 }
 
-.theme-dark {
-  --bg: #0f172a;
-  --text: #e5e7eb;
+.layout-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: sans-serif;
+.layout-right {
+  border-left: 1px solid #ddd;
+  padding-left: 16px;
 }
 
-.app {
-  padding: var(--space);
+form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stepper {
+  display: flex;
+  gap: 8px;
+}
+
+.step {
+  padding: 6px 12px;
+}
+
+.step.active {
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 16px;
+}
+
+.layout-left {
+  max-width: 520px;
+}
+
+.layout-right {
+  overflow-x: auto;
+}
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: var(--space);
-  margin: 4px;
+  margin-top: 12px;
 }
-
 input {
-  padding: var(--space);
-  margin: 4px;
+  width: 320px;
+}
+textarea {
+  width: 100%;
+  max-width: 420px;
+  padding: 8px;
+  font-size: 14px;
 }

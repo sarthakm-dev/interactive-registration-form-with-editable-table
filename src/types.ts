@@ -14,7 +14,10 @@ export type FieldKey =
   | RatingKey
   | 'like'
   | 'improve'
-  | 'additional';
+  | 'additional'
+  |  'recommendToFriends'
+  | 'packageContentMatch'
+  | 'participateInMonthlyReview'
 
 export interface FormState {
   values: Record<FieldKey, string>;
@@ -33,4 +36,20 @@ export interface AppState {
   editingId: string | null;
   feedback: FeedbackRecord[];
   form: FormState;
+}
+
+export enum Step {
+  ORDER = 0,
+  FEEDBACK = 1,
+  RATINGS = 2,
+  FINAL = 3
+}
+
+export interface FieldConfig {
+  key: string;
+  label: string;
+  type: 'text' | 'email' | 'date' | 'select' | 'radio' | 'textarea' | 'rating';
+  step: Step;
+  options?: string[];
+  ratingKey?: string;
 }

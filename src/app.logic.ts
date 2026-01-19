@@ -1,9 +1,35 @@
 import { type FieldKey } from './types';
 import { state } from './app.state';
 import { type FeedbackRecord } from './types';
-
+import { type FormState } from './types';
 
 type Validator = (v: string) => string | null;
+
+export function createInitialFormState(): FormState {
+  return {
+    values: {
+      orderNumber: '',
+      email: '',
+      purchaseDate: '',
+      shoppingMethod: '',
+      supportContacted: 'no',
+
+      like: '',
+      improve: '',
+      additional: '',
+
+      recommendToFriends: '',
+      packageContentMatch: '',
+      participateInMonthlyReview: 'no',
+
+      productQuality: '',
+      deliveryExperience: '',
+      supportExperience: ''
+    },
+    errors: {},
+    touched: {}
+  };
+}
 
 const validators: Partial<Record<FieldKey, Validator>> = {
   orderNumber: v =>
@@ -54,3 +80,9 @@ export function resetForm(): void {
   state.form.touched = {};
   state.step = 0;
 }
+
+export function submitForm() {
+  const payload = {
+    ...state.form.values,
+    ratings: state.form.values.ratings
+  };

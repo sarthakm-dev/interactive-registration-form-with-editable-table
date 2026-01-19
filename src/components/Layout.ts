@@ -1,19 +1,18 @@
 export function Layout(
   left: HTMLElement,
   right: HTMLElement
-): HTMLDivElement {
+): HTMLElement {
   const container = document.createElement('div');
   container.className = 'layout';
 
-  const leftPanel = document.createElement('div');
-  leftPanel.className = 'layout-left';
+  const leftCol = document.createElement('div');
+  leftCol.className = 'layout-left';
+  leftCol.appendChild(left);
 
-  const rightPanel = document.createElement('div');
-  rightPanel.className = 'layout-right';
+  const rightCol = document.createElement('div');
+  rightCol.className = 'layout-right';
+  rightCol.appendChild(right);
 
-  leftPanel.appendChild(left);
-  rightPanel.appendChild(right);
-
-  container.append(leftPanel, rightPanel);
+  container.append(leftCol, rightCol);
   return container;
 }

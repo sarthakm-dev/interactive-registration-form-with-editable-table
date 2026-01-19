@@ -1,23 +1,27 @@
-import { state } from '../app.state';
-import { Form } from './Form';
-import { Table } from './Table';
 import { ThemeToggle } from './ThemeToggle';
-import { saveToStorage } from '../app.storage';
+import { Stepper } from './Stepper';
+import { ActiveForm } from './FormSections';
+import { Table } from './Table';
+import { Layout } from './Layout';
+import { Button } from './ui/Button';
+import { submitForm } from '../app.logic';
+import { state } from '../app.state';
 
 export function renderApp(): void {
-  const root = document.getElementById('app');
-  if (!root) throw new Error('No root');
-
+  const root = document.getElementById('app')!;
   root.innerHTML = '';
-  root.className = `theme-${state.theme}`;
 
-  const app = document.createElement('div');
-  app.className = 'layout';
+  const header = ThemeToggle();
 
-  app.appendChild(ThemeToggle());
-  app.appendChild(Form());
-  app.appendChild(Table());
+  const left = document.createElement('div');
+  left.append(
+    Stepper(),
+    ActiveForm(),
+    Button(
+      state.editingId ? 'Update Feedback' : 'Submit Feedback',
+      submitForm
+    )
+  );
 
-  root.appendChild(app);
-  saveToStorage();
+  root.append(header, Layout(left, Table()));
 }

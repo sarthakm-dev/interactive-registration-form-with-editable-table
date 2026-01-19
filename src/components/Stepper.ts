@@ -1,22 +1,22 @@
 import { state } from '../app.state';
 import { renderApp } from './App';
 
-export function Stepper(): HTMLDivElement {
-  const stepper = document.createElement('div');
-  stepper.className = 'stepper';
+export function Stepper(): HTMLElement {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'stepper';
 
   ['Order', 'Feedback'].forEach((label, index) => {
-    const step = document.createElement('button');
-    step.textContent = label;
-    step.className = index === state.step ? 'step active' : 'step';
+    const btn = document.createElement('button');
+    btn.textContent = label;
+    btn.className = state.step === index ? 'active' : '';
 
-    step.onclick = () => {
+    btn.onclick = () => {
       state.step = index;
       renderApp();
     };
 
-    stepper.appendChild(step);
+    wrapper.appendChild(btn);
   });
 
-  return stepper;
+  return wrapper;
 }
