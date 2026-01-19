@@ -1,6 +1,6 @@
 import { state } from './app.state';
 
-const KEY = 'feedback-app-state';
+const KEY = 'feedback-app';
 
 export function loadFromStorage(): void {
   const raw = localStorage.getItem(KEY);

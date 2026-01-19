@@ -1,39 +1,38 @@
 import { state } from '../app.state';
 import { renderApp } from './App';
-import { saveToStorage } from '../app.storage';
 
 export function Table(): HTMLTableElement {
   const table = document.createElement('table');
   table.className = 'table';
 
-  state.feedback.forEach(record => {
+  state.feedback.forEach((r, index) => {
     const row = document.createElement('tr');
 
     const order = document.createElement('td');
-    order.textContent = record.orderNumber;
+    order.textContent = r.values.orderNumber;
 
     const email = document.createElement('td');
-    email.textContent = record.email;
+    email.textContent = r.values.email;
+
+    const actions = document.createElement('td');
 
     const edit = document.createElement('button');
     edit.textContent = 'Edit';
     edit.onclick = () => {
-      state.editingId = record.id;
-      state.form = { ...record };
+      state.form.values = { ...r.values };
+      state.editingId = r.id;
+      state.step = 0;
       renderApp();
     };
 
     const del = document.createElement('button');
     del.textContent = 'Delete';
     del.onclick = () => {
-      state.feedback = state.feedback.filter(r => r.id !== record.id);
-      saveToStorage();
+      state.feedback.splice(index, 1);
       renderApp();
     };
 
-    const actions = document.createElement('td');
     actions.append(edit, del);
-
     row.append(order, email, actions);
     table.appendChild(row);
   });

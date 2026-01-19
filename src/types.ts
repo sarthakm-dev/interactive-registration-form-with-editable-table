@@ -1,36 +1,30 @@
 export type Theme = 'light' | 'dark';
 
-export interface RatingMap {
-  [key: string]: number;
+export type RatingKey =
+  | 'productQuality'
+  | 'deliveryExperience'
+  | 'supportExperience';
+
+export type FieldKey =
+  | 'orderNumber'
+  | 'email'
+  | 'purchaseDate'
+  | 'shoppingMethod'
+  | 'supportContacted'
+  | RatingKey
+  | 'like'
+  | 'improve'
+  | 'additional';
+
+export interface FormState {
+  values: Record<FieldKey, string>;
+  errors: Partial<Record<FieldKey, string>>;
+  touched: Partial<Record<FieldKey, boolean>>;
 }
 
 export interface FeedbackRecord {
   id: string;
-  orderNumber: string;
-  email: string;
-  purchaseDate: string;
-  shoppingMethod: string;
-  supportContacted: string;
-  rating: RatingMap;
-  comment: {
-    like: string;
-    improve: string;
-    additional: string;
-  };
-}
-
-export interface FormState {
-  orderNumber: string;
-  email: string;
-  purchaseDate: string;
-  shoppingMethod: string;
-  supportContacted: string;
-  rating: RatingMap;
-  comment: {
-    like: string;
-    improve: string;
-    additional: string;
-  };
+  values: Record<FieldKey, string>;
 }
 
 export interface AppState {
