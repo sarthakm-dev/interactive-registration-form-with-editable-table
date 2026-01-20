@@ -1,41 +1,89 @@
-import { state } from '../app.state';
-import { FORM_FIELDS } from '../form.config';
-import { validateField } from '../app.logic';
-import { renderApp } from './App';
-import { Field } from './ui/Field';
-import { Rating } from './Rating';
-import { submitForm, canSubmit } from '../app.logic';
-import { Button } from './ui/Button';
-import { Stepper } from './Stepper';
-import { type FieldKey } from '../types';
-export function Form(keys: FieldKey[]): HTMLFormElement {
-  const form = document.createElement('form');
+import { appState, setState, resetForm } from '../app.state';
+import * as dom from '../utils/dom';
+import { renderBasicDetails } from './form/BasicDetails';
+import { renderStepper } from './form/Stepper';
+import { renderRatingSections } from './rating/RatingContainer';
+import { renderNavigation } from './form/Navigation';
+import { handleSubmit } from './form/SubmitButton';
+//import { RecordData } from '../types';
 
-  FORM_FIELDS
-    .filter(f => keys.includes(f.key))
-    .forEach(field => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'field';
+export function Form(): HTMLElement {
+  const container = dom.createElement('div', { className: 'left-panel glass' });
 
-      const label = document.createElement('label');
+  const form = dom.createElement('form', {
+    attributes: { id: 'form-container' },
+  });
 
-      label.className = 'field-label';
-      label.textContent = field.label;
 
-      const input =
-        field.type === 'textarea'
-          ? document.createElement('textarea')
-          : document.createElement('input');
+  const basicDetails = renderBasicDetails();
+  form.appendChild(basicDetails);
 
-      input.value = state.form.values[field.key] ?? '';
 
-      input.addEventListener('input', () => {
-        state.form.values[field.key] = input.value;
-      });
+  const stepper = renderStepper();
+  form.appendChild(stepper);
 
-      wrapper.append(label, input);
-      form.appendChild(wrapper);
-    });
+  // Rating sections
+  const ratingSections = renderRatingSections();
+  form.appendChild(ratingSections);
 
-  return form;
+  // Navigation buttons
+  const nav = renderNavigation();
+  form.appendChild(nav);
+
+  // Submit button
+  const submitBtn = dom.createButton(appState.editingIndex !== null ? 'Update' : 'Submit', {
+    className: 'submit-btn',
+    attributes: { id: 'submit', type: 'submit' },
+    onClick: (e) => handleSubmit(e),
+  });
+  form.appendChild(submitBtn);
+
+  // Attach form submit listener
+  form.addEventListener('submit', (e) => handleSubmit(e));
+
+  container.appendChild(form);
+  return container;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function resetNotebookState(): void {
+  setState({
+    editingIndex: null,
+    currentStep: 0,
+    formData: {
+      orderNumber: null,
+      email: null,
+      purchaseDate: null,
+      shoppingMethod: null,
+      packageContentMatch: null,
+      supportContacted: null,
+      recommendToFriends: null,
+      whatDidYouLike: null,
+      whatToImprove: null,
+      additionalComments: null,
+      participateInMonthlyReview: 'no',
+      ratings: appState.ratingData,
+    },
+  });
+
+  const submitBtn = dom.queryId('submit');
+  if (submitBtn) {
+    dom.setText(submitBtn, 'Submit');
+  }
 }

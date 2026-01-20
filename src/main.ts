@@ -1,7 +1,11 @@
-import { loadFromStorage } from './app.storage';
+import { appState, setState } from './app.state';
+import { loadRecordsFromStorage } from './app.storage';
 import { renderApp } from './components/App';
 
-document.addEventListener('DOMContentLoaded', () => {
-  loadFromStorage();
+
+function initializeApp(): void {
+  const records = loadRecordsFromStorage();
+  setState({ records });
   renderApp();
-});
+}
+initializeApp();

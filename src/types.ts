@@ -1,55 +1,40 @@
-export type Theme = 'light' | 'dark';
+// Central type definitions
+export type RatingValue = 0 | 1 | 2 | 3 | 4 | 5;
 
-export type RatingKey =
-  | 'productQuality'
-  | 'deliveryExperience'
-  | 'supportExperience';
-
-export type FieldKey =
-  | 'orderNumber'
-  | 'email'
-  | 'purchaseDate'
-  | 'shoppingMethod'
-  | 'supportContacted'
-  | RatingKey
-  | 'like'
-  | 'improve'
-  | 'additional'
-  |  'recommendToFriends'
-  | 'packageContentMatch'
-  | 'participateInMonthlyReview'
-
-export interface FormState {
-  values: Record<FieldKey, string>;
-  errors: Partial<Record<FieldKey, string>>;
-  touched: Partial<Record<FieldKey, boolean>>;
+export interface RatingMap {
+  [category: string]: RatingValue;
 }
 
-export interface FeedbackRecord {
-  id: string;
-  values: Record<FieldKey, string>;
+export interface RecordData {
+  orderNumber: string | null;
+  email: string | null;
+  purchaseDate: string | null;
+  shoppingMethod: string | null;
+  packageContentMatch: string | null;
+  supportContacted: string | null;
+  recommendToFriends: string | null;
+  whatDidYouLike: string | null;
+  whatToImprove: string | null;
+  additionalComments: string | null;
+  participateInMonthlyReview: string;
+  ratings: RatingMap;
 }
 
 export interface AppState {
-  theme: Theme;
-  step: number;
-  editingId: string | null;
-  feedback: FeedbackRecord[];
-  form: FormState;
+  records: RecordData[];
+  currentStep: number;
+  editingIndex: number | null;
+  deletingIndex: number | null;
+  ratingData: RatingMap;
+  formData: Partial<RecordData>;
+  validationErrors: ValidationErrors;
 }
 
-export enum Step {
-  ORDER = 0,
-  FEEDBACK = 1,
-  RATINGS = 2,
-  FINAL = 3
+export interface ValidationErrors {
+  [field: string]: boolean | undefined;
 }
 
-export interface FieldConfig {
-  key: string;
-  label: string;
-  type: 'text' | 'email' | 'date' | 'select' | 'radio' | 'textarea' | 'rating';
-  step: Step;
-  options?: string[];
-  ratingKey?: string;
+export interface StepConfig {
+  ratings: string[];
+  conditionalOn?: string;
 }

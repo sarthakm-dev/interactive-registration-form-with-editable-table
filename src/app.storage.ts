@@ -1,13 +1,17 @@
-import { state } from './app.state';
+import { type RecordData } from './types';
 
-const KEY = 'feedback-app';
+const STORAGE_KEY = 'customer-feedback-records';
 
-export function loadFromStorage(): void {
-  const raw = localStorage.getItem(KEY);
-  if (!raw) return;
-  Object.assign(state, JSON.parse(raw));
+export function loadRecordsFromStorage(): RecordData[] {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return [];
+  try {
+    return JSON.parse(stored) as RecordData[];
+  } catch {
+    return [];
+  }
 }
 
-export function saveToStorage(): void {
-  localStorage.setItem(KEY, JSON.stringify(state));
+export function saveRecordsToStorage(records: RecordData[]): void {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
