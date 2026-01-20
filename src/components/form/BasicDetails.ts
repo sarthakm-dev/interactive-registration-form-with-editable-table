@@ -1,6 +1,6 @@
 import * as dom from '../../utils/dom';
 import { renderApp } from '.././App';
-import { appState, setState, resetForm  } from '../../app.state';
+import { appState, setState  } from '../../app.state';
 
 export function renderBasicDetails(): HTMLElement {
   const section = dom.createElement('div', { attributes: { id: 'product-details' } });

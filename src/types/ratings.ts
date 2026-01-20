@@ -1,3 +1,4 @@
+export type RatingValue = 0 | 1 | 2 | 3 | 4 | 5;
 export interface RatingMap {
-    [category: string]: number;
+  [category: string]: RatingValue;
 }

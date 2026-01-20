@@ -1,13 +1,8 @@
-import { appState } from '../app.state';
 import * as dom from '../utils/dom';
 import { Form } from './Form';
 import { Table } from './Table';
 
-/**
- * App Component (Root)
- * Orchestrates the full page render
- * This is called after every state change
- */
+
 
 export function App(): HTMLElement {
   const appContainer = dom.createElement('div', { attributes: { id: 'app-container' } });

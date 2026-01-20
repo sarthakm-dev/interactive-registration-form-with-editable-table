@@ -1,4 +1,4 @@
-import { appState, setState, resetForm } from '../app.state';
+import { appState, setState } from '../app.state';
 import * as dom from '../utils/dom';
 import { renderBasicDetails } from './form/BasicDetails';
 import { renderStepper } from './form/Stepper';

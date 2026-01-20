@@ -1,6 +1,6 @@
-import { type AppState, type RecordData, type RatingMap } from './types';
-
-
+import { type AppState } from './types/state';
+import { type RecordData } from './types/record';
+import { type RatingMap } from './types/ratings';
 // Global mutable state - SINGLE SOURCE OF TRUTH
 export const appState: AppState = {
   records: [],

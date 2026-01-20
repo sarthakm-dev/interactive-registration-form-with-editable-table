@@ -1,12 +1,8 @@
-import {
-  type AppState,
-  type RecordData,
-  type RatingValue,
-  type RatingMap,
-  type StepConfig,
-  type ValidationErrors,
-} from './types';
-
+import { type RecordData } from './types/record';
+import { type RatingValue } from './types/ratings';
+import { type RatingMap } from './types/ratings';
+import { type StepConfig } from './types/step';
+import { type ValidationErrors } from './types/validation';
 //Validation Logic
 
 const EMAIL_REGEX = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;

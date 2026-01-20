@@ -1,4 +1,4 @@
-import { state } from '../app.state';
+/*import { state } from '../app.state';
 import { renderApp } from './App';
 
 export function ThemeToggle(): HTMLButtonElement {
@@ -12,3 +12,4 @@ export function ThemeToggle(): HTMLButtonElement {
 
   return btn;
 }
+  */
