@@ -1,4 +1,5 @@
 import * as dom from '../utils/dom';
+import { setupEmailValidation } from '../utils/validation';
 import { Form } from './Form';
 import { Table } from './Table';
 
@@ -26,6 +27,10 @@ export function App(): HTMLElement {
 
   const successModal = createSuccessModal();
   appContainer.appendChild(successModal);
+
+  //validations
+  setupEmailValidation();
+  
 
   return appContainer;
 }

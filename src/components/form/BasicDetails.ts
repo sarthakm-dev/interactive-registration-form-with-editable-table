@@ -31,7 +31,7 @@ export function renderBasicDetails(): HTMLElement {
       const input = e.target as HTMLInputElement;
       setState({
         formData: { ...appState.formData, orderNumber: input.value },
-        validationErrors: { ...appState.validationErrors, orderNumber: undefined },
+        validationErrors: { ...appState.validationErrors },
       });
     },
   });
@@ -67,7 +67,7 @@ export function renderBasicDetails(): HTMLElement {
       const input = e.target as HTMLInputElement;
       setState({
         formData: { ...appState.formData, email: input.value },
-        validationErrors: { ...appState.validationErrors, email: undefined },
+        validationErrors: { ...appState.validationErrors},
       });
     },
   });
@@ -105,7 +105,7 @@ export function renderBasicDetails(): HTMLElement {
       const input = e.target as HTMLInputElement;
       setState({
         formData: { ...appState.formData, purchaseDate: input.value },
-        validationErrors: { ...appState.validationErrors, purchaseDate: undefined },
+        validationErrors: { ...appState.validationErrors},
       });
     },
   });
@@ -150,7 +150,7 @@ export function renderBasicDetails(): HTMLElement {
         const input = e.target as HTMLInputElement;
         setState({
           formData: { ...appState.formData, shoppingMethod: input.value },
-          validationErrors: { ...appState.validationErrors, method: undefined },
+          validationErrors: { ...appState.validationErrors},
         });
         renderApp();
       },

@@ -1,8 +1,3 @@
-/**
- * DOM Utilities - Encapsulates all DOM creation/manipulation
- * Uses only: createElement, appendChild, textContent, setAttribute
- */
-
 export function createElement(
   tag: string,
   options?: {

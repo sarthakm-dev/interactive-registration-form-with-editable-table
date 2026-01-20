@@ -1,7 +1,6 @@
 import { appState, setState } from '../../app.state';
 import * as dom from '../../utils/dom';
 import { renderApp } from '.././App';
-import { renderRadioGroup } from './RadioGroup';
 import { getRatingHint } from './RatingHint';
 
 export function renderRatingGroup(
@@ -30,7 +29,7 @@ export function renderRatingGroup(
     star.addEventListener('click', () => {
       setState({
         ratingData: { ...appState.ratingData, [category]: i as any },
-        validationErrors: { ...appState.validationErrors, [category]: undefined },
+        validationErrors: { ...appState.validationErrors },
       });
       renderApp();
     });

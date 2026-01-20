@@ -6,18 +6,31 @@ import { type ValidationErrors } from './types/validation';
 //Validation Logic
 
 const EMAIL_REGEX = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-const ORDER_NUMBER_PATTERN = /^ORD-\d{6}$/;
+const ORDER_REGEX = /^ORD-\d{6}$/;
 
-export function isValidEmail(email: string): boolean {
-  return EMAIL_REGEX.test(email.trim());
+export function isValidEmail(v: string | null): boolean {
+  return !!v && EMAIL_REGEX.test(v);
 }
 
-export function isValidOrderNumber(orderNumber: string): boolean {
-  return ORDER_NUMBER_PATTERN.test(orderNumber.trim());
+export function isValidOrder(v: string | null): boolean {
+  return !!v && ORDER_REGEX.test(v);
 }
 
-export function isValidDate(dateStr: string): boolean {
-  return dateStr.trim().length > 0;
+export function isValidDate(v: string | null): boolean {
+  return !!v && v.trim() !== '';
+}
+
+function radioNameToFormKey(name:string) {
+  switch(name) {
+    case 'package-content-experience':
+      return 'packageContentMatch';
+    case 'support-contacted':
+      return 'recommendation-experience';
+    case 'method':
+      return 'shoppingMethod';
+    default:
+      return name as keyof RecordData;
+  }
 }
 
 export function validateRadioGroup(
@@ -32,7 +45,7 @@ export function validateRatingsForStep(
   ratingData: RatingMap,
   supportContacted: string | null,
 ): boolean {
-  const stepConfig = getStepConfig();
+  const stepConfig = STEP_CONFIG;
   const config = stepConfig[currentStep];
   if (!config) return false;
 
@@ -44,44 +57,48 @@ export function validateRatingsForStep(
 }
 
 export function validateCurrentStep(
-  currentStep: number,
-  formData: Partial<RecordData>,
-  ratingData: RatingMap,
+  step: number,
+  formData: any,
+  ratingData: any
 ): { valid: boolean; errors: ValidationErrors } {
-  const errors: ValidationErrors = {};
 
-  // Step 0: Basic details
-  if (currentStep === 0) {
-    if (!formData.orderNumber || !isValidOrderNumber(formData.orderNumber)) {
-      errors['orderNumber'] = true;
+  const errors: ValidationErrors = {};
+  const config = STEP_CONFIG[step];
+
+  if (step === 0) {
+    if (!isValidOrder(formData.orderNumber)) {
+      errors.orderNumber = true;
     }
-    if (!formData.email || !isValidEmail(formData.email)) {
-      errors['email'] = true;
+    if (!isValidEmail(formData.email)) {
+      errors.email = true;
     }
-    if (!formData.purchaseDate || !isValidDate(formData.purchaseDate)) {
-      errors['purchaseDate'] = true;
+    if (!isValidDate(formData.purchaseDate)) {
+      errors.purchaseDate = true;
     }
     if (!formData.shoppingMethod) {
-      errors['method'] = true;
+      errors.method = true;
     }
   }
 
-  // Steps 1-3: Rating validations
-  if (currentStep >= 1) {
-    if (!validateRatingsForStep(currentStep - 1, ratingData, formData.supportContacted || null)) {
-      const stepConfig = getStepConfig();
-      const config = stepConfig[currentStep - 1];
-      config.ratings.forEach((category) => {
-        if (ratingData[category] === 0) {
-          errors[category] = true;
-        }
-      });
+  
+  config?.radios?.forEach((name) => {
+    const key = radioNameToFormKey(name);
+
+    if (!formData[key]) {
+      errors[name] = true;
     }
-  }
+  });
+
+ 
+  config?.ratings?.forEach((category) => {
+    if (!ratingData[category] || ratingData[category] === 0) {
+      errors[category] = true;
+    }
+  });
 
   return {
     valid: Object.keys(errors).length === 0,
-    errors,
+    errors
   };
 }
 
@@ -94,7 +111,7 @@ export function validateFormForSubmission(
   const errors: ValidationErrors = {};
 
   // Basic details validation
-  if (!formData.orderNumber || !isValidOrderNumber(formData.orderNumber)) {
+  if (!formData.orderNumber || !isValidOrder(formData.orderNumber)) {
     errors['orderNumber'] = true;
   }
 
@@ -133,12 +150,12 @@ export function validateFormForSubmission(
 
   // Delivery experience follow-up
   if (!formData.packageContentMatch) {
-    errors['packageContentMatch'] = true;
+    errors['package-content-experience'] = true;
   }
 
   // Support question
   if (!formData.supportContacted) {
-    errors['supportContacted'] = true;
+    errors['support-contacted'] = true;
   }
 
   // If support was contacted, validate support ratings
@@ -153,7 +170,7 @@ export function validateFormForSubmission(
 
   // Recommendation question
   if (!formData.recommendToFriends) {
-    errors['recommendToFriends'] = true;
+    errors['recommendation-experience'] = true;
   }
 
   // Check for duplicate
@@ -223,23 +240,45 @@ export function checkDuplicateRecord(
 
 // Stepper Logic
 
-export function getStepConfig(): StepConfig[] {
-  return [
-    {
-      ratings: ['product-quality', 'matches-description', 'durability', 'value-for-money'],
-    },
-    {
-      ratings: ['websites-ease-of-use', 'product-search', 'checkout-process', 'payment-options'],
-    },
-    {
-      ratings: ['delivery-experience', 'delivery-speed', 'packaging-quality'],
-    },
-    {
-      ratings: ['support-responsiveness', 'support-helpfulness'],
-      conditionalOn: 'support-contacted',
-    },
-  ];
-}
+export const STEP_CONFIG = [
+  {
+    // Step 0
+    fields: ['orderNumber', 'email', 'purchaseDate', 'method'],
+    ratings: [
+      'product-quality',
+      'matches-description',
+      'durability',
+      'value-for-money'
+    ]
+  },
+  {
+    // Step 1
+    ratings: [
+      'websites-ease-of-use',
+      'product-search',
+      'checkout-process',
+      'payment-options'
+    ],
+    
+  },
+  {
+    // Step 2
+     ratings: [
+      'delivery-experience',
+      'delivery-speed',
+      'packaging-quality'
+    ],
+    radios: ['package-content-experience']
+  },
+  {
+    // Step 3
+    ratings: [
+      'support-helpfulness',
+      'support-responsiveness',
+    ],
+    radios: ['support-contacted', 'recommendation-experience']
+  }
+];
 
 export function getNextStep(
   currentStep: number,

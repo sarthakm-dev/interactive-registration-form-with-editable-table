@@ -13,6 +13,15 @@ export function renderRadioGroup(
     attributes: { 'data-radio': name },
   });
 
+  const fieldName =
+    name === 'package-content-experience'
+      ? 'packageContentMatch'
+      : name === 'support-contacted'
+      ? 'supportContacted'
+      : name === 'recommendation-experience'
+      ? 'recommendToFriends'
+      : name;
+
   if (appState.validationErrors[name]) {
     group.classList.add('error-field');
   }
@@ -28,40 +37,52 @@ export function renderRadioGroup(
   );
 
   const radioContent = dom.createElement('div', { className: 'radio-content' });
+
   options.forEach(({ id, value, label: optionLabel }) => {
     const span = dom.createElement('span');
-    const fieldName = name === 'package-content-experience' ? 'packageContentMatch' :
-                     name === 'support-contacted' ? 'supportContacted' :
-                     name === 'recommendation-experience' ? 'recommendToFriends' : name;
-    
-    const isChecked = appState.formData[fieldName as keyof typeof appState.formData] === value;
-    
+
+    const isChecked =
+      appState.formData[fieldName as keyof typeof appState.formData] === value;
+
     const radio = dom.createInput('radio', {
       id,
-      name,
+      name, 
       value,
       checked: isChecked,
       onChange: (e) => {
         const input = e.target as HTMLInputElement;
+
         setState({
-          formData: { ...appState.formData, [fieldName]: input.value },
-          validationErrors: { ...appState.validationErrors, [name]: undefined },
+          formData: {
+            ...appState.formData,
+            [fieldName]: input.value,
+          },
+          validationErrors: {
+            ...appState.validationErrors,
+            [name]: undefined,
+          },
         });
+
         renderApp();
       },
     });
+
     span.appendChild(radio);
-    span.appendChild(dom.createElement('label', { text: optionLabel, attributes: { for: id } }));
+    span.appendChild(
+      dom.createElement('label', { text: optionLabel, attributes: { for: id } }),
+    );
+
     radioContent.appendChild(span);
   });
 
   group.appendChild(radioContent);
-  
-  const errorMsg = dom.createElement('small', { 
-    className: appState.validationErrors[name] ? 'error show' : 'error',
-    text: 'This is a required field' 
-  });
-  group.appendChild(errorMsg);
+
+  group.appendChild(
+    dom.createElement('small', {
+      className: appState.validationErrors[name] ? 'error show' : 'error',
+      text: 'This is a required field',
+    }),
+  );
 
   return group;
 }

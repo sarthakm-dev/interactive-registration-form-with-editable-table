@@ -14,15 +14,17 @@ export function renderNavigation(): HTMLElement {
       renderApp();
     },
   });
-
+  
   const nextBtn = dom.createButton('Next', {
-    attributes: { id: 'nextBtn', type: 'button' },
+    attributes: {
+      id: 'nextBtn',
+      type: 'button',
+    },
     onClick: () => {
-     
-      const { valid, errors } = appLogic.validateCurrentStep(
+      const { valid, errors } =appLogic. validateCurrentStep(
         appState.currentStep,
         appState.formData,
-        appState.ratingData,
+        appState.ratingData
       );
 
       if (!valid) {
@@ -31,10 +33,12 @@ export function renderNavigation(): HTMLElement {
         return;
       }
 
-      const next = Math.min(appState.currentStep + 1, 3);
-      setState({ currentStep: next, validationErrors: {} });
+      setState({
+        currentStep: appState.currentStep + 1,
+        validationErrors: {}
+      });
       renderApp();
-    },
+    }
   });
 
   nav.appendChild(prevBtn);

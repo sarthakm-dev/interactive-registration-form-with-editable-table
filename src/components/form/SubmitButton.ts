@@ -14,14 +14,18 @@ export function handleSubmit(e: Event): void {
     appState.records,
     appState.editingIndex,
   );
-
+  console.log("FormData",appState.formData);
+  console.log("ratingdata",appState.ratingData);
+  console.log("records",appState.records);
+  console.log("editingdata",appState.editingIndex);
+  console.log("Errors",errors);
   if (!valid) {
     // Mark errors visually
     setState({ validationErrors: errors });
     renderApp();
     return;
   }
-
+  console.log("valid Check Passed");
   let newRecords = appState.records;
 
   if (appState.editingIndex !== null) {
@@ -41,7 +45,7 @@ export function handleSubmit(e: Event): void {
     );
     newRecords = appLogic.addRecordToList(appState.records, record);
   }
-
+  console.log("New Records:",newRecords);
   setState({ records: newRecords });
   saveRecordsToStorage(newRecords);
 

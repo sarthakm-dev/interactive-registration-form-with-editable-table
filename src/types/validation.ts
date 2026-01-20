@@ -1,3 +1,3 @@
-export interface ValidationErrors {
-  [field: string]: boolean | undefined;
+export type ValidationErrors = {
+    [key: string]: true | undefined;
 }

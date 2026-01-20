@@ -1,7 +1,7 @@
 import { type AppState } from './types/state';
 import { type RecordData } from './types/record';
 import { type RatingMap } from './types/ratings';
-// Global mutable state - SINGLE SOURCE OF TRUTH
+
 export const appState: AppState = {
   records: [],
   currentStep: 0,
@@ -47,7 +47,7 @@ function initializeRatingMap(): RatingMap {
   };
 }
 
-// State mutations - called by logic functions
+
 export function setState(updates: Partial<AppState>): void {
   Object.assign(appState, updates);
 }
