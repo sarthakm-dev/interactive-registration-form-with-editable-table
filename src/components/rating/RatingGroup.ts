@@ -26,6 +26,23 @@ export function renderRatingGroup(
       text: '★',
       attributes: { 'data-value': String(i) },
     });
+
+    star.addEventListener('mouseenter',()=>{
+        const stars = group.querySelectorAll<HTMLElement>('.star');
+        stars.forEach((s,index)=>{
+            s.classList.toggle('hover',index<i);
+        });
+    });
+
+    group.addEventListener('mouseleave',()=>{
+        const stars = group.querySelectorAll<HTMLElement>('.star');
+        const saved = appState.ratingData[category] || 0;
+        stars.forEach((s,index)=>{
+            s.classList.remove('hover');
+            s.classList.toggle('active',index<saved);
+        });
+    });
+
     star.addEventListener('click', () => {
       setState({
         ratingData: { ...appState.ratingData, [category]: i as any },
@@ -33,6 +50,7 @@ export function renderRatingGroup(
       });
       renderApp();
     });
+    
     starItem.appendChild(star);
     starItem.appendChild(
       dom.createElement('div', { className: 'point-hint', text: getRatingHint(i) }),

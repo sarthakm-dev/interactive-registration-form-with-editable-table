@@ -67,8 +67,9 @@ body {
 }
 
 .step {
-    background: #ffffff;
-    border: 2px solid #bbf7d0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border-radius: 12px;
     width: 44px;
     padding: 0 0;
@@ -79,15 +80,24 @@ body {
     transition: all 0.2s ease;
 }
 
+.step-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    border: 2px solid var(--primary-700);
+    display: flex;
+    background: var(--accent-soft);
+    align-items: center;
+    justify-content: center;
+    
+}
 .step span {
     font-size: 20px;
     display: block;
 }
 
-.step.active {
-    background: var(--primary-500);
-    border-color: var(--primary-500);
-    color: white;
+.step.active img{
+    filter: invert(40%) sepia(100%) saturate(300%) hue-rotate(90deg);
 
 }
 
@@ -429,6 +439,9 @@ textarea {
 
 
 .star:hover {
+    color: var(--primary-500);
+}
+.star.hover {
     color: var(--primary-500);
 }
 
@@ -859,7 +872,11 @@ button {
 .error.show {
   visibility: visible;
 }
-
+.step-icon{
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
 
 
 
