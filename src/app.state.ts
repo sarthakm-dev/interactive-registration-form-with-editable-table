@@ -1,6 +1,6 @@
 import { type AppState } from './types/state';
 import { type RecordData } from './types/record';
-import { type RatingMap } from './types/ratings';
+import { initializeRatingMap } from './utils/initializeratings';
 
 export const appState: AppState = {
   records: [],
@@ -8,12 +8,7 @@ export const appState: AppState = {
   editingIndex: null,
   deletingIndex: null,
   ratingData: initializeRatingMap(),
-  formData: createEmptyFormData(),
-  validationErrors: {},
-};
-
-function createEmptyFormData(): Partial<RecordData> {
-  return {
+  formData: {
     orderNumber: null,
     email: null,
     purchaseDate: null,
@@ -26,37 +21,15 @@ function createEmptyFormData(): Partial<RecordData> {
     additionalComments: null,
     participateInMonthlyReview: 'no',
     ratings: initializeRatingMap(),
-  };
-}
-
-function initializeRatingMap(): RatingMap {
-  return {
-    'product-quality': 0,
-    'matches-description': 0,
-    durability: 0,
-    'value-for-money': 0,
-    'websites-ease-of-use': 0,
-    'product-search': 0,
-    'checkout-process': 0,
-    'payment-options': 0,
-    'delivery-experience': 0,
-    'delivery-speed': 0,
-    'packaging-quality': 0,
-    'support-responsiveness': 0,
-    'support-helpfulness': 0,
-  };
-}
-
+  },
+  validationErrors: {},
+};
 
 export function setState(updates: Partial<AppState>): void {
   Object.assign(appState, updates);
 }
 
-export function resetForm(): void {
-  appState.formData = createEmptyFormData();
-  appState.editingIndex = null;
-  appState.validationErrors = {};
-}
+
 
 export function resetStep(): void {
   appState.currentStep = 0;
