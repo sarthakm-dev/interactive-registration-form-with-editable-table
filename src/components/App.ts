@@ -3,8 +3,7 @@ import { Form } from './Form';
 import { Table } from './Table';
 
 
-
-export function App(): HTMLElement {
+function App(): HTMLElement {
   const appContainer = dom.createElement('div', { attributes: { id: 'app-container' } });
 
   // Left panel - Form
@@ -27,7 +26,7 @@ export function App(): HTMLElement {
   const successModal = createSuccessModal();
   appContainer.appendChild(successModal);
 
-    
+
 
 
   return appContainer;

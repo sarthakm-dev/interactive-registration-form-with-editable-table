@@ -69,6 +69,8 @@ export function createInput(
     className?: string | string[];
     attributes?: Record<string, string | number>;
     onChange?: (e: Event) => void;
+    onInput?: (e:Event) => void;
+    onBlur?: (e:Event) => void;
   },
 ): HTMLInputElement {
   const input = createElement('input', {
@@ -91,7 +93,12 @@ export function createInput(
   if (options?.onChange) {
     input.addEventListener('change', options.onChange);
   }
-
+  if(options?.onInput) {
+    input.addEventListener('input',options.onInput);
+  }
+  if(options?.onBlur) {
+    input.addEventListener('blur',options.onBlur);
+  }
   return input;
 }
 

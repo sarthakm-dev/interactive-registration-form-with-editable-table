@@ -1,6 +1,7 @@
 import * as dom from '../../utils/dom';
 import { renderApp } from '.././App';
-import { appState, setState  } from '../../app.state';
+import { appState, setState } from '../../app.state';
+import { isValidDate, isValidEmail, isValidOrder } from '../../app.logic';
 
 export function renderBasicDetails(): HTMLElement {
   const section = dom.createElement('div', { attributes: { id: 'product-details' } });
@@ -22,24 +23,55 @@ export function renderBasicDetails(): HTMLElement {
       ],
     }),
   );
+
   const orderInput = dom.createInput('text', {
     id: 'product-name',
     name: 'product-name',
     placeholder: 'e.g. ORD-123456',
     value: appState.formData.orderNumber || '',
-    onChange: (e) => {
+    onInput: (e) => {
+      const input = e.target as HTMLInputElement;
+      const value = (e.target as HTMLInputElement).value;
+
+      const isInvalid = !isValidOrder(value);
+
+      setState({
+        formData: { ...appState.formData, orderNumber: value },
+        validationErrors: {
+          ...appState.validationErrors,
+          orderNumber: isInvalid ? true : undefined,
+        },
+      });
+      const wrapper = input.closest('.order-details');
+      wrapper?.classList.remove('error-field');
+      const errorEl = wrapper?.querySelector('.error');
+      errorEl?.classList.remove('show');
+    },
+
+    onBlur: (e) => {
+      const value = (e.target as HTMLInputElement).value;
+
+      setState({
+        validationErrors: {
+          ...appState.validationErrors,
+          orderNumber: !isValidOrder(value) ? true : undefined,
+        },
+      });
+      renderApp();
+    },
+    /*onChange: (e) => {
       const input = e.target as HTMLInputElement;
       setState({
         formData: { ...appState.formData, orderNumber: input.value },
         validationErrors: { ...appState.validationErrors },
       });
-    },
+    }*/
   });
   orderDiv.appendChild(orderInput);
   orderDiv.appendChild(
-    dom.createElement('small', { 
+    dom.createElement('small', {
       className: appState.validationErrors['orderNumber'] ? 'error show' : 'error',
-      text: 'Enter in ORD-XXXXXX format' 
+      text: 'Enter in ORD-XXXXXX format'
     }),
   );
   personalDetails.appendChild(orderDiv);
@@ -58,24 +90,38 @@ export function renderBasicDetails(): HTMLElement {
       ],
     }),
   );
-  const emailInput = dom.createInput('email', {
+  const emailInput = dom.createInput('text', {
     id: 'email',
     name: 'email',
     placeholder: 'your@email.com',
     value: appState.formData.email || '',
-    onChange: (e) => {
-      const input = e.target as HTMLInputElement;
+    onInput: (e) => {
+      const input = (e.target as HTMLInputElement);
+      const value = (e.target as HTMLInputElement).value;
       setState({
-        formData: { ...appState.formData, email: input.value },
-        validationErrors: { ...appState.validationErrors},
+        formData: { ...appState.formData, email: value },
       });
+      const wrapper = input.closest('.order-details');
+      wrapper?.classList.remove('error-field');
+      const errorEl = wrapper?.querySelector('.error');
+      errorEl?.classList.remove('show');
+    },
+    onBlur: (e) => {
+      const value = (e.target as HTMLInputElement).value;
+      setState({
+        validationErrors: {
+          ...appState.validationErrors,
+          email: !isValidEmail(value) ? true : undefined,
+        },
+      });
+      renderApp();
     },
   });
   emailDiv.appendChild(emailInput);
   emailDiv.appendChild(
-    dom.createElement('small', { 
+    dom.createElement('small', {
       className: appState.validationErrors['email'] ? 'error show' : 'error',
-      text: 'Enter a valid email id' 
+      text: 'Enter a valid email id'
     }),
   );
   personalDetails.appendChild(emailDiv);
@@ -101,19 +147,33 @@ export function renderBasicDetails(): HTMLElement {
     name: 'purchase-date',
     value: appState.formData.purchaseDate || '',
     attributes: { max: new Date().toISOString().split('T')[0] },
-    onChange: (e) => {
-      const input = e.target as HTMLInputElement;
+    onInput: (e) => {
+      const input = (e.target as HTMLInputElement);
+      const value = (e.target as HTMLInputElement).value;
       setState({
-        formData: { ...appState.formData, purchaseDate: input.value },
-        validationErrors: { ...appState.validationErrors},
+        formData: { ...appState.formData, purchaseDate: value },
       });
+      const wrapper = input.closest('.order-details');
+      wrapper?.classList.remove('error-field');
+      const errorEl = wrapper?.querySelector('.error');
+      errorEl?.classList.remove('show');
     },
+    onBlur: (e) => {
+      const value = (e.target as HTMLInputElement).value;
+      setState({
+        validationErrors: {
+          ...appState.validationErrors,
+          purchaseDate: !isValidDate(value) ? true : undefined,
+        },
+      });
+      renderApp();
+    }
   });
   dateDiv.appendChild(dateInput);
   dateDiv.appendChild(
-    dom.createElement('small', { 
+    dom.createElement('small', {
       className: appState.validationErrors['purchaseDate'] ? 'error show' : 'error',
-      text: 'This is a required field' 
+      text: 'This is a required field'
     }),
   );
   section.appendChild(dateDiv);
@@ -123,7 +183,7 @@ export function renderBasicDetails(): HTMLElement {
     className: 'radio-container',
     attributes: { 'data-radio': 'method', id: 'main-radio-container' },
   });
-  
+
   if (appState.validationErrors['method']) {
     methodDiv.classList.add('error-field');
   }
@@ -150,7 +210,7 @@ export function renderBasicDetails(): HTMLElement {
         const input = e.target as HTMLInputElement;
         setState({
           formData: { ...appState.formData, shoppingMethod: input.value },
-          validationErrors: { ...appState.validationErrors},
+          validationErrors: { ...appState.validationErrors },
         });
         renderApp();
       },
@@ -165,10 +225,10 @@ export function renderBasicDetails(): HTMLElement {
   });
 
   methodDiv.appendChild(radioContent);
-  
-  const methodError = dom.createElement('small', { 
+
+  const methodError = dom.createElement('small', {
     className: appState.validationErrors['method'] ? 'error show' : 'error',
-    text: 'This is a required field' 
+    text: 'This is a required field'
   });
   methodDiv.appendChild(methodError);
   section.appendChild(methodDiv);
