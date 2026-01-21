@@ -1,22 +1,28 @@
-import * as dom from '../../utils/dom';
 import { type RecordData } from '../../types/record';
+import { createElement } from '../../utils/createElement';
+import { addClass } from '../../utils/addClass';
+import { removeClass } from '../../utils/removeClass';
 
 export function showRatingModal(record: RecordData): void {
-  const modal = dom.queryId('modal-overlay');
+  const modal = document.getElementById('modal-overlay');
   const modalBody = modal?.querySelector('.modal-body');
   if (!modal || !modalBody) return;
 
   // Render ratings table
-  const tableBody = dom.createElement('tbody');
+  const tableBody = createElement('tbody',{
+    attributes: {
+      id: 'ratings-table-body'
+    }
+  });
   Object.entries(record.ratings).forEach(([category, rating]) => {
-    const tr = dom.createElement('tr');
+    const tr = createElement('tr');
 
-    const tdCategory = dom.createElement('td', {
+    const tdCategory = createElement('td', {
       text: category.replace(/-/g, ' '),
     });
     tr.appendChild(tdCategory);
 
-    const tdRating = dom.createElement('td', {
+    const tdRating = createElement('td', {
       text: rating === 0 ? 'N/A' : String(rating),
     });
     tr.appendChild(tdRating);
@@ -24,13 +30,13 @@ export function showRatingModal(record: RecordData): void {
     tableBody.appendChild(tr);
   });
 
-  const ratingsTable = dom.createElement('table', {
+  const ratingsTable = createElement('table', {
     className: 'ratings-table',
   });
-  const thead = dom.createElement('thead');
-  const headerRow = dom.createElement('tr');
+  const thead = createElement('thead');
+  const headerRow = createElement('tr');
   ['Category', 'Rating'].forEach((h) => {
-    const th = dom.createElement('th', { text: h });
+    const th = createElement('th', { text: h });
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
@@ -46,27 +52,27 @@ export function showRatingModal(record: RecordData): void {
   }
 
   // Render optional text fields
-  const optionalDiv = dom.createElement('div', { className: 'optional-text-modal' });
+  const optionalDiv = createElement('div', { className: 'optional-text-modal', attributes: { id:'optional-text-modal'} });
 
   if (record.whatDidYouLike) {
-    const p1 = dom.createElement('p');
-    const label1 = dom.createElement('strong', { text: 'What Did You Like:' });
+    const p1 = createElement('p');
+    const label1 = createElement('strong', { text: 'What Did You Like:' });
     p1.appendChild(label1);
     p1.appendChild(document.createTextNode(` ${record.whatDidYouLike}`));
     optionalDiv.appendChild(p1);
   }
 
   if (record.whatToImprove) {
-    const p2 = dom.createElement('p');
-    const label2 = dom.createElement('strong', { text: 'What To Improve:' });
+    const p2 = createElement('p');
+    const label2 = createElement('strong', { text: 'What To Improve:' });
     p2.appendChild(label2);
     p2.appendChild(document.createTextNode(` ${record.whatToImprove}`));
     optionalDiv.appendChild(p2);
   }
 
   if (record.additionalComments) {
-    const p3 = dom.createElement('p');
-    const label3 = dom.createElement('strong', {
+    const p3 = createElement('p');
+    const label3 = createElement('strong', {
       text: 'Additional Comments:',
     });
     p3.appendChild(label3);
@@ -82,13 +88,13 @@ export function showRatingModal(record: RecordData): void {
   }
 
   // Show modal
-  dom.removeClass(modal, 'hidden');
+  removeClass(modal, 'hidden');
 
   // Setup close handler
   const closeBtn = modal.querySelector('.close-btn');
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
-      dom.addClass(modal, 'hidden');
+      addClass(modal, 'hidden');
     });
   }
 }

@@ -1,16 +1,17 @@
-import { appState, setState } from '../app.state';
-import * as dom from '../utils/dom';
+import { getState } from '../app.state';
 import { renderBasicDetails } from './form/BasicDetails';
 import { renderStepper } from './form/Stepper';
 import { renderRatingSections } from './rating/RatingContainer';
 import { renderNavigation } from './form/Navigation';
-import { handleSubmit } from './form/SubmitButton';
-//import { RecordData } from '../types';
+import { handleSubmit } from './form/HandleSubmit';
+import { createElement } from '../utils/createElement';
+import { createButton } from '../utils/createButton';
+
 
 export function Form(): HTMLElement {
-  const container = dom.createElement('div', { className: 'left-panel glass' });
+  const container = createElement('div', { className: 'left-panel glass' });
 
-  const form = dom.createElement('form', {
+  const form = createElement('form', {
     attributes: { id: 'form-container' },
   });
 
@@ -31,12 +32,13 @@ export function Form(): HTMLElement {
   form.appendChild(nav);
 
   // Submit button
-  const submitBtn = dom.createButton(appState.editingIndex !== null ? 'Update' : 'Submit', {
+  const submitBtn = createButton(getState.editingIndex !== null ? 'Update' : 'Submit', {
     className: 'submit-btn',
     attributes: { id: 'submit', type: 'submit' },
     onClick: (e) => handleSubmit(e),
   });
-  form.appendChild(submitBtn);
+  if(getState.currentStep === 3)
+    form.appendChild(submitBtn);
 
   // Attach form submit listener
   form.addEventListener('submit', (e) => handleSubmit(e));
@@ -62,28 +64,3 @@ export function Form(): HTMLElement {
 
 
 
-function resetNotebookState(): void {
-  setState({
-    editingIndex: null,
-    currentStep: 0,
-    formData: {
-      orderNumber: null,
-      email: null,
-      purchaseDate: null,
-      shoppingMethod: null,
-      packageContentMatch: null,
-      supportContacted: null,
-      recommendToFriends: null,
-      whatDidYouLike: null,
-      whatToImprove: null,
-      additionalComments: null,
-      participateInMonthlyReview: 'no',
-      ratings: appState.ratingData,
-    },
-  });
-
-  const submitBtn = dom.queryId('submit');
-  if (submitBtn) {
-    dom.setText(submitBtn, 'Submit');
-  }
-}

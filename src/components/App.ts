@@ -1,17 +1,18 @@
-import * as dom from '../utils/dom';
+import { addClass } from '../utils/addClass';
+import { createButton } from '../utils/createButton';
+import { createElement } from '../utils/createElement';
 import { Form } from './Form';
 import { Table } from './Table';
 
-
 function App(): HTMLElement {
-  const appContainer = dom.createElement('div', { attributes: { id: 'app-container' } });
+  const appContainer = createElement('div', { attributes: { id: 'app-container' } });
 
   // Left panel - Form
   const formComponent = Form();
   appContainer.appendChild(formComponent);
 
   // Right panel - Table
-  const rightPanel = dom.createElement('div', { className: 'right-panel glass' });
+  const rightPanel = createElement('div', { className: 'right-panel glass' });
   const tableComponent = Table();
   rightPanel.appendChild(tableComponent);
   appContainer.appendChild(rightPanel);
@@ -33,25 +34,25 @@ function App(): HTMLElement {
 }
 
 function createRatingsModal(): HTMLElement {
-  const modal = dom.createElement('div', {
+  const modal = createElement('div', {
     className: 'modal-overlay hidden',
     attributes: { id: 'modal-overlay' },
   });
 
-  const modalContent = dom.createElement('div', { className: 'modal-content' });
-  const modalHeader = dom.createElement('div', { className: 'modal-header' });
-  const modalTitle = dom.createElement('h2', { text: 'View Ratings' });
+  const modalContent = createElement('div', { className: 'modal-content' });
+  const modalHeader = createElement('div', { className: 'modal-header' });
+  const modalTitle = createElement('h2', { text: 'View Ratings' });
   modalHeader.appendChild(modalTitle);
-  const closeBtn = dom.createButton('✕', {
+  const closeBtn = createButton('✕', {
     className: 'modal-close',
     onClick: () => {
-      dom.addClass(modal, 'hidden');
+      addClass(modal, 'hidden');
     },
   });
   modalHeader.appendChild(closeBtn);
   modalContent.appendChild(modalHeader);
 
-  const modalBody = dom.createElement('div', { className: 'modal-body' });
+  const modalBody = createElement('div', { className: 'modal-body' });
   modalContent.appendChild(modalBody);
 
   modal.appendChild(modalContent);
@@ -59,32 +60,32 @@ function createRatingsModal(): HTMLElement {
 }
 
 function createDeleteModal(): HTMLElement {
-  const modal = dom.createElement('div', {
+  const modal = createElement('div', {
     className: 'modal-overlay hidden',
     attributes: { id: 'delete-modal-overlay' },
   });
 
-  const modalContent = dom.createElement('div', { className: 'modal-content small' });
-  const modalBody = dom.createElement('div', { className: 'modal-body' });
-  const message = dom.createElement('p', {
+  const modalContent = createElement('div', { className: 'modal-content small' });
+  const modalBody = createElement('div', { className: 'modal-body' });
+  const message = createElement('p', {
     text: 'Are you sure you want to delete this record?',
     attributes: { id: 'delete-message' },
   });
   modalBody.appendChild(message);
 
-  const buttonContainer = dom.createElement('div', { className: 'modal-buttons' });
-  const confirmBtn = dom.createButton('Delete', {
+  const buttonContainer = createElement('div', { className: 'modal-buttons' });
+  const confirmBtn = createButton('Delete', {
     className: 'delete-confirm',
     attributes: { id: 'delete-confirm' },
     onClick: () => {
       // This will be handled by Table component
     },
   });
-  const cancelBtn = dom.createButton('Cancel', {
+  const cancelBtn = createButton('Cancel', {
     className: 'modal-cancel',
     attributes: { id: 'delete-cancel' },
     onClick: () => {
-      dom.addClass(modal, 'hidden');
+      addClass(modal, 'hidden');
     },
   });
 
@@ -98,24 +99,24 @@ function createDeleteModal(): HTMLElement {
 }
 
 function createSuccessModal(): HTMLElement {
-  const modal = dom.createElement('div', {
+  const modal = createElement('div', {
     className: 'modal-overlay hidden',
     attributes: { id: 'success-modal-overlay' },
   });
 
-  const modalContent = dom.createElement('div', { className: 'modal-content small' });
-  const modalBody = dom.createElement('div', { className: 'modal-body' });
-  const message = dom.createElement('p', {
+  const modalContent = createElement('div', { className: 'modal-content small' });
+  const modalBody = createElement('div', { className: 'modal-body' });
+  const message = createElement('p', {
     text: 'Form submitted successfully',
     attributes: { id: 'success-message' },
   });
   modalBody.appendChild(message);
 
-  const okBtn = dom.createButton('OK', {
+  const okBtn = createButton('OK', {
     className: 'modal-ok',
     attributes: { id: 'success-ok' },
     onClick: () => {
-      dom.addClass(modal, 'hidden');
+      addClass(modal, 'hidden');
     },
   });
   modalBody.appendChild(okBtn);
@@ -128,14 +129,14 @@ function createSuccessModal(): HTMLElement {
 let appRoot: HTMLElement | null = null;
 
 export function renderApp(): void {
-  const root = dom.queryId('app');
+  const root = document.getElementById('app');
   if (!root) {
     console.error('Root element with id="app" not found');
     return;
   }
 
   // Clear old content
-  dom.clearElement(root);
+  root.innerHTML = '';
 
   // Render new content
   const newApp = App();

@@ -1,25 +1,22 @@
-import { appState } from '../../app.state';
-import * as dom from '../../utils/dom';
-
+import { getState } from '../../app.state';
+import { addClass } from '../../utils/addClass';
+import { removeClass } from '../../utils/removeClass';
 
 export function showSuccessModal(): void {
-  const modal = dom.queryId('success-modal-overlay');
+  const modal = document.getElementById('success-modal-overlay');
   if (!modal) return;
 
-  const message = dom.queryId('success-message');
+  const message = document.getElementById('success-message');
   if (message) {
-    dom.setText(
-      message,
-      appState.editingIndex !== null ? 'Form updated successfully' : 'Form submitted successfully',
-    );
+    message.textContent = getState.editingIndex !== null ? 'Form updated successfully' : 'Form submitted successfully';
   }
 
-  dom.removeClass(modal, 'hidden');
+  removeClass(modal, 'hidden');
 
-  const okBtn = dom.queryId('success-ok');
+  const okBtn = document.getElementById('success-ok');
   if (okBtn) {
     okBtn.onclick = () => {
-      dom.addClass(modal, 'hidden');
+      addClass(modal, 'hidden');
     };
   }
 }

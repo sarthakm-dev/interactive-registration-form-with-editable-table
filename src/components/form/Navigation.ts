@@ -1,30 +1,32 @@
-import { appState, setState } from '../../app.state';
+import { getState, setState } from '../../app.state';
 import * as appLogic from '../../app.logic';
-import * as dom from '../../utils/dom';
 import { renderApp } from '.././App';
+import { createElement } from '../../utils/createElement';
+import { createButton } from '../../utils/createButton';
 
 export function renderNavigation(): HTMLElement {
-  const nav = dom.createElement('div', { className: 'rating-nav' });
-
-  const prevBtn = dom.createButton('Previous', {
+  const nav = createElement('div', { className: 'rating-nav' });
+  const isFirstStep = getState.currentStep === 0 ;
+  const isLastStep = getState.currentStep === 3;
+  const prevBtn = createButton('Previous', {
     attributes: { id: 'prevBtn', type: 'button' },
     onClick: () => {
-      const prev = Math.max(appState.currentStep - 1, 0);
+      const prev = Math.max(getState.currentStep - 1, 0);
       setState({ currentStep: prev });
       renderApp();
     },
   });
-  
-  const nextBtn = dom.createButton('Next', {
+  prevBtn.disabled = isFirstStep;
+  const nextBtn = createButton('Next', {
     attributes: {
       id: 'nextBtn',
       type: 'button',
     },
     onClick: () => {
-      const { valid, errors } =appLogic. validateCurrentStep(
-        appState.currentStep,
-        appState.formData,
-        appState.ratingData
+      const { valid, errors } = appLogic.validateCurrentStep(
+        getState.currentStep,
+        getState.formData,
+        getState.ratingData
       );
 
       if (!valid) {
@@ -34,13 +36,13 @@ export function renderNavigation(): HTMLElement {
       }
 
       setState({
-        currentStep: appState.currentStep + 1,
+        currentStep: getState.currentStep + 1,
         validationErrors: {}
       });
       renderApp();
     }
   });
-
+  nextBtn.disabled = isLastStep;
   nav.appendChild(prevBtn);
   nav.appendChild(nextBtn);
 

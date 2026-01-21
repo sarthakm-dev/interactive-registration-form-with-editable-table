@@ -1,7 +1,7 @@
-import { appState } from "../app.state";
+import { getState } from "../app.state";
 import { initializeRatingMap } from "./initializeRatings";
 export function resetForm(): void {
-  appState.formData = {
+  getState.formData = {
     orderNumber: null,
     email: null,
     purchaseDate: null,
@@ -15,7 +15,7 @@ export function resetForm(): void {
     participateInMonthlyReview: 'no',
     ratings: initializeRatingMap(),
   },
-  appState.ratingData = initializeRatingMap();
-  appState.editingIndex = null;
-  appState.validationErrors = {};
+  getState.ratingData = initializeRatingMap();
+  getState.editingIndex = null;
+  getState.validationErrors = {};
 }

@@ -1,10 +1,9 @@
-import { appState, setState } from '../../app.state';
-
-import * as dom from '../../utils/dom';
+import { getState, setState } from '../../app.state';
+import { createElement } from '../../utils/createElement';
 import { renderApp } from '.././App';
 
 export function renderStepper(): HTMLElement {
-  const stepper = dom.createElement('div', { className: 'rating-stepper' });
+  const stepper = createElement('div', { className: 'rating-stepper' });
 
   const steps = [
     { icon: '/assets/package.png', label: 'Product' },
@@ -14,14 +13,14 @@ export function renderStepper(): HTMLElement {
   ];
 
   steps.forEach((step, index) => {
-    const stepEl = dom.createElement('div', {
-      className: appState.currentStep === index ? ['step', 'active'] : ['step'],
+    const stepEl = createElement('div', {
+      className: getState.currentStep === index ? ['step', 'active'] : ['step'],
       attributes: { 'data-step': String(index) },
     });
-    const iconbox = dom.createElement('div',{
+    const iconbox = createElement('div',{
       className: 'step-icon-box',
     })
-    const icon = dom.createElement('img', {
+    const icon = createElement('img', {
       attributes: {
         src: step.icon,
         alt: step.label
@@ -30,7 +29,7 @@ export function renderStepper(): HTMLElement {
     });
     iconbox.appendChild(icon);
     stepEl.appendChild(iconbox);
-    stepEl.appendChild(dom.createElement('small', { text: step.label }));
+    stepEl.appendChild(createElement('small', { text: step.label }));
     stepEl.addEventListener('click', () => {
       setState({ currentStep: index });
       renderApp();

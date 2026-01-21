@@ -1,30 +1,30 @@
-import { appState } from '../app.state';
-import * as dom from '../utils/dom';
+import { getState } from '../app.state';
+import { createElement } from '../utils/createElement';
 import { renderTableRow } from './table/TableRow';
 
 
 export function Table(): HTMLElement {
-  const container = dom.createElement('div', { className: 'table-panel' });
+  const container = createElement('div', { className: 'table-panel' });
 
-  const table = dom.createElement('table', {
+  const table = createElement('table', {
     className: 'data-table',
     attributes: { id: 'main-table' },
   });
 
   // Create thead
-  const thead = dom.createElement('thead');
-  const headerRow = dom.createElement('tr');
+  const thead = createElement('thead');
+  const headerRow = createElement('tr');
   const headers = ['#', 'Order', 'Email', 'Purchase', 'Method', 'Actions'];
   headers.forEach((header) => {
-    const th = dom.createElement('th', { text: header });
+    const th = createElement('th', { text: header });
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
   // Create tbody
-  const tbody = dom.createElement('tbody');
-  appState.records.forEach((record, index) => {
+  const tbody = createElement('tbody');
+  getState.records.forEach((record, index) => {
     const tr = renderTableRow(record, index);
     tbody.appendChild(tr);
   });

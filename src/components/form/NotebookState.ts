@@ -1,5 +1,5 @@
-import { appState, setState } from '../../app.state';
-import * as dom from '../../utils/dom';
+import { setState } from '../../app.state';
+import { initializeRatingMap } from '../../utils/initializeRatings';
 
 export function resetNotebookState(): void {
   setState({
@@ -17,12 +17,12 @@ export function resetNotebookState(): void {
       whatToImprove: null,
       additionalComments: null,
       participateInMonthlyReview: 'no',
-      ratings: appState.ratingData,
+      ratings: initializeRatingMap(),
     },
   });
 
-  const submitBtn = dom.queryId('submit');
+  const submitBtn = document.getElementById('submit');
   if (submitBtn) {
-    dom.setText(submitBtn, 'Submit');
+    submitBtn.textContent = "Submit"
   }
 }

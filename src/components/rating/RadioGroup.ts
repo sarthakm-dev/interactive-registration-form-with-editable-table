@@ -1,6 +1,6 @@
-import { appState, setState } from '../../app.state';
-
-import * as dom from '../../utils/dom';
+import { getState, setState } from '../../app.state';
+import { createElement } from '../../utils/createElement';
+import { createInput } from '../../utils/createInput';
 import { renderApp } from '.././App';
 
 export function renderRadioGroup(
@@ -8,7 +8,7 @@ export function renderRadioGroup(
   label: string,
   options: Array<{ id: string; value: string; label: string }>,
 ): HTMLElement {
-  const group = dom.createElement('div', {
+  const group = createElement('div', {
     className: 'radio-container',
     attributes: { 'data-radio': name },
   });
@@ -22,29 +22,29 @@ export function renderRadioGroup(
       ? 'recommendToFriends'
       : name;
 
-  if (appState.validationErrors[name]) {
+  if (getState.validationErrors[name]) {
     group.classList.add('error-field');
   }
 
   group.appendChild(
-    dom.createElement('label', {
+    createElement('label', {
       className: 'radio-label',
       children: [
         label,
-        dom.createElement('span', { className: 'required', text: '*' }),
+        createElement('span', { className: 'required', text: '*' }),
       ],
     }),
   );
 
-  const radioContent = dom.createElement('div', { className: 'radio-content' });
+  const radioContent = createElement('div', { className: 'radio-content' });
 
   options.forEach(({ id, value, label: optionLabel }) => {
-    const span = dom.createElement('span');
+    const span = createElement('span');
 
     const isChecked =
-      appState.formData[fieldName as keyof typeof appState.formData] === value;
+      getState.formData[fieldName as keyof typeof getState.formData] === value;
 
-    const radio = dom.createInput('radio', {
+    const radio = createInput('radio', {
       id,
       name, 
       value,
@@ -54,11 +54,11 @@ export function renderRadioGroup(
 
         setState({
           formData: {
-            ...appState.formData,
+            ...getState.formData,
             [fieldName]: input.value,
           },
           validationErrors: {
-            ...appState.validationErrors,
+            ...getState.validationErrors,
             [name]: undefined,
           },
         });
@@ -69,7 +69,7 @@ export function renderRadioGroup(
 
     span.appendChild(radio);
     span.appendChild(
-      dom.createElement('label', { text: optionLabel, attributes: { for: id } }),
+      createElement('label', { text: optionLabel, attributes: { for: id } }),
     );
 
     radioContent.appendChild(span);
@@ -78,8 +78,8 @@ export function renderRadioGroup(
   group.appendChild(radioContent);
 
   group.appendChild(
-    dom.createElement('small', {
-      className: appState.validationErrors[name] ? 'error show' : 'error',
+    createElement('small', {
+      className: getState.validationErrors[name] ? 'error show' : 'error',
       text: 'This is a required field',
     }),
   );

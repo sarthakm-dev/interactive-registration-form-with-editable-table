@@ -1,15 +1,15 @@
-import { appState, setState } from '../../app.state';
-import * as appLogic from '../../app.logic';
-import * as dom from '../../utils/dom';
+import { getState, setState } from '../../app.state';
 import { renderApp } from '.././App';
+import { findFirstRatedStep } from '../../services/findFirstRatedStep';
+import { populateFormDataFromRecord } from '../../services/populateFormData';
 
 export function handleEdit(index: number): void {
-  const record = appState.records[index];
+  const record = getState.records[index];
   if (!record) return;
 
   // Load record into form
-  const formData = appLogic.populateFormDataFromRecord(record);
-  const currentStep = appLogic.findFirstRatedStep(record);
+  const formData = populateFormDataFromRecord(record);
+  const currentStep = findFirstRatedStep(record);
 
   setState({
     editingIndex: index,
@@ -19,11 +19,11 @@ export function handleEdit(index: number): void {
   });
 
   // Update button text and scroll to form
-  const submitBtn = dom.queryId('submit');
+  const submitBtn = document.getElementById('submit');
   if (submitBtn) {
-    dom.setText(submitBtn, 'Update');
+    submitBtn.textContent = "Update";
   }
 
-  dom.scrollTo(document.body, 'smooth');
+  document.body.scrollIntoView({behavior:'smooth'});
   renderApp();
 }

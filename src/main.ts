@@ -1,4 +1,4 @@
-import { appState, setState } from './app.state';
+import { getState, setState } from './app.state';
 import { loadRecordsFromStorage } from './app.storage';
 import { renderApp } from './components/App';
 

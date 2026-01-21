@@ -1,8 +1,8 @@
-import { appState } from '../../app.state';
+import { getState } from '../../app.state';
 import { showRatingModal } from './ShowRating';
 
 export function handleView(index: number): void {
-  const record = appState.records[index];
+  const record = getState.records[index];
   if (!record) return;
 
   showRatingModal(record);
