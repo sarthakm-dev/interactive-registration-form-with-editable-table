@@ -1,6 +1,7 @@
 import { type AppState } from './types/state';
 import { type RecordData } from './types/record';
-import { initializeRatingMap } from './utils/initializeratings';
+import { initializeRatingMap } from './utils/initializeRatings';
+
 
 export const appState: AppState = {
   records: [],

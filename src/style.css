@@ -615,7 +615,9 @@ hr {
     font-size: 20px;
     font-weight: 600;
 }
-
+.delete-confirm {
+    background-color: var(--danger);
+}
 button {
 
     border: none;
@@ -675,7 +677,7 @@ button {
 }
 
 .modal {
-    background: #ffffff;
+    background: var(--bg-page);
     width: 520px;
     max-height: 80vh;
     overflow-y: auto;
@@ -712,11 +714,20 @@ button {
 }
 
 .modal-body {
+    background-color: var(--bg-panel);
     padding: 16px;
+    width: 520px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    position: relative;
 }
 
 .modal h3 {
     margin-bottom: 16px;
+    align-items: center;
 }
 
 .close-btn {
@@ -753,6 +764,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    margin: 8px;
 }
 
 .optional-row strong {
@@ -785,7 +797,7 @@ button {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
-
+    color: var(--bg-page);
 }
 
 .modal-header h3 {
@@ -801,10 +813,13 @@ button {
 }
 
 .modal-body {
-    padding: 0 0 0 22px;
+    padding: 15px 12px;
     overflow-y: auto;
+    width: auto;
 }
-
+#success-ok {
+    background-color: var(--primary-500);
+}
 .btn {
     padding: 8px 16px;
     border-radius: 6px;
@@ -878,21 +893,22 @@ button {
   object-fit: contain;
 }
 
-
-
-
 .error-field .radio-content {
 
   padding: 6px;
   border-radius: 4px;
 }
-@media (max-width: 600px) {
+@media (max-width: 1180px) {
     body {
         padding: 0;
         margin: 0;
 
     }
-
+    #app-container {
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+    }
     #main-container {
         align-items: stretch;
         padding: 9px;
@@ -1004,12 +1020,7 @@ button {
         margin-right: 0;
     }
 
-    #app-container {
-        flex-direction: column;
-        justify-content: center;
-        padding: 0;
-
-    }
+    
 
     .left-panel {
         width: 100%;

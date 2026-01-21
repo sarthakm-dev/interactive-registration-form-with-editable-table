@@ -1,7 +1,6 @@
 import { type RecordData } from './types/record';
 import { type RatingValue } from './types/ratings';
 import { type RatingMap } from './types/ratings';
-import { type StepConfig } from './types/step';
 import { type ValidationErrors } from './types/validation';
 //Validation Logic
 
@@ -91,6 +90,10 @@ export function validateCurrentStep(
 
  
   config?.ratings?.forEach((category) => {
+    const isSupportRating = category.startsWith('support-');
+    if(isSupportRating && ratingData.supportContacted==='yes'){
+      return;
+    }
     if (!ratingData[category] || ratingData[category] === 0) {
       errors[category] = true;
     }
@@ -273,8 +276,6 @@ export const STEP_CONFIG = [
   {
     // Step 3
     ratings: [
-      'support-helpfulness',
-      'support-responsiveness',
     ],
     radios: ['support-contacted', 'recommendation-experience']
   }
