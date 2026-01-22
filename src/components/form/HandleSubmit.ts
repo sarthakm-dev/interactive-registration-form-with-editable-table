@@ -1,13 +1,13 @@
 import { getState, setState } from '../../app.state';
 import { renderApp } from '../App';
 import { saveRecordsToStorage } from '../../app.storage';
-import { showSuccessModal } from '../modal/SuccessModal';
 import { resetNotebookState } from './NotebookState';
 import { resetForm } from '../../utils/resetForm';
 import { validateFormForSubmission } from '../../services/validateFormSubmission';
 import { createRecordFromFormData } from '../../services/createRecordFromData';
 import { addRecordToList } from '../../services/addRecordToList';
 import { updateRecordInList } from '../../services/updateRecordInList';
+import { showSuccessModal } from '../modal/ShowSuccessModal';
 
 export function handleSubmit(e: Event): void {
   e.preventDefault();
@@ -26,8 +26,9 @@ export function handleSubmit(e: Event): void {
     return;
   }
   let newRecords = getState.records;
-
+  let idx = null;
   if (getState.editingIndex !== null) {
+    idx = getState.editingIndex;
     const record = createRecordFromFormData(
       getState.formData,
       getState.ratingData,
@@ -48,12 +49,10 @@ export function handleSubmit(e: Event): void {
   setState({ records: newRecords });
   saveRecordsToStorage(newRecords);
 
-  // Show success modal
-
 
   // Reset form
   resetForm();
   resetNotebookState();
   renderApp();
-  showSuccessModal();
+  showSuccessModal(idx);
 }
