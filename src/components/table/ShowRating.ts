@@ -14,7 +14,7 @@ export function showRatingModal(record: RecordData): void {
       id: 'ratings-table-body'
     }
   });
-  Object.entries(record.ratings).forEach(([category, rating]) => {
+  Object.entries(record.rating).forEach(([category, rating]) => {
     const tr = createElement('tr');
 
     const tdCategory = createElement('td', {
@@ -70,16 +70,24 @@ export function showRatingModal(record: RecordData): void {
     optionalDiv.appendChild(p2);
   }
 
-  if (record.additionalComments) {
+  if (record.additionalComment) {
     const p3 = createElement('p');
     const label3 = createElement('strong', {
       text: 'Additional Comments:',
     });
     p3.appendChild(label3);
-    p3.appendChild(document.createTextNode(` ${record.additionalComments}`));
+    p3.appendChild(document.createTextNode(` ${record.additionalComment}`));
     optionalDiv.appendChild(p3);
   }
-
+  if(record.participateInMonthlyReview){
+    const p3 = createElement('p');
+    const label4 = createElement('strong', {
+      text: 'Additional Comments:',
+    });
+    p3.appendChild(label4);
+    p3.appendChild(document.createTextNode(` ${record.participateInMonthlyReview}`));
+    optionalDiv.appendChild(p3);
+  }
   const existingOptional = modalBody.querySelector('.optional-text-modal');
   if (existingOptional) {
     existingOptional.replaceWith(optionalDiv);

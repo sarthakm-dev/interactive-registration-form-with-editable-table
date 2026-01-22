@@ -31,6 +31,7 @@ export const RATING_CONFIG = [
           { id: 'damaged-items', value: 'Damaged Items', label: 'Damaged Items' },
         ],
       },
+      
     },
     {
       radio: {
@@ -61,7 +62,7 @@ export const RATING_CONFIG = [
       textareas: [
         { name: 'what-did-you-like', label: 'What Did You Like' },
         { name: 'what-to-improve', label: 'What To Improve?' },
-        { name: 'additional-comments', label: 'Additional Comments', maxlength: 200 },
+        { name: 'additional-comment', label: 'Additional Comments', maxlength: 200 },
       ],
       checkbox: {
         name: 'review',

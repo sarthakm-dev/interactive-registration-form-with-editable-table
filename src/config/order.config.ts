@@ -1,0 +1,1 @@
+export const ORDER_REGEX = /^ORD-\d{6}$/;

@@ -89,7 +89,7 @@ export function renderRatingSections(): HTMLElement {
             setState({
               formData: {
                 ...getState.formData,
-                participateInMonthlyReview: input.checked ? 'yes' : 'no',
+                participateInMonthlyReview: input.checked ? 'Yes' : 'No',
               },
             });
           },

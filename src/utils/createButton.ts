@@ -1,6 +1,5 @@
 import { createElement } from "./createElement";
 
-createElement
 export function createButton(
   text: string,
   options?: {

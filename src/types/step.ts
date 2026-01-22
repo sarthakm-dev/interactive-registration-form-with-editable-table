@@ -1,4 +1,4 @@
 export interface StepConfig {
-  ratings: string[];
+  rating: string[];
   conditionalOn?: string;
 }

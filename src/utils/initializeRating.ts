@@ -1,4 +1,4 @@
-import { type RatingMap } from '../types/ratings';
+import { type RatingMap } from '../types/rating';
 export function initializeRatingMap(): RatingMap {
   return {
     'product-quality': 0,

@@ -1,7 +1,7 @@
 import { getState, setState } from '../../app.state';
 import { renderApp } from '../App';
 import { saveRecordsToStorage } from '../../app.storage';
-import { resetNotebookState } from './NotebookState';
+import { resetNotebookState } from './ResetNotebookState';
 import { resetForm } from '../../utils/resetForm';
 import { validateFormForSubmission } from '../../services/validateFormSubmission';
 import { createRecordFromFormData } from '../../services/createRecordFromData';

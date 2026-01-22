@@ -1,4 +1,4 @@
-import { type RatingMap } from "./ratings";
+import { type RatingMap } from "./rating";
 
 export interface RecordData {
     orderNumber: string | null,
@@ -7,10 +7,10 @@ export interface RecordData {
     shoppingMethod: string | null,
     packageContentMatch: string | null,
     supportContacted: string | null,
-    recommendToFriends: string | null,
+    recommendToFriend: string | null,
     whatDidYouLike: string | null,
     whatToImprove: string | null,
-    additionalComments: string | null,
+    additionalComment: string | null,
     participateInMonthlyReview: string,
-    ratings: RatingMap,
+    rating: RatingMap,
 }

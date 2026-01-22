@@ -19,7 +19,7 @@ export function renderRadioGroup(
       : name === 'support-contacted'
       ? 'supportContacted'
       : name === 'recommendation-experience'
-      ? 'recommendToFriends'
+      ? 'recommendToFriend'
       : name;
 
   if (getState.validationErrors[name]) {

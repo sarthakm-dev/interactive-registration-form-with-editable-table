@@ -1,9 +1,9 @@
 import { type AppState } from './types/state';
-import { type RecordData } from './types/record';
-import { initializeRatingMap } from './utils/initializeRatings';
+import { initializeRatingMap } from './utils/initializeRating';
 
 
-export const appState: AppState = {
+export const getState: AppState = {
+  theme: 'light',
   records: [],
   currentStep: 0,
   editingIndex: null,
@@ -16,22 +16,19 @@ export const appState: AppState = {
     shoppingMethod: null,
     packageContentMatch: null,
     supportContacted: null,
-    recommendToFriends: null,
+    recommendToFriend: null,
     whatDidYouLike: null,
     whatToImprove: null,
-    additionalComments: null,
+    additionalComment: null,
     participateInMonthlyReview: 'no',
-    ratings: initializeRatingMap(),
+    rating: initializeRatingMap(),
   },
   validationErrors: {},
 };
 
 export function setState(updates: Partial<AppState>): void {
-  Object.assign(appState, updates);
+  Object.assign(getState, updates);
 }
 
 
 
-export function resetStep(): void {
-  appState.currentStep = 0;
-}

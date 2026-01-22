@@ -1,5 +1,5 @@
 import { setState } from '../../app.state';
-import { initializeRatingMap } from '../../utils/initializeRatings';
+import { initializeRatingMap } from '../../utils/initializeRating';
 
 export function resetNotebookState(): void {
   setState({
@@ -12,12 +12,12 @@ export function resetNotebookState(): void {
       shoppingMethod: null,
       packageContentMatch: null,
       supportContacted: null,
-      recommendToFriends: null,
+      recommendToFriend: null,
       whatDidYouLike: null,
       whatToImprove: null,
-      additionalComments: null,
+      additionalComment: null,
       participateInMonthlyReview: 'no',
-      ratings: initializeRatingMap(),
+      rating: initializeRatingMap(),
     },
   });
 

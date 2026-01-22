@@ -15,7 +15,7 @@ export function handleEdit(index: number): void {
     editingIndex: index,
     formData,
     currentStep,
-    ratingData: { ...record.ratings },
+    ratingData: { ...record.rating },
   });
 
   // Update button text and scroll to form
