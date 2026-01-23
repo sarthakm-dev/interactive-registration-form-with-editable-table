@@ -297,6 +297,7 @@ textarea {
 #purchase-date {
     background-color: transparent;
     background: transparent;
+    text-transform: uppercase;
     border: 2px solid var(--primary-900);
     outline: none;
     margin-top: 5px;
