@@ -1,11 +1,11 @@
 import { type RecordData } from '../types/record';
 import { type RatingMap } from '../types/rating';
 import { type ValidationErrors } from '../types/validation';
-import { isValidDate } from './isValidDate';
-import { isValidEmail } from './isValidEmail';
-import { isValidOrder } from './isValidOrder';
+import { isValidDate } from '../utils/isValidDate';
+import { isValidEmail } from '../utils/isValidEmail';
+import { isValidOrder } from '../utils/isValidOrder';
 import { setState } from '../app.state';
-import { renderApp } from '../components/App';
+import { renderApp } from '../components';
 
 function checkDuplicateRecord(
   formData: Partial<RecordData>,
@@ -29,19 +29,19 @@ export function validateFormForSubmission(
 
   // Basic details validation
   if (!formData.orderNumber || !isValidOrder(formData.orderNumber)) {
-    errors['orderNumber'] = true;
+    errors['orderNumber'] = "Invalid Order Number";
   }
 
   if (!formData.email || !isValidEmail(formData.email)) {
-    errors['email'] = true;
+    errors['email'] = "Invalid Email";
   }
 
   if (!formData.purchaseDate || !isValidDate(formData.purchaseDate)) {
-    errors['purchaseDate'] = true;
+    errors['purchaseDate'] = "Invalid Purchase Date";
   }
 
   if (!formData.shoppingMethod) {
-    errors['method'] = true;
+    errors['method'] = "Invalid Shopping Method";
   }
 
   // All ratings must be filled
@@ -61,39 +61,39 @@ export function validateFormForSubmission(
 
   requiredRatings.forEach((cat) => {
     if (ratingData[cat] === 0 || ratingData[cat] === undefined) {
-      errors[cat] = true;
+      errors[cat] = "Requird Field";
     }
   });
 
   // Delivery experience follow-up
   if (!formData.packageContentMatch) {
-    errors['package-content-experience'] = true;
+    errors['package-content-experience'] = "REquired Field";
   }
 
   // Support question
   if (!formData.supportContacted) {
-    errors['support-contacted'] = true;
+    errors['support-contacted'] = "Required Field";
   }
 
   // If support was contacted, validate support ratings
   if (formData.supportContacted === 'yes') {
     if (ratingData['support-responsiveness'] === 0 || ratingData['support-responsiveness'] === undefined) {
-      errors['support-responsiveness'] = true;
+      errors['support-responsiveness'] = "Required Field";
     }
     if (ratingData['support-helpfulness'] === 0 || ratingData['support-helpfulness'] === undefined) {
-      errors['support-helpfulness'] = true;
+      errors['support-helpfulness'] = "Required Field";
     }
   }
 
   // Recommendation question
   if (!formData.recommendToFriend) {
-    errors['recommendation-experience'] = true;
+    errors['recommendation-experience'] = "Required Field";
   }
 
   // Check for duplicate
   const isDuplicate = checkDuplicateRecord(formData, records, editingIndex);
   if (isDuplicate) {
-    errors['duplicate'] = true;
+    errors['duplicate'] = "Duplicate Entry";
     setState({showDuplicateModal:true});
     renderApp();
     

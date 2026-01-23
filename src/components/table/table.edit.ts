@@ -1,8 +1,9 @@
-import { getState, setState } from '../../app.state';
-import { renderApp } from '.././App';
-import { findFirstRatedStep } from '../../services/findFirstRatedStep';
-import { populateFormDataFromRecord } from '../../services/populateFormData';
 import { resetForm } from '../../utils/resetForm';
+import { populateFormDataFromRecord } from '../../services/populateFormData';
+import { findFirstRatedStep } from '../../services/findFirstRatedStep';
+import { renderApp } from '..';
+import { getState, setState } from '../../app.state';
+
 
 export function handleEdit(index: number): void {
   const record = getState.records[index];

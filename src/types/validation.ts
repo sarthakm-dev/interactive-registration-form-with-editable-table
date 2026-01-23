@@ -1,3 +1,3 @@
 export type ValidationErrors = {
-    [key: string]: true | undefined;
+    [key: string]: string;
 }

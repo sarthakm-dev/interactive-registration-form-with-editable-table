@@ -1,6 +1,6 @@
 import { getState, setState } from '../../app.state';
-import { createElement } from '../../utils/createElement';
-import { renderApp } from '.././App';
+import { createElement } from '../../ui/createElement';
+import { renderApp } from '..';
 
 export function renderStepper(): HTMLElement {
   const stepper = createElement('div', { className: 'rating-stepper' });

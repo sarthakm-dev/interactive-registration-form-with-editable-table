@@ -1,7 +1,8 @@
 import { getState, setState } from '../../app.state';
-import { createElement } from '../../utils/createElement';
-import { renderApp } from '.././App';
-import { getRatingHint } from './RatingHint';
+import { createElement } from '../../ui/createElement';
+import { renderApp } from '..';
+import { getRatingHint } from './rating.hint';
+
 
 export function renderRatingGroup(
   category: string,
@@ -46,7 +47,7 @@ export function renderRatingGroup(
     star.addEventListener('click', () => {
       setState({
         ratingData: { ...getState.ratingData, [category]: i as any },
-        validationErrors: { ...getState.validationErrors,[category]:undefined },
+        validationErrors: { ...getState.validationErrors,[category]:'' },
       });
       renderApp();
     });

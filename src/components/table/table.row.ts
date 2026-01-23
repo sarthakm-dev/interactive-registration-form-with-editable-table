@@ -1,9 +1,9 @@
 import { type RecordData } from '../../types/record';
-import { handleView } from './HandleView';
-import { handleEdit } from './HandleEdit';
-import { handleDelete } from './HandleDelete';
-import { createElement } from '../../utils/createElement';
-import { createButton } from '../../utils/createButton';
+import { handleView } from './table.view';
+import { handleEdit } from './table.edit';
+import { handleDelete } from './table.delete';
+import { createElement } from '../../ui/createElement';
+import { createButton } from '../../ui/createButton';
 
 export function renderTableRow(record: RecordData, index: number): HTMLElement {
   const tr = createElement('tr');

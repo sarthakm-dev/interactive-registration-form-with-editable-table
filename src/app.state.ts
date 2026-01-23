@@ -4,6 +4,7 @@ import { initializeRatingMap } from './utils/initializeRating';
 export const getState: AppState = {
   theme: 'light',
   showDuplicateModal: false,
+  showSuccessModal: false,
   records: [],
   currentStep: 0,
   editingIndex: null,

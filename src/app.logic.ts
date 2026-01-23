@@ -1,9 +1,9 @@
 import { type RecordData } from './types/record';
 import { type ValidationErrors } from './types/validation';
 import { STEP_CONFIG } from './config/step.config';
-import { isValidEmail } from './services/isValidEmail';
-import { isValidOrder } from './services/isValidOrder';
-import { isValidDate } from './services/isValidDate';
+import { isValidEmail } from './utils/isValidEmail';
+import { isValidOrder } from './utils/isValidOrder';
+import { isValidDate } from './utils/isValidDate';
 
 function radioNameToFormKey(name:string) {
   switch(name) {
@@ -29,16 +29,16 @@ export function validateCurrentStep(
 
   if (step === 0) {
     if (!isValidOrder(formData.orderNumber)) {
-      errors.orderNumber = true;
+      errors.orderNumber = "Invalid Order Number";
     }
     if (!isValidEmail(formData.email)) {
-      errors.email = true;
+      errors.email = "Invalid Email";
     }
     if (!isValidDate(formData.purchaseDate)) {
-      errors.purchaseDate = true;
+      errors.purchaseDate = "Date is a Required Field";
     }
     if (!formData.shoppingMethod) {
-      errors.method = true;
+      errors.method = "This is a required field";
     }
   }
 
@@ -47,7 +47,7 @@ export function validateCurrentStep(
     const key = radioNameToFormKey(name);
 
     if (!formData[key]) {
-      errors[name] = true;
+      errors[name] = "THis is a required field";
     }
   });
 
@@ -58,7 +58,7 @@ export function validateCurrentStep(
       return;
     }
     if (!ratingData[category] || ratingData[category] === 0) {
-      errors[category] = true;
+      errors[category] = "This is a required field";
     }
   });
 

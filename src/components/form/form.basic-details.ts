@@ -1,10 +1,10 @@
-import { renderApp } from '.././App';
 import { getState, setState } from '../../app.state';
-import { createElement } from '../../utils/createElement';
-import { createInput } from '../../utils/createInput';
-import { isValidDate } from '../../services/isValidDate';
-import { isValidEmail } from '../../services/isValidEmail';
-import { isValidOrder } from '../../services/isValidOrder';
+import { createElement } from '../../ui/createElement';
+import { isValidDate } from '../../utils/isValidDate';
+import { renderApp } from '..';
+import { isValidEmail } from '../../utils/isValidEmail';
+import { isValidOrder } from '../../utils/isValidOrder';
+import { createInput } from '../../ui/createInput';
 
 
 
@@ -44,7 +44,7 @@ export function renderBasicDetails(): HTMLElement {
         formData: { ...getState.formData, orderNumber: value },
         validationErrors: {
           ...getState.validationErrors,
-          orderNumber: isInvalid ? true : undefined,
+          orderNumber: isInvalid ? 'Invalid Order' : '',
         },
       });
       const wrapper = input.closest('.order-details');
@@ -59,7 +59,7 @@ export function renderBasicDetails(): HTMLElement {
       setState({
         validationErrors: {
           ...getState.validationErrors,
-          orderNumber: !isValidOrder(value) ? true : undefined,
+          orderNumber: !isValidOrder(value) ? 'Invalid Order' : '',
         },
       });
       renderApp();
@@ -110,7 +110,7 @@ export function renderBasicDetails(): HTMLElement {
       setState({
         validationErrors: {
           ...getState.validationErrors,
-          email: !isValidEmail(value) ? true : undefined,
+          email: !isValidEmail(value) ? "Invalid Email" : '',
         },
       });
       renderApp();
@@ -163,7 +163,7 @@ export function renderBasicDetails(): HTMLElement {
       setState({
         validationErrors: {
           ...getState.validationErrors,
-          purchaseDate: !isValidDate(value) ? true : undefined,
+          purchaseDate: !isValidDate(value) ? 'Invalid Date' : '',
         },
       });
       renderApp();
@@ -210,7 +210,7 @@ export function renderBasicDetails(): HTMLElement {
         const input = e.target as HTMLInputElement;
         setState({
           formData: { ...getState.formData, shoppingMethod: input.value },
-          validationErrors: { ...getState.validationErrors,method:undefined },
+          validationErrors: { ...getState.validationErrors,method:'' },
         });
         renderApp();
       },

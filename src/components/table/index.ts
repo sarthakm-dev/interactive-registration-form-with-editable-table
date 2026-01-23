@@ -1,6 +1,6 @@
-import { getState } from '../app.state';
-import { createElement } from '../utils/createElement';
-import { renderTableRow } from './table/TableRow';
+import { getState } from '../../app.state';
+import { createElement } from '../../ui/createElement';
+import { renderTableRow } from './table.row';
 
 
 export function Table(): HTMLElement {

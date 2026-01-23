@@ -1,7 +1,7 @@
 import { getState, setState } from '../../app.state';
-import { createElement } from '../../utils/createElement';
-import { createInput } from '../../utils/createInput';
-import { renderApp } from '.././App';
+import { createElement } from '../../ui/createElement';
+import { createInput } from '../../ui/createInput';
+import { renderApp } from '..';
 
 export function renderRadioGroup(
   name: string,
@@ -59,7 +59,7 @@ export function renderRadioGroup(
           },
           validationErrors: {
             ...getState.validationErrors,
-            [name]: undefined,
+            [name]: '',
           },
         });
 

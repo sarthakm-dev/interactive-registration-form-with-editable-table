@@ -1,7 +1,7 @@
 import { getState } from '../../app.state';
-import { addClass } from '../../utils/addClass';
-import { createButton } from '../../utils/createButton';
-import { createElement } from '../../utils/createElement';
+import { addClass } from '../../ui/addClass';
+import { createButton } from '../../ui/createButton';
+import { createElement } from '../../ui/createElement';
 
 export function createDuplicateModal(): HTMLElement {
   const modal = createElement('div', {

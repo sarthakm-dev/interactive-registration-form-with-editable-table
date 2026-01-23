@@ -1,11 +1,11 @@
 import { getState, setState } from '../../app.state';
-import { renderApp } from '.././App';
 import { saveRecordsToStorage } from '../../app.storage';
-import { addClass } from '../../utils/addClass';
-import { removeClass } from '../../utils/removeClass';
 import { deleteRecordFromList } from '../../services/deleteServicesFromList';
+import { addClass } from '../../ui/addClass';
+import { removeClass } from '../../utils/removeClass';
+import { renderApp } from '..';
 
-export function showDeleteModal(index: number): void {
+function showDeleteModal(index: number): void {
   const deleteModal = document.getElementById('delete-modal-overlay');
   if (!deleteModal) return;
 
@@ -38,4 +38,11 @@ export function showDeleteModal(index: number): void {
       addClass(deleteModal, 'hidden');
     });
   }
+}
+export function handleDelete(index: number): void {
+  setState({
+    deletingIndex: index,
+  });
+
+  showDeleteModal(index);
 }

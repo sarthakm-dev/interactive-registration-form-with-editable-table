@@ -1,13 +1,17 @@
-import { addClass } from '../../utils/addClass';
-import { createButton } from '../../utils/createButton';
-import { createElement } from '../../utils/createElement';
+import { getState, setState } from '../../app.state';
+import { addClass } from '../../ui/addClass';
+import { createButton } from '../../ui/createButton';
+import { createElement } from '../../ui/createElement';
 
 export function createSuccessModal(): HTMLElement {
   const modal = createElement('div', {
-    className: 'modal-overlay hidden',
+    className: 'modal-overlay',
     attributes: { id: 'success-modal-overlay' },
   });
-
+  modal.classList.add('hidden');
+  if(getState.showSuccessModal){
+    modal.classList.remove('hidden');
+  }
   const modalContent = createElement('div', { className: 'modal-content small' });
   const modalBody = createElement('div', { className: 'modal-body' });
   const message = createElement('p', {
@@ -21,6 +25,7 @@ export function createSuccessModal(): HTMLElement {
     attributes: { id: 'success-ok' },
     onClick: () => {
       addClass(modal, 'hidden');
+      setState({showSuccessModal:false});
     },
   });
   modalBody.appendChild(okBtn);

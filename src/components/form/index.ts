@@ -1,12 +1,12 @@
-import { getState } from '../app.state';
-import { renderBasicDetails } from './form/BasicDetails';
-import { renderStepper } from './form/Stepper';
-import { renderRatingSections } from './rating/RatingContainer';
-import { renderNavigation } from './form/Navigation';
-import { handleSubmit } from './form/HandleSubmit';
-import { createElement } from '../utils/createElement';
-import { createButton } from '../utils/createButton';
-import { ThemeToggle } from './ThemeToggle';
+import { getState } from '../../app.state';
+import { renderBasicDetails } from './form.basic-details';
+import { renderStepper } from './form.stepper';
+import { renderRatingSections } from '../rating';
+import { renderNavigation } from './form.navigation';
+import { handleSubmit } from './form.submit';
+import { createElement } from '../../ui/createElement';
+import { ThemeToggle } from '../ThemeToggle';
+import { createButton } from '../../ui/createButton';
 
 
 export function Form(): HTMLElement {

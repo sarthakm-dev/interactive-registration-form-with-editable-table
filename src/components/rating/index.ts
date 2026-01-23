@@ -1,10 +1,10 @@
 import { getState, setState } from '../../app.state';
 import { RATING_CONFIG } from '../../config/ratings.config';
-import { addClass } from '../../utils/addClass';
-import { createElement } from '../../utils/createElement';
-import { createInput } from '../../utils/createInput';
-import { renderRadioGroup } from './RadioGroup';
-import { renderRatingGroup } from './RatingGroup';
+import { addClass } from '../../ui/addClass';
+import { createElement } from '../../ui/createElement';
+import { createInput } from '../../ui/createInput';
+import { renderRadioGroup } from './rating.radio';
+import { renderRatingGroup } from './rating.star';
 
 export function renderRatingSections(): HTMLElement {
   const container = createElement('div');

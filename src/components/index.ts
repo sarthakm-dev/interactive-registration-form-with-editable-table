@@ -1,11 +1,12 @@
 import { getState } from '../app.state';
-import { createElement } from '../utils/createElement';
-import { Form } from './Form';
-import { createDeleteModal } from './modal/CreateDeleteModal';
-import { createDuplicateModal } from './modal/CreateDuplicateModal';
-import { createRatingsModal } from './modal/CreateRatingModal';
-import { createSuccessModal } from './modal/CreateSuccessModal';
-import { Table } from './Table';
+import { createElement } from '../ui/createElement';
+import { Form } from './form';
+import { createDeleteModal } from './modal/modal.delete';
+import { createDuplicateModal } from './modal/modal.duplicate';
+import { createRatingsModal } from './modal/modal.rating';
+import { createSuccessModal } from './modal/modal.success';
+import { Table } from './table';
+
 
 function App(): HTMLElement {
   const appContainer = createElement('div', { attributes: { id: 'app-container' } });

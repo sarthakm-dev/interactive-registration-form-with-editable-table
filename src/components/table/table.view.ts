@@ -1,5 +1,6 @@
 import { getState } from '../../app.state';
-import { showRatingModal } from './ShowRating';
+import { showRatingModal } from './table.rating';
+
 
 export function handleView(index: number): void {
   const record = getState.records[index];

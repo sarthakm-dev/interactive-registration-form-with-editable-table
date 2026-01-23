@@ -1,8 +1,8 @@
 import { getState, setState } from '../../app.state';
-import * as appLogic from '../../app.logic';
-import { renderApp } from '.././App';
-import { createElement } from '../../utils/createElement';
-import { createButton } from '../../utils/createButton';
+import { renderApp } from '..';
+import { createElement } from '../../ui/createElement';
+import { createButton } from '../../ui/createButton';
+import { validateStep } from '../../services/validationService';
 
 export function renderNavigation(): HTMLElement {
   const nav = createElement('div', { className: 'rating-nav' });
@@ -23,12 +23,11 @@ export function renderNavigation(): HTMLElement {
       type: 'button',
     },
     onClick: () => {
-      const { valid, errors } = appLogic.validateCurrentStep(
+      const { valid, errors } = validateStep(
         getState.currentStep,
         getState.formData,
         getState.ratingData
       );
-
       if (!valid) {
         setState({ validationErrors: errors });
         renderApp();

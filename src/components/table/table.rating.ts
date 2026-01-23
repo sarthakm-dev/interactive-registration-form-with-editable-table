@@ -1,7 +1,9 @@
-import { type RecordData } from '../../types/record';
-import { createElement } from '../../utils/createElement';
-import { addClass } from '../../utils/addClass';
+import { addClass } from '../../ui/addClass';
+import { createElement } from '../../ui/createElement';
 import { removeClass } from '../../utils/removeClass';
+import { type RecordData } from '../../types/record';
+
+
 
 export function showRatingModal(record: RecordData): void {
   const modal = document.getElementById('modal-overlay');

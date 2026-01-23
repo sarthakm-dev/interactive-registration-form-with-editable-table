@@ -1,6 +1,6 @@
 import { getState, setState } from '../app.state';
-import { createButton } from '../utils/createButton';
-import { renderApp } from './App';
+import { createButton } from '../ui/createButton';
+import { renderApp } from '.';
 export function ThemeToggle(): HTMLElement {
   const btn = createButton(getState.theme === 'light'?'☾':'☀',
     {

@@ -1,5 +1,6 @@
-import { setState } from '../../app.state';
-import { initializeRatingMap } from '../../utils/initializeRating';
+import { setState } from "../../app.state";
+import { initializeRatingMap } from "../../utils/initializeRating";
+
 
 export function resetNotebookState(): void {
   setState({
