@@ -2,11 +2,12 @@ import { getState, setState } from '../../app.state';
 import { renderApp } from '.././App';
 import { findFirstRatedStep } from '../../services/findFirstRatedStep';
 import { populateFormDataFromRecord } from '../../services/populateFormData';
+import { resetForm } from '../../utils/resetForm';
 
 export function handleEdit(index: number): void {
   const record = getState.records[index];
   if (!record) return;
-
+  resetForm();
   // Load record into form
   const formData = populateFormDataFromRecord(record);
   const currentStep = findFirstRatedStep(record);
