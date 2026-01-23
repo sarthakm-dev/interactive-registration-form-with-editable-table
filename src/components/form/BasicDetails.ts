@@ -6,6 +6,8 @@ import { isValidDate } from '../../services/isValidDate';
 import { isValidEmail } from '../../services/isValidEmail';
 import { isValidOrder } from '../../services/isValidOrder';
 
+
+
 export function renderBasicDetails(): HTMLElement {
   const section = createElement('div', { attributes: { id: 'product-details' } });
 
@@ -122,6 +124,7 @@ export function renderBasicDetails(): HTMLElement {
     }),
   );
   personalDetails.appendChild(emailDiv);
+  
 
   section.appendChild(personalDetails);
 

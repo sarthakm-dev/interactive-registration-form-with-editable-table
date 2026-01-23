@@ -6,11 +6,12 @@ import { renderNavigation } from './form/Navigation';
 import { handleSubmit } from './form/HandleSubmit';
 import { createElement } from '../utils/createElement';
 import { createButton } from '../utils/createButton';
+import { ThemeToggle } from './ThemeToggle';
 
 
 export function Form(): HTMLElement {
   const container = createElement('div', { className: 'left-panel glass' });
-
+  container.appendChild(ThemeToggle());
   const form = createElement('form', {
     attributes: { id: 'form-container' },
   });

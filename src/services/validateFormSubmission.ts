@@ -4,6 +4,8 @@ import { type ValidationErrors } from '../types/validation';
 import { isValidDate } from './isValidDate';
 import { isValidEmail } from './isValidEmail';
 import { isValidOrder } from './isValidOrder';
+import { setState } from '../app.state';
+import { renderApp } from '../components/App';
 
 function checkDuplicateRecord(
   formData: Partial<RecordData>,
@@ -92,9 +94,11 @@ export function validateFormForSubmission(
   const isDuplicate = checkDuplicateRecord(formData, records, editingIndex);
   if (isDuplicate) {
     errors['duplicate'] = true;
-    alert("Order Number and Email already exists");
+    setState({showDuplicateModal:true});
+    renderApp();
+    
   }
-
+  
   return {
     valid: Object.keys(errors).length === 0,
     errors,

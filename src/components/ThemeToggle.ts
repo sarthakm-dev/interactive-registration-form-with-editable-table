@@ -1,15 +1,18 @@
-/*import { state } from '../app.state';
+import { getState, setState } from '../app.state';
+import { createButton } from '../utils/createButton';
 import { renderApp } from './App';
-
-export function ThemeToggle(): HTMLButtonElement {
-  const btn = document.createElement('button');
-  btn.textContent = state.theme === 'light' ? 'Dark' : 'Light';
-
-  btn.onclick = () => {
-    state.theme = state.theme === 'light' ? 'dark' : 'light';
-    renderApp();
-  };
+export function ThemeToggle(): HTMLElement {
+  const btn = createButton(getState.theme === 'light'?'☾':'☀',
+    {
+      className: 'theme-toggle',
+      onClick: ()=>{
+        setState({
+          theme: getState.theme === 'light'?'dark': 'light',
+        });
+        renderApp();
+      }
+    }
+  )
 
   return btn;
 }
-  */

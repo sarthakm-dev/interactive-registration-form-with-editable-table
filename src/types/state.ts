@@ -5,6 +5,7 @@ import type { ValidationErrors } from "./validation";
 
 export interface AppState {
   theme: Theme;
+  showDuplicateModal: boolean;
   records: RecordData[];
   currentStep: number;
   editingIndex: number | null;

@@ -49,7 +49,6 @@ export function handleSubmit(e: Event): void {
   setState({ records: newRecords });
   saveRecordsToStorage(newRecords);
 
-
   // Reset form
   resetForm();
   resetNotebookState();

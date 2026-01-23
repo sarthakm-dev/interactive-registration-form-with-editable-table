@@ -1,9 +1,9 @@
 import { type AppState } from './types/state';
 import { initializeRatingMap } from './utils/initializeRating';
 
-
 export const getState: AppState = {
   theme: 'light',
+  showDuplicateModal: false,
   records: [],
   currentStep: 0,
   editingIndex: null,

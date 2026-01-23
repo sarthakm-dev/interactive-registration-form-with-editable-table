@@ -1,4 +1,3 @@
-import { getState } from '../../app.state';
 import { addClass } from '../../utils/addClass';
 import { removeClass } from '../../utils/removeClass';
 
@@ -10,7 +9,7 @@ export function showSuccessModal(idx:number| null): void {
   if (message) {
     message.textContent = idx !== null ? 'Form updated successfully' : 'Form submitted successfully';
   }
-  console.log(getState.editingIndex);
+
   removeClass(modal, 'hidden');
 
   const okBtn = document.getElementById('success-ok');

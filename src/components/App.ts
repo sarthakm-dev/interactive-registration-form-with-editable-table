@@ -1,12 +1,14 @@
-import { addClass } from '../utils/addClass';
-import { createButton } from '../utils/createButton';
+import { getState } from '../app.state';
 import { createElement } from '../utils/createElement';
 import { Form } from './Form';
+import { createDeleteModal } from './modal/CreateDeleteModal';
+import { createDuplicateModal } from './modal/CreateDuplicateModal';
+import { createRatingsModal } from './modal/CreateRatingModal';
+import { createSuccessModal } from './modal/CreateSuccessModal';
 import { Table } from './Table';
 
 function App(): HTMLElement {
   const appContainer = createElement('div', { attributes: { id: 'app-container' } });
-
   // Left panel - Form
   const formComponent = Form();
   appContainer.appendChild(formComponent);
@@ -27,108 +29,14 @@ function App(): HTMLElement {
   const successModal = createSuccessModal();
   appContainer.appendChild(successModal);
 
-
-
-
+  const duplicateModal = createDuplicateModal();
+  appContainer.appendChild(duplicateModal);
   return appContainer;
 }
 
-function createRatingsModal(): HTMLElement {
-  const modal = createElement('div', {
-    className: 'modal-overlay hidden',
-    attributes: { id: 'modal-overlay' },
-  });
-
-  const modalContent = createElement('div', { className: 'modal-content' });
-  const modalHeader = createElement('div', { className: 'modal-header' });
-  const modalTitle = createElement('h2', { text: 'View Ratings' });
-  modalHeader.appendChild(modalTitle);
-  const closeBtn = createButton('✕', {
-    className: 'modal-close',
-    onClick: () => {
-      addClass(modal, 'hidden');
-    },
-  });
-  modalHeader.appendChild(closeBtn);
-  modalContent.appendChild(modalHeader);
-
-  const modalBody = createElement('div', { className: 'modal-body' });
-  modalContent.appendChild(modalBody);
-
-  modal.appendChild(modalContent);
-  return modal;
-}
-
-function createDeleteModal(): HTMLElement {
-  const modal = createElement('div', {
-    className: 'modal-overlay hidden',
-    attributes: { id: 'delete-modal-overlay' },
-  });
-
-  const modalContent = createElement('div', { className: 'modal-content small' });
-  const modalBody = createElement('div', { className: 'modal-body' });
-  const message = createElement('p', {
-    text: 'Are you sure you want to delete this record?',
-    attributes: { id: 'delete-message' },
-  });
-  modalBody.appendChild(message);
-
-  const buttonContainer = createElement('div', { className: 'modal-buttons' });
-  const confirmBtn = createButton('Delete', {
-    className: 'delete-confirm',
-    attributes: { id: 'delete-confirm' },
-    onClick: () => {
-      // This will be handled by Table component
-    },
-  });
-  const cancelBtn = createButton('Cancel', {
-    className: 'modal-cancel',
-    attributes: { id: 'delete-cancel' },
-    onClick: () => {
-      addClass(modal, 'hidden');
-    },
-  });
-
-  buttonContainer.appendChild(confirmBtn);
-  buttonContainer.appendChild(cancelBtn);
-  modalBody.appendChild(buttonContainer);
-  modalContent.appendChild(modalBody);
-
-  modal.appendChild(modalContent);
-  return modal;
-}
-
-function createSuccessModal(): HTMLElement {
-  const modal = createElement('div', {
-    className: 'modal-overlay hidden',
-    attributes: { id: 'success-modal-overlay' },
-  });
-
-  const modalContent = createElement('div', { className: 'modal-content small' });
-  const modalBody = createElement('div', { className: 'modal-body' });
-  const message = createElement('p', {
-    text: 'Form submitted successfully',
-    attributes: { id: 'success-message' },
-  });
-  modalBody.appendChild(message);
-
-  const okBtn = createButton('OK', {
-    className: 'modal-ok',
-    attributes: { id: 'success-ok' },
-    onClick: () => {
-      addClass(modal, 'hidden');
-    },
-  });
-  modalBody.appendChild(okBtn);
-  modalContent.appendChild(modalBody);
-
-  modal.appendChild(modalContent);
-  return modal;
-}
-
-let appRoot: HTMLElement | null = null;
-
 export function renderApp(): void {
+  const head = document.documentElement;
+  head.setAttribute('data-theme',getState.theme);
   const root = document.getElementById('app');
   if (!root) {
     console.error('Root element with id="app" not found');
@@ -141,6 +49,4 @@ export function renderApp(): void {
   // Render new content
   const newApp = App();
   root.appendChild(newApp);
-
-  appRoot = newApp;
 }
