@@ -307,7 +307,7 @@ textarea {
     text-align: center;
 }
 
-#product-name {
+#order-input {
     background-color: transparent;
     background: transparent;
     border: 2px solid var(--primary-900);
@@ -990,7 +990,7 @@ button {
         padding: 0;
     }
 
-    #product-name,
+    #order-input,
     #email {
         width: 100%;
     }

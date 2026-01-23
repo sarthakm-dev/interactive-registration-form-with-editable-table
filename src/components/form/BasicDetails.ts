@@ -30,8 +30,8 @@ export function renderBasicDetails(): HTMLElement {
   );
 
   const orderInput = createInput('text', {
-    id: 'product-name',
-    name: 'product-name',
+    id: 'order-input',
+    name: 'order-input',
     placeholder: 'e.g. ORD-123456',
     value: getState.formData.orderNumber || '',
     onInput: (e) => {
