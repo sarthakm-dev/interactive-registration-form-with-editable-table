@@ -6,8 +6,6 @@ import { isValidEmail } from '../../utils/isValidEmail';
 import { isValidOrder } from '../../utils/isValidOrder';
 import { createInput } from '../../ui/createInput';
 
-
-
 export function renderBasicDetails(): HTMLElement {
   const section = createElement('div', { attributes: { id: 'product-details' } });
 
@@ -89,6 +87,7 @@ export function renderBasicDetails(): HTMLElement {
       ],
     }),
   );
+
   const emailInput = createInput('text', {
     id: 'email',
     name: 'email',
@@ -116,13 +115,16 @@ export function renderBasicDetails(): HTMLElement {
       renderApp();
     },
   });
+
   emailDiv.appendChild(emailInput);
+
   emailDiv.appendChild(
     createElement('small', {
       className: getState.validationErrors['email'] ? 'error show' : 'error',
       text: 'Enter a valid email id'
     }),
   );
+
   personalDetails.appendChild(emailDiv);
   
 
@@ -133,6 +135,7 @@ export function renderBasicDetails(): HTMLElement {
   if (getState.validationErrors['purchaseDate']) {
     dateDiv.classList.add('error-field');
   }
+
   dateDiv.appendChild(
     createElement('label', {
       className: 'text-label',
@@ -142,6 +145,7 @@ export function renderBasicDetails(): HTMLElement {
       ],
     }),
   );
+
   const dateInput = createInput('date', {
     id: 'purchase-date',
     name: 'purchase-date',
@@ -169,7 +173,9 @@ export function renderBasicDetails(): HTMLElement {
       renderApp();
     }
   });
+
   dateDiv.appendChild(dateInput);
+
   dateDiv.appendChild(
     createElement('small', {
       className: getState.validationErrors['purchaseDate'] ? 'error show' : 'error',
@@ -215,6 +221,7 @@ export function renderBasicDetails(): HTMLElement {
         renderApp();
       },
     });
+    
     radioRow.appendChild(radio);
     const label = createElement('label', {
       text: method === 'online' ? 'Online (Website)' : 'Offline (Stores)',
