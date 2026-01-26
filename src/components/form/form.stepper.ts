@@ -1,6 +1,6 @@
-import { getState, setState } from '../../app.state';
-import { createElement } from '../../ui/createElement';
-import { renderApp } from '..';
+import { getState, setState } from '../../core/state';
+import { createElement } from '../../ui/create-element';
+
 
 export function renderStepper(): HTMLElement {
   const stepper = createElement('div', { className: 'rating-stepper' });
@@ -32,10 +32,10 @@ export function renderStepper(): HTMLElement {
     stepEl.appendChild(createElement('small', { text: step.label }));
     stepEl.addEventListener('click', () => {
       setState({ currentStep: index });
-      renderApp();
     });
     stepper.appendChild(stepEl);
   });
 
   return stepper;
 }
+

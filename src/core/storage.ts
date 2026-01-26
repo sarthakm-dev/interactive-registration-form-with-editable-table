@@ -1,4 +1,4 @@
-import { type RecordData } from './types/record';
+import { type RecordData } from '.././types/record';
 
 const STORAGE_KEY = 'customer-feedback-records';
 

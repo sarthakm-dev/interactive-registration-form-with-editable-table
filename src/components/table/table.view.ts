@@ -1,4 +1,4 @@
-import { getState } from '../../app.state';
+import { getState } from '../../core/state';
 import { showRatingModal } from './table.rating';
 
 
@@ -8,3 +8,4 @@ export function handleView(index: number): void {
 
   showRatingModal(record);
 }
+

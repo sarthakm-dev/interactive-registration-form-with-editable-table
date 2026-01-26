@@ -1,9 +1,9 @@
 import { type RecordData } from './types/record';
 import { type ValidationErrors } from './types/validation';
-import { STEP_CONFIG } from './config/step.config';
-import { isValidEmail } from './utils/isValidEmail';
-import { isValidOrder } from './utils/isValidOrder';
-import { isValidDate } from './utils/isValidDate';
+import { STEP_CONFIG } from './config/step-config';
+import { isValidEmail } from './utils/is-valid-email';
+import { isValidOrder } from './utils/is-valid-order';
+import { isValidDate } from './utils/is-valid-date';
 
 function radioNameToFormKey(name:string) {
   switch(name) {
@@ -67,3 +67,4 @@ export function validateCurrentStep(
     errors
   };
 }
+

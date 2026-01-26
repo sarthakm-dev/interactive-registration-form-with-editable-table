@@ -35,7 +35,7 @@ export const VALIDATION_CONFIG: Record<number, FieldValidationConfig> = {
       { type: 'required', message: 'Purchase date is required' },
     ],
     
-    'shoppingMethod': [{ type: 'required', message: 'Select shopping method' }],
+     shoppingMethod: [{ type: 'required', message: 'Select shopping method' }],
     'product-quality' : [{type: 'rating-required',message:'Required'}],
     'matches-description' : [{type: 'rating-required',message:'Required'}],
     'durability' : [{type: 'rating-required',message:'Required'}],
@@ -53,7 +53,7 @@ export const VALIDATION_CONFIG: Record<number, FieldValidationConfig> = {
     'delivery-experience': [{ type: 'rating-required', message: 'Required' }],
     'delivery-speed': [{ type: 'rating-required', message: 'Required' }],
     'packaging-quality': [{ type: 'rating-required', message: 'Required' }],
-    'packageContentMatch': [
+    packageContentMatch: [
       { type: 'required', message: 'Please select an option' },
     ],
   },

@@ -1,9 +1,8 @@
-import { getState, setState } from '../../app.state';
-import { addClass } from '../../ui/addClass';
-import { createButton } from '../../ui/createButton';
-import { createElement } from '../../ui/createElement';
+import { getState, setState, subscribe } from '../../core/state';
+import { createButton } from '../../ui/create-button';
+import { createElement } from '../../ui/create-element';
 
-export function createSuccessModal(): HTMLElement {
+function renderSuccessModalContent(): HTMLElement {
   const modal = createElement('div', {
     className: 'modal-overlay',
     attributes: { id: 'success-modal-overlay' },
@@ -24,7 +23,6 @@ export function createSuccessModal(): HTMLElement {
     className: 'modal-ok',
     attributes: { id: 'success-ok' },
     onClick: () => {
-      addClass(modal, 'hidden');
       setState({showSuccessModal:false});
     },
   });
@@ -34,3 +32,24 @@ export function createSuccessModal(): HTMLElement {
   modal.appendChild(modalContent);
   return modal;
 }
+
+export function createSuccessModal(): HTMLElement {
+  const container = document.createElement('div');
+  container.id = 'success-modal-container';
+  container.appendChild(renderSuccessModalContent());
+  
+  // Update visibility without full re-render
+  subscribe('showSuccessModal', (newValue) => {
+    const modal = document.getElementById('success-modal-overlay');
+    if (modal) {
+      if (newValue) {
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+  });
+  
+  return container;
+}
+

@@ -1,4 +1,4 @@
-import { createElement } from "./createElement";
+import { createElement } from "./create-element";
 
 export function createButton(
   text: string,

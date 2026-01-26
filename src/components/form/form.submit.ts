@@ -1,12 +1,11 @@
-import { getState, setState } from '../../app.state';
-import { renderApp } from '..';
-import { saveRecordsToStorage } from '../../app.storage';
+import { getState, setState } from '../../core/state';
 import { resetNotebookState } from './form.reset';
-import { resetForm } from '../../utils/resetForm';
-import { validateFormForSubmission } from '../../services/validateFormSubmission';
-import { createRecordFromFormData } from '../../services/createRecordFromData';
-import { updateRecordInList } from '../../services/updateRecordInList';
-import { addRecordToList } from '../../services/addRecordToList';
+import { saveRecordsToStorage } from '../../core/storage';
+import { resetForm } from '../../utils/reset-form';
+import { validateFormForSubmission } from '../../services/validate-form-submission';
+import { createRecordFromFormData } from '../../services/create-record-from-data';
+import { updateRecordInList } from '../../services/update-record-in-list';
+import { addRecordToList } from '../../services/add-record-to-list';
 
 export function handleSubmit(e: Event): void {
   e.preventDefault();
@@ -21,7 +20,6 @@ export function handleSubmit(e: Event): void {
   if (!valid) {
     // Mark errors visually
     setState({ validationErrors: errors });
-    renderApp();
     return;
   }
   let newRecords = getState.records;
@@ -49,6 +47,6 @@ export function handleSubmit(e: Event): void {
   // Reset form
   resetForm();
   resetNotebookState();
-  renderApp();
   
 }
+

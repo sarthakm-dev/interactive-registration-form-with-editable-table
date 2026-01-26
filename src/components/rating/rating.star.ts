@@ -1,6 +1,5 @@
-import { getState, setState } from '../../app.state';
-import { createElement } from '../../ui/createElement';
-import { renderApp } from '..';
+import { getState, setState } from '../../core/state';
+import { createElement } from '../../ui/create-element';
 import { getRatingHint } from './rating.hint';
 
 
@@ -47,9 +46,11 @@ export function renderRatingGroup(
     star.addEventListener('click', () => {
       setState({
         ratingData: { ...getState.ratingData, [category]: i as any },
-        validationErrors: { ...getState.validationErrors,[category]:'' },
+        validationErrors: {
+          ...getState.validationErrors,
+          [category]: '',
+        },
       });
-      renderApp();
     });
     
     starItem.appendChild(star);
@@ -69,3 +70,4 @@ export function renderRatingGroup(
 
   return group;
 }
+

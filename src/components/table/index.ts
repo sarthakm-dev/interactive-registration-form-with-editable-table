@@ -1,11 +1,10 @@
-import { getState } from '../../app.state';
-import { createElement } from '../../ui/createElement';
+import { getState, subscribe } from '../../core/state';
+import { createElement } from '../../ui/create-element';
 import { renderTableRow } from './table.row';
+import { updateElementInPlace } from '../../ui/update-element';
 
 
-export function Table(): HTMLElement {
-  const container = createElement('div', { className: 'table-panel' });
-
+function renderTableContent(): HTMLElement {
   const table = createElement('table', {
     className: 'data-table',
     attributes: { id: 'main-table' },
@@ -30,9 +29,31 @@ export function Table(): HTMLElement {
   });
   table.appendChild(tbody);
 
+  return table;
+}
+
+export function Table(): HTMLElement {
+  const container = createElement('div', { className: 'table-panel' });
+  const table = renderTableContent();
   container.appendChild(table);
+
+  
+  subscribe('records', () => {
+    updateElementInPlace('main-table', renderTableContent);
+  });
+
+
+  subscribe('editingIndex', () => {
+    updateElementInPlace('main-table', renderTableContent);
+  });
+
+  subscribe('deletingIndex', () => {
+    updateElementInPlace('main-table', renderTableContent);
+  });
+
   return container;
 }
+
 
 
 

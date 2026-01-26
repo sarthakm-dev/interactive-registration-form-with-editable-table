@@ -1,4 +1,4 @@
-import { createElement } from "../ui/createElement";
+import { createElement } from "./create-element";
 
 export function createInput(
   type: string = 'text',

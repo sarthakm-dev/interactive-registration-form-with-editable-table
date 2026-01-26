@@ -1,10 +1,9 @@
-import { getState, setState } from '../../app.state';
-import { createElement } from '../../ui/createElement';
-import { isValidDate } from '../../utils/isValidDate';
-import { renderApp } from '..';
-import { isValidEmail } from '../../utils/isValidEmail';
-import { isValidOrder } from '../../utils/isValidOrder';
-import { createInput } from '../../ui/createInput';
+import { getState, setState } from '../../core/state';
+import { createElement } from '../../ui/create-element';
+import { createInput } from '../../ui/create-input';
+import { isValidDate } from '../../utils/is-valid-date';
+import { isValidEmail } from '../../utils/is-valid-email';
+import { isValidOrder } from '../../utils/is-valid-order';
 
 export function renderBasicDetails(): HTMLElement {
   const section = createElement('div', { attributes: { id: 'product-details' } });
@@ -36,14 +35,8 @@ export function renderBasicDetails(): HTMLElement {
       const input = e.target as HTMLInputElement;
       const value = (e.target as HTMLInputElement).value;
 
-      const isInvalid = !isValidOrder(value);
-
       setState({
         formData: { ...getState.formData, orderNumber: value },
-        validationErrors: {
-          ...getState.validationErrors,
-          orderNumber: isInvalid ? 'Invalid Order' : '',
-        },
       });
       const wrapper = input.closest('.order-details');
       wrapper?.classList.remove('error-field');
@@ -60,7 +53,6 @@ export function renderBasicDetails(): HTMLElement {
           orderNumber: !isValidOrder(value) ? 'Invalid Order' : '',
         },
       });
-      renderApp();
     },
     
   });
@@ -112,7 +104,6 @@ export function renderBasicDetails(): HTMLElement {
           email: !isValidEmail(value) ? "Invalid Email" : '',
         },
       });
-      renderApp();
     },
   });
 
@@ -170,7 +161,6 @@ export function renderBasicDetails(): HTMLElement {
           purchaseDate: !isValidDate(value) ? 'Invalid Date' : '',
         },
       });
-      renderApp();
     }
   });
 
@@ -190,7 +180,7 @@ export function renderBasicDetails(): HTMLElement {
     attributes: { 'data-radio': 'method', id: 'main-radio-container' },
   });
 
-  if (getState.validationErrors['method']) {
+  if (getState.validationErrors['shoppingMethod']) {
     methodDiv.classList.add('error-field');
   }
 
@@ -216,9 +206,11 @@ export function renderBasicDetails(): HTMLElement {
         const input = e.target as HTMLInputElement;
         setState({
           formData: { ...getState.formData, shoppingMethod: input.value },
-          validationErrors: { ...getState.validationErrors,method:'' },
+          validationErrors: {
+            ...getState.validationErrors,
+            shoppingMethod: '',
+          },
         });
-        renderApp();
       },
     });
     
@@ -234,7 +226,7 @@ export function renderBasicDetails(): HTMLElement {
   methodDiv.appendChild(radioContent);
 
   const methodError = createElement('small', {
-    className: getState.validationErrors['method'] ? 'error show' : 'error',
+    className: getState.validationErrors['shoppingMethod'] ? 'error show' : 'error',
     text: 'This is a required field'
   });
   methodDiv.appendChild(methodError);
@@ -242,3 +234,4 @@ export function renderBasicDetails(): HTMLElement {
 
   return section;
 }
+

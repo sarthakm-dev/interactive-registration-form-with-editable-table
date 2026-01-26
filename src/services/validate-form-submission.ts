@@ -1,10 +1,10 @@
 import { type RecordData } from '../types/record';
 import { type RatingMap } from '../types/rating';
 import { type ValidationErrors } from '../types/validation';
-import { isValidDate } from '../utils/isValidDate';
-import { isValidEmail } from '../utils/isValidEmail';
-import { isValidOrder } from '../utils/isValidOrder';
-import { setState } from '../app.state';
+import { isValidDate } from '../utils/is-valid-date';
+import { isValidEmail } from '../utils/is-valid-email';
+import { isValidOrder } from '../utils/is-valid-order';
+import { setState } from '../core/state';
 import { renderApp } from '../components';
 
 function checkDuplicateRecord(

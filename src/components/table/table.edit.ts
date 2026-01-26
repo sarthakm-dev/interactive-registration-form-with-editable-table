@@ -1,8 +1,7 @@
-import { resetForm } from '../../utils/resetForm';
-import { populateFormDataFromRecord } from '../../services/populateFormData';
-import { findFirstRatedStep } from '../../services/findFirstRatedStep';
-import { renderApp } from '..';
-import { getState, setState } from '../../app.state';
+import { resetForm } from '../../utils/reset-form';
+import { populateFormDataFromRecord } from '../../services/populate-form-data';
+import { findFirstRatedStep } from '../../services/find-first-rated-step';
+import { getState, setState } from '../../core/state';
 
 
 export function handleEdit(index: number): void {
@@ -27,5 +26,5 @@ export function handleEdit(index: number): void {
   }
 
   document.body.scrollIntoView({behavior:'smooth'});
-  renderApp();
 }
+

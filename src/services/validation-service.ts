@@ -1,4 +1,4 @@
-import { VALIDATION_CONFIG } from '../config/validation.config';
+import { VALIDATION_CONFIG } from '../config/validation-config';
 import { type RatingMap } from '../types/rating';
 import { type ValidationErrors } from '../types/validation';
 

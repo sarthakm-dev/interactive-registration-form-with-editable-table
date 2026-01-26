@@ -1,8 +1,7 @@
-import { getState, setState } from '../../app.state';
-import { renderApp } from '..';
-import { createElement } from '../../ui/createElement';
-import { createButton } from '../../ui/createButton';
-import { validateStep } from '../../services/validationService';
+import { getState, setState } from '../../core/state';
+import { validateStep } from '../../services/validation-service';
+import { createButton } from '../../ui/create-button';
+import { createElement } from '../../ui/create-element';
 
 export function renderNavigation(): HTMLElement {
   const nav = createElement('div', { className: 'rating-nav' });
@@ -12,8 +11,7 @@ export function renderNavigation(): HTMLElement {
     attributes: { id: 'prevBtn', type: 'button' },
     onClick: () => {
       const prev = Math.max(getState.currentStep - 1, 0);
-      setState({ currentStep: prev });
-      renderApp();
+      setState({ currentStep: prev, validationErrors: {} });
     },
   });
   prevBtn.disabled = isFirstStep;
@@ -30,7 +28,6 @@ export function renderNavigation(): HTMLElement {
       );
       if (!valid) {
         setState({ validationErrors: errors });
-        renderApp();
         return;
       }
 
@@ -38,7 +35,6 @@ export function renderNavigation(): HTMLElement {
         currentStep: getState.currentStep + 1,
         validationErrors: {}
       });
-      renderApp();
     }
   });
   nextBtn.disabled = isLastStep;
@@ -47,3 +43,4 @@ export function renderNavigation(): HTMLElement {
 
   return nav;
 }
+

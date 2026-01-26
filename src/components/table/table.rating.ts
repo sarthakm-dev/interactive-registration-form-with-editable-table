@@ -1,6 +1,6 @@
-import { addClass } from '../../ui/addClass';
-import { createElement } from '../../ui/createElement';
-import { removeClass } from '../../utils/removeClass';
+import { addClass } from '../../ui/add-class';
+import { createElement } from '../../ui/create-element';
+import { removeClass } from '../../utils/remove-class';
 import { type RecordData } from '../../types/record';
 
 
@@ -108,3 +108,4 @@ export function showRatingModal(record: RecordData): void {
     });
   }
 }
+

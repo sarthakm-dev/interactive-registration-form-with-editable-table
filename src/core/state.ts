@@ -1,5 +1,6 @@
-import { type AppState } from './types/state';
-import { initializeRatingMap } from './utils/initializeRating';
+import { type AppState } from '../types/state';
+import { initializeRatingMap } from '../utils/initialize-rating';
+import { stateNotifier } from './pubsub';
 
 export const getState: AppState = {
   theme: 'light',
@@ -27,9 +28,25 @@ export const getState: AppState = {
   validationErrors: {},
 };
 
+
 export function setState(updates: Partial<AppState>): void {
-  Object.assign(getState, updates);
+  Object.entries(updates).forEach(([key, newValue]) => {
+    const oldValue = getState[key as keyof AppState];
+    (getState as any)[key] = newValue;
+    // Notify subscribers about this state change
+    stateNotifier.notify(key, newValue, oldValue);
+  });
 }
+
+
+export function subscribe(
+  key: keyof AppState,
+  callback: (newValue: any, oldValue?: any) => void
+) {
+  return stateNotifier.subscribe(key as string, callback);
+}
+
+
 
 
 

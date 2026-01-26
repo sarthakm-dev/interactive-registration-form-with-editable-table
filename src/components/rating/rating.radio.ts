@@ -1,7 +1,7 @@
-import { getState, setState } from '../../app.state';
-import { createElement } from '../../ui/createElement';
-import { createInput } from '../../ui/createInput';
-import { renderApp } from '..';
+import { getState, setState } from '../../core/state';
+import { createElement } from '../../ui/create-element';
+import { createInput } from '../../ui/create-input';
+
 
 export function renderRadioGroup(
   name: string,
@@ -22,7 +22,13 @@ export function renderRadioGroup(
       ? 'recommendToFriend'
       : name;
 
-  if (getState.validationErrors[name]) {
+  
+  const validationErrorKey =
+    name === 'package-content-experience'
+      ? 'packageContentMatch'
+      : name;
+
+  if (getState.validationErrors[validationErrorKey]) {
     group.classList.add('error-field');
   }
 
@@ -59,11 +65,9 @@ export function renderRadioGroup(
           },
           validationErrors: {
             ...getState.validationErrors,
-            [name]: '',
+            [validationErrorKey]: '',
           },
         });
-
-        renderApp();
       },
     });
 
@@ -79,7 +83,7 @@ export function renderRadioGroup(
 
   group.appendChild(
     createElement('small', {
-      className: getState.validationErrors[name] ? 'error show' : 'error',
+      className: getState.validationErrors[validationErrorKey] ? 'error show' : 'error',
       text: 'This is a required field',
     }),
   );

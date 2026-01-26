@@ -1,5 +1,6 @@
-import { getState } from '../app.state';
-import { createElement } from '../ui/createElement';
+import { getState } from '../core/state';
+import { createElement } from '../ui/create-element';
+createElement
 import { Form } from './form';
 import { createDeleteModal } from './modal/modal.delete';
 import { createDuplicateModal } from './modal/modal.duplicate';
@@ -44,10 +45,10 @@ export function renderApp(): void {
     return;
   }
 
-  // Clear old content
+
   root.innerHTML = '';
 
-  // Render new content
+
   const newApp = App();
   root.appendChild(newApp);
 }

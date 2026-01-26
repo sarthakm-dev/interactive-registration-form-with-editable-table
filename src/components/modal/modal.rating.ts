@@ -1,8 +1,10 @@
-import { addClass } from "../../ui/addClass";
-import { createButton } from "../../ui/createButton";
-import { createElement } from "../../ui/createElement";
+import { subscribe } from "../../core/state";
+import { updateElementInPlace } from "../../ui/update-element";
+import { createElement } from "../../ui/create-element";
+import { createButton } from "../../ui/create-button";
 
-export function createRatingsModal(): HTMLElement {
+
+function renderRatingModalContent(): HTMLElement {
   const modal = createElement('div', {
     className: 'modal-overlay hidden',
     attributes: { id: 'modal-overlay' },
@@ -15,7 +17,10 @@ export function createRatingsModal(): HTMLElement {
   const closeBtn = createButton('✕', {
     className: 'modal-close',
     onClick: () => {
-      addClass(modal, 'hidden');
+      const overlay = document.getElementById('modal-overlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+      }
     },
   });
   modalHeader.appendChild(closeBtn);
@@ -26,4 +31,17 @@ export function createRatingsModal(): HTMLElement {
 
   modal.appendChild(modalContent);
   return modal;
+}
+
+export function createRatingsModal(): HTMLElement {
+  const container = document.createElement('div');
+  container.id = 'rating-modal-container';
+  container.appendChild(renderRatingModalContent());
+  
+
+  subscribe('ratingData', () => {
+    updateElementInPlace('rating-modal-container', renderRatingModalContent);
+  });
+  
+  return container;
 }

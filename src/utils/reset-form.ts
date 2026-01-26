@@ -1,5 +1,5 @@
-import { getState } from "../app.state";
-import { initializeRatingMap } from "./initializeRating";
+import { getState } from "../core/state";
+import { initializeRatingMap } from "./initialize-rating";
 export function resetForm(): void {
   getState.formData = {
     orderNumber: null,
