@@ -1,4 +1,3 @@
-export type RatingValue = number;
-export interface RatingMap {
-  [category: string]: RatingValue;
-}
+export type RatingCategory = string;
+
+export type Rating = Record<RatingCategory, number>;
