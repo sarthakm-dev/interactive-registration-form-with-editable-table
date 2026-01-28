@@ -46,7 +46,7 @@ export const RATING_CONFIG = [
         { category: 'support-responsiveness', label: 'If yes how was the Support Responsiveness?' },
         { category: 'support-helpfulness', label: 'If yes how was the Support Helpfulness?' },
       ],
-      radios: [
+      radios: 
         {
           name: 'recommendation-experience',
           label: 'Would you recommend product to friends?',
@@ -58,7 +58,7 @@ export const RATING_CONFIG = [
             { id: 'definitely-no', value: 'Definitely No', label: 'Definitely No' },
           ],
         },
-      ],
+      
       textareas: [
         { name: 'what-did-you-like', label: 'What Did You Like' },
         { name: 'what-to-improve', label: 'What To Improve?' },

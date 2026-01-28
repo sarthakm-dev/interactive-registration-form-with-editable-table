@@ -1,26 +1,36 @@
 import type { InputFieldProps } from "../types/input";
 
+
+
 const InputField = ({
   label,
   name,
   value,
-  type = 'text',
+  type = "text",
   placeholder,
-  checked,
   onChange,
+  onBlur,
+  error,
 }: InputFieldProps) => {
   return (
-    <div className="form-group">
-      {label && <label>{label}<span className="required">*</span></label>}
-      
+    <div className={`form-group ${error ? "error-field" : ""}`}>
+      {label && (
+        <label htmlFor={name}>
+          {label} <span className="required">*</span>
+        </label>
+      )}
+
       <input
-        type={type}
+        id={name}
         name={name}
+        type={type}
         value={value}
         placeholder={placeholder}
-        checked={type === 'radio' ? checked : undefined}
         onChange={onChange}
+        onBlur={onBlur}
       />
+
+      {error && <small className="error show">{error}</small>}
     </div>
   );
 };

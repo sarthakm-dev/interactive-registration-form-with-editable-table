@@ -1,14 +1,16 @@
-import type { FormData } from "../types/form";
+import type {  FormValues} from "../types/form";
 import type { Rating } from "./rating";
 
 export type FormContextType = {
-  formData: FormData;
+  formData: FormValues;
   rating: Rating;
   currentStep: number;
-
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-  setRatings: React.Dispatch<React.SetStateAction<Rating>>;
-
+  errors: Record<string,string>;
+  setFormData: React.Dispatch<React.SetStateAction<FormValues>>;
+  setRating: React.Dispatch<React.SetStateAction<Rating>>;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string,string>>>;
   nextStep: () => void;
   prevStep: () => void;
+  resetStep: () => void;
+  resetForm: () => void;
 };

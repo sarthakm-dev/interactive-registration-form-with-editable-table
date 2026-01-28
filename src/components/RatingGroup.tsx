@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useFormContext } from "../context/FormContext";
 
 type Props = {
@@ -7,31 +6,39 @@ type Props = {
 };
 
 const RatingGroup = ({ category, label }: Props) => {
-  const { rating, setRatings } = useFormContext();
-  const [hoverRating, setHoverRating] = useState<number | null>(null);
-  const savedRating = rating[category] ?? 0;
-  const displayRating = hoverRating ?? savedRating;
+  const { rating, setRating, errors, setErrors } = useFormContext();
+  const value = rating[category] || 0;
+  const hasError = Boolean(errors[category]);
+
   return (
-    <div className="rating-group">
-      <p>{label}</p>
+    <div className={`rating-group ${hasError ? "error-field" : ""}`}>
+      <p>
+        {label} <span className="required">*</span>
+      </p>
       <div className="stars">
-        {[1, 2, 3, 4, 5].map((value) => (
+        {[1, 2, 3, 4, 5].map((star) => (
           <span
-            key={value}
-            className={`star ${displayRating >= value ? "active" : ""}`}
-            onMouseEnter={() => setHoverRating(value)}
-            onMouseLeave={() => setHoverRating(null)}
-            onClick={() =>
-              setRatings((prev) => ({
-                ...prev,
-                [category]: value,
-              }))
-            }
+            key={star}
+            className={star <= value ? "star active" : "star"}
+            onClick={() => {
+              setRating((prev) => ({ ...prev, [category]: star }));
+
+              if (hasError) {
+                setErrors((prev) => {
+                  const copy = { ...prev };
+                  delete copy[category];
+                  return copy;
+                });
+              }
+            }}
           >
             ★
           </span>
         ))}
+
+        
       </div>
+      {hasError && <small className="error show">{errors[category]}</small>}
     </div>
   );
 };

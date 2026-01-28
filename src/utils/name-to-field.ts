@@ -2,7 +2,7 @@ export function nameToFieldName(name:string){
     if(name=='package-content-experience'){
         return 'packageContentExperience';
     }
-    else if(name==='method'){
+    else if(name==='shoppingMethod'){
         return 'shoppingMethod';
     }
     else if(name==='support-contacted'){

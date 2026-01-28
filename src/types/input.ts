@@ -6,4 +6,6 @@ export type InputFieldProps = {
   placeholder?: string;
   checked?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>; 
+  error?:string;
 };

@@ -1,13 +1,20 @@
 import { useState } from "react";
-import type { FormData } from "../types/form";
+import type { FormValues } from "../types/form";
 import type { Rating } from "../types/rating";
 import { FormContext } from "./FormContext";
 
-const initialFormData: FormData = {
+const initialFormData: FormValues = {
   orderNumber: "",
   email: "",
-  date: "",
+  purchaseDate: "",
   shoppingMethod: "",
+  supportContacted: "no",
+  recommendationExperience: "",
+  whatDidYouLike: "",
+  whatToImprove: "",
+  additionalComment: "",
+  review: false,
+
 };
 
 const initialRatings: Rating = {
@@ -27,8 +34,9 @@ const initialRatings: Rating = {
 };
 
 export const FormProvider = ({ children }: { children: React.ReactNode }) => {
-  const [formData, setFormData] = useState<FormData>(initialFormData);
-  const [rating, setRatings] = useState<Rating>(initialRatings);
+  const [formData, setFormData] = useState<FormValues>(initialFormData);
+  const [errors,setErrors] = useState<Record<string,string>>({});
+  const [rating, setRating] = useState<Rating>(initialRatings);
   const [currentStep, setCurrentStep] = useState(0);
 
   return (
@@ -37,10 +45,18 @@ export const FormProvider = ({ children }: { children: React.ReactNode }) => {
         formData,
         rating,
         currentStep,
+        errors,
+        setErrors,
         setFormData,
-        setRatings,
+        setRating,
         nextStep: () => setCurrentStep((s) => s + 1),
         prevStep: () => setCurrentStep((s) => Math.max(0, s - 1)),
+        resetStep: () => setCurrentStep(0),
+        resetForm: () => {
+          setFormData(initialFormData);
+          setErrors({});
+          setRating({});
+        }
       }}
     >
       {children}
