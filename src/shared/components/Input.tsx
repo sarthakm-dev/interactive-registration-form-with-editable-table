@@ -23,13 +23,13 @@ const InputField = ({
   max,
 }: InputFieldProps) => {
   return (
-    <div className={`flex flex-col gap-2 ${error ? 'error-field' : ''}`}>
+    <div className={`flex flex-col gap-1 ${error ? 'error-field' : ''}`}>
       {label && (
         <label htmlFor={name}>
           {label} <span className="required">*</span>
         </label>
       )}
-
+      
       <input
         id={name}
         name={name}
@@ -39,10 +39,10 @@ const InputField = ({
         onChange={onChange}
         onBlur={onBlur}
         max={max}
-        className="w-45"
+        className="md:w-45 bg-transparent border-2 border-(--primary-500) text-center rounded-xl"
       />
 
-      {error && <small className="error show">{error}</small>}
+      {error && <small className="text-(--danger) show">{error}</small>}
     </div>
   );
 };

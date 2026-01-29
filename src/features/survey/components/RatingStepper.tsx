@@ -67,7 +67,7 @@ const steps: Step[] = [
 
 const RatingStepper = ({ currentStep }: RatingStepperProps) => {
   return (
-    <div className="flex justify-center relative">
+    <div className="flex justify-between relative">
       {steps.map((step) => (
         <div
           key={step.id}

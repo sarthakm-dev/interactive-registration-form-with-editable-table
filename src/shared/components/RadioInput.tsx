@@ -36,12 +36,12 @@ const RadioGroup = ({ name, label, options }: Props) => {
   };
 
   return (
-    <div className={`radio-container ${hasError ? 'error-field' : ''}`}>
+    <div className={`py-3 m-0 mt-2 ${hasError ? 'error-field' : ''}`}>
       <label className="radio-label">
         {label} <span className="required">*</span>
       </label>
 
-      <div className="radio-content">
+      <div className="flex flex-col">
         {options.map((opt) => (
           <label key={opt.id} className="radio-option">
             <input
@@ -50,13 +50,14 @@ const RadioGroup = ({ name, label, options }: Props) => {
               value={opt.value}
               checked={selectedValue === opt.value}
               onChange={() => handleChange(opt.value)}
+              className='accent-(--primary-500)'
             />
             {opt.label}
           </label>
         ))}
       </div>
 
-      {hasError && <small className="error show">{errors[fieldName]}</small>}
+      {hasError && <small className="text-(--danger) show">{errors[fieldName]}</small>}
     </div>
   );
 };

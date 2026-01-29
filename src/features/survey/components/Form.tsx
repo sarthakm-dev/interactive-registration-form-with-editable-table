@@ -123,7 +123,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
   return (
     <div className="w-full p-3 box-sizing:border-box">
       <div className="gap-3 p-0 grid">
-        <div className="grid grid-cols-2 gap-4 mb-2">
+        <div className="grid md:grid-cols-2 md:gap-4 mb-2">
           <div className=" gap-0 w-full flex-col">
             <InputField
               type="text"
@@ -236,9 +236,9 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       <div className="flex mt-6 justify-between">
         {currentStep > 0 && <button onClick={prevStep}>Prev</button>}
 
-        {currentStep < RATING_CONFIG.length - 1 && <button onClick={handleNext}>Next</button>}
+        {currentStep < RATING_CONFIG.length - 1 && <button className='bg-(--primary-500) rounded-md w-11 text-center h-5 border-none' onClick={handleNext}>Next</button>}
 
-        {currentStep === RATING_CONFIG.length - 1 && <button onClick={handleSubmit}>Submit</button>}
+        {currentStep === RATING_CONFIG.length - 1 && <button className='bg-(--primary-500)' onClick={handleSubmit}>Submit</button>}
       </div>
     </div>
   );

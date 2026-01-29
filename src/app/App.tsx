@@ -41,13 +41,13 @@ function App() {
   };
 
   return (
-    <div className="flex p-5">
+    <div className="flex md:flex-row flex-col p-5">
       <ThemeToggle/>
-      <div className="bg-[linear-gradient(180deg,var(--accent-warm),var(--bg-panel))] p-6  border border-green-600 w-[40%] rounded-l-[18px]">
+      <div className="bg-[linear-gradient(180deg,var(--accent-warm),var(--bg-panel))] p-6  border border-green-600 md:w-[40%] w-full md:rounded-l-[18px] md:rounded-r-none rounded-l-xl rounded-r-xl">
         <Form onSubmit={handleSubmit} editingRow={editingRow} />
       </div>
 
-      <div className="bg-(--bg-card) p-6 border border-green-600 w-[60%]">
+      <div className="bg-(--bg-card) p-6 border border-green-600 md:w-[60%] rounded-r-[18px] w-full overflow-x-auto">
         <Table
           rows={rows}
           onView={(row) => setViewRow(row)}

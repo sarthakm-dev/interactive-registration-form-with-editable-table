@@ -47,7 +47,7 @@ const RatingGroup = ({ category, label }: Props) => {
         ))}
       </div>
 
-      {hasError && <small className="error show">{errors[category]}</small>}
+      {hasError && <small className="text-(--danger) show">{errors[category]}</small>}
     </div>
   );
 };
