@@ -24,13 +24,6 @@ export default defineConfig([
       '@typescript-eslint': tseslint.plugin,
     },
 
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      reactHooks.configs['flat/recommended'],
-      reactRefresh.configs.vite,
-    ],
-
     rules: {
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
