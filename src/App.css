@@ -67,6 +67,18 @@ body {
     sans-serif;
 }
 
+.ant-input:hover {
+    border-color: var(--primary-500);  
+}
+
+.ant-input:focus {
+    border-color: var(--primary-500); 
+    -webkit-box-shadow: 0 0 0 2px var(--primary-500); 
+    box-shadow: 0 0 0 2px var(--primary-500);  
+}
+.ant-radio-checked, .ant-radio-inner:focus {
+    color: var(--primary-500);
+}
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -142,9 +154,7 @@ input[type='date'] {
   border-radius: 12px;
   font-weight: 600;
   color: var(--text-primary);
-  width: 185px;
   text-transform: uppercase;
-  height: 24px;
   text-align: center;
   cursor: pointer;
 }
@@ -526,8 +536,10 @@ p {
     font-size: x-small;
   }
 
-  .purchase-date {
+  #purchase-date {
     max-width: 160px;
+    height: 25px;
+    background-color: red;
   }
 
   hr {

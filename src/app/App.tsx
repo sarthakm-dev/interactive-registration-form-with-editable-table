@@ -6,6 +6,7 @@ import RatingsModal from '../features/survey/components/RatingsModal';
 import type { TableRow } from '../features/survey/types/table';
 import Modal from '../shared/components/Modal';
 import ThemeToggle from '../shared/components/ThemeToggle';
+import { ConfigProvider } from 'antd';
 
 function App() {
   const [rows, setRows] = useState<TableRow[]>([]);
@@ -41,70 +42,83 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <ThemeToggle/>
-      <div className="left-container">
-        <Form onSubmit={handleSubmit} editingRow={editingRow} />
-      </div>
-
-      <div className="right-container">
-        <Table
-          rows={rows}
-          onView={(row) => setViewRow(row)}
-          onEdit={(row) => setEditingRow(row)}
-          onDelete={(id) => handleDeleteRequest(id)}
-        />
-      </div>
-
-      {viewRow && <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />}
-
-      {showSuccess && (
-        <Modal
-          title="Success"
-          onClose={() => setShowSuccess(false)}
-          actions={
-            <button className="primary-btn" onClick={() => setShowSuccess(false)}>
-              OK
-            </button>
+    <ConfigProvider
+      theme={{
+        components: {
+          Radio: {
+            colorPrimary: 'green',
+          },
+          Button: {
+            colorPrimary: "green"
           }
-        >
-          <p>Your feedback has been submitted successfully</p>
-        </Modal>
-      )}
+        },
+      }}
+    >
+      <div className="app-container">
+        <ThemeToggle />
+        <div className="left-container">
+          <Form onSubmit={handleSubmit} editingRow={editingRow} />
+        </div>
 
-      {deleteTarget && (
-        <Modal
-          title="Confirm Delete"
-          onClose={() => setDeleteTarget(null)}
-          actions={
-            <>
-              <button onClick={() => setDeleteTarget(null)}>Cancel</button>
-              <button className="danger-btn" onClick={handleConfirmDelete}>
-                Delete
+        <div className="right-container">
+          <Table
+            rows={rows}
+            onView={(row) => setViewRow(row)}
+            onEdit={(row) => setEditingRow(row)}
+            onDelete={(id) => handleDeleteRequest(id)}
+          />
+        </div>
+
+        {viewRow && <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />}
+
+        {showSuccess && (
+          <Modal
+            title="Success"
+            onClose={() => setShowSuccess(false)}
+            actions={
+              <button className="primary-btn" onClick={() => setShowSuccess(false)}>
+                OK
               </button>
-            </>
-          }
-        >
-          <p>Are you sure you want to delete this record?</p>
-        </Modal>
-      )}
-      {showDuplicateModal && (
-        <Modal
-          title="Duplicate Entry"
-          onClose={() => setShowDuplicateModal(false)}
-          actions={
-            <button className="danger-btn" onClick={() => setShowDuplicateModal(false)}>
-              Ok
-            </button>
-          }
-        >
-          <p>
-            This <strong>Order Number</strong> and <strong>Email</strong> combination already
-            exists.
-          </p>
-        </Modal>
-      )}
-    </div>
+            }
+          >
+            <p>Your feedback has been submitted successfully</p>
+          </Modal>
+        )}
+
+        {deleteTarget && (
+          <Modal
+            title="Confirm Delete"
+            onClose={() => setDeleteTarget(null)}
+            actions={
+              <>
+                <button onClick={() => setDeleteTarget(null)}>Cancel</button>
+                <button className="danger-btn" onClick={handleConfirmDelete}>
+                  Delete
+                </button>
+              </>
+            }
+          >
+            <p>Are you sure you want to delete this record?</p>
+          </Modal>
+        )}
+        {showDuplicateModal && (
+          <Modal
+            title="Duplicate Entry"
+            onClose={() => setShowDuplicateModal(false)}
+            actions={
+              <button className="danger-btn" onClick={() => setShowDuplicateModal(false)}>
+                Ok
+              </button>
+            }
+          >
+            <p>
+              This <strong>Order Number</strong> and <strong>Email</strong> combination already
+              exists.
+            </p>
+          </Modal>
+        )}
+      </div>
+    </ConfigProvider>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Input } from "antd";
 type InputFieldProps = {
   label?: string;
   name: string;
@@ -29,8 +30,7 @@ const InputField = ({
           {label} <span className="required">*</span>
         </label>
       )}
-
-      <input
+      <Input
         id={name}
         name={name}
         type={type}

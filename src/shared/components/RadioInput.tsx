@@ -1,6 +1,6 @@
 import { useFormContext } from '../../features/survey/context/FormContext';
 import { nameToFieldName } from '../../features/survey/utils/name-to-field';
-
+import { ConfigProvider, Radio } from 'antd';
 type Option = {
   id: string;
   value: string;
@@ -44,13 +44,24 @@ const RadioGroup = ({ name, label, options }: Props) => {
       <div className="radio-content">
         {options.map((opt) => (
           <label key={opt.id} className="radio-option">
-            <input
-              type="radio"
-              name={fieldName}
-              value={opt.value}
-              checked={selectedValue === opt.value}
-              onChange={() => handleChange(opt.value)}
-            />
+            <ConfigProvider
+              theme={{
+                components: {
+                  Radio: {
+                    colorPrimary: 'green',
+                  },
+                },
+              }}
+            >
+              <Radio
+                type="radio"
+                name={fieldName}
+                value={opt.value}
+                checked={selectedValue === opt.value}
+                onChange={() => handleChange(opt.value)}
+              />
+            </ConfigProvider>
+
             {opt.label}
           </label>
         ))}

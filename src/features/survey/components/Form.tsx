@@ -9,7 +9,7 @@ import { useFormContext } from '../context/FormContext';
 import { nameToFieldName } from '../utils/name-to-field';
 import { validators } from '../utils/field-validator';
 import type { TableRow } from '../types/table';
-
+import { Button } from 'antd';
 type FormProps = {
   onSubmit: (row: TableRow) => void;
   editingRow: TableRow | null;
@@ -239,11 +239,11 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
       </div>
 
       <div className="navigation">
-        {currentStep > 0 && <button onClick={prevStep}>Prev</button>}
+        {currentStep > 0 && <Button onClick={prevStep}>Prev</Button>}
 
-        {currentStep < RATING_CONFIG.length - 1 && <button onClick={handleNext}>Next</button>}
+        {currentStep < RATING_CONFIG.length - 1 && <Button onClick={handleNext}>Next</Button>}
 
-        {currentStep === RATING_CONFIG.length - 1 && <button onClick={handleSubmit}>Submit</button>}
+        {currentStep === RATING_CONFIG.length - 1 && <Button onClick={handleSubmit}>Submit</Button>}
       </div>
     </div>
   );
