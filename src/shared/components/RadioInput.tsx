@@ -1,5 +1,5 @@
-import { useFormContext } from '../../features/registration/context/FormContext';
-import { nameToFieldName } from '../../features/registration/utils/name-to-field';
+import { useFormContext } from '../../features/survey/context/FormContext';
+import { nameToFieldName } from '../../features/survey/utils/name-to-field';
 
 type Option = {
   id: string;

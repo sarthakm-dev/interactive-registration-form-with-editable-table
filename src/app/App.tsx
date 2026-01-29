@@ -1,9 +1,9 @@
 import '../App.css';
 import { useState } from 'react';
-import Form from '../features/registration/components/Form';
-import Table from '../features/registration/components/Table';
-import RatingsModal from '../features/registration/components/RatingsModal';
-import type { TableRow } from '../features/registration/types/table';
+import Form from '../features/survey/components/Form';
+import Table from '../features/survey/components/Table';
+import RatingsModal from '../features/survey/components/RatingsModal';
+import type { TableRow } from '../features/survey/types/table';
 import Modal from '../shared/components/Modal';
 import ThemeToggle from '../shared/components/ThemeToggle';
 
