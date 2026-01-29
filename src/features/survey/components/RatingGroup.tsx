@@ -34,16 +34,19 @@ const RatingGroup = ({ category, label }: Props) => {
       </p>
 
       <div className="stars">
-        {[1, 2, 3, 4, 5].map((star) => (
+        {[{value:1,text:"Very Poor"}, {value:1,text:"Poor"}, {value:2,text:"Average"}, {value:3,text:"Good"}, {value:4,text:"Excellent"}].map((star) => (
+          <div className='star-container'>
           <span
-            key={star}
-            className={star <= displayValue ? 'star active' : 'star'}
-            onMouseEnter={() => setHoverValue(star)}
+            key={star.value}
+            className={star.value <= displayValue ? 'star active' : 'star'}
+            onMouseEnter={() => setHoverValue(star.value)}
             onMouseLeave={() => setHoverValue(0)}
-            onClick={() => handleClick(star)}
+            onClick={() => handleClick(star.value)}
           >
             ★
           </span>
+          <small>{star.text}</small>
+          </div>
         ))}
       </div>
 
