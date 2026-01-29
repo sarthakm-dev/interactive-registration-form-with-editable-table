@@ -34,7 +34,7 @@ const RatingGroup = ({ category, label }: Props) => {
       </p>
 
       <div className="stars">
-        {[{value:1,text:"Very Poor"}, {value:1,text:"Poor"}, {value:2,text:"Average"}, {value:3,text:"Good"}, {value:4,text:"Excellent"}].map((star) => (
+        {[{value:1,text:"Very Poor"}, {value:2,text:"Poor"}, {value:3,text:"Average"}, {value:4,text:"Good"}, {value:5,text:"Excellent"}].map((star) => (
           <div className='star-container'>
           <span
             key={star.value}
