@@ -141,6 +141,7 @@ input[type='date'] {
   outline: none;
   border-radius: 12px;
   font-weight: 600;
+  color: var(--text-primary);
   width: 185px;
   text-transform: uppercase;
   height: 24px;
