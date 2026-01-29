@@ -48,7 +48,12 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const validate = validators[name as keyof typeof validators];
+    let fieldName = name;
+    if(name=='purchaseDate'){
+      fieldName='date';
+    }
+    console.log('name',name,"fieldname",fieldName);
+    const validate = validators[fieldName as keyof typeof validators];
     if (!validate) return;
 
     const message = validate(value);
