@@ -121,10 +121,10 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
   }, [editingRow]);
 
   return (
-    <div className="form-container">
-      <div className="product-details">
-        <div className="personal-details">
-          <div className="order-details">
+    <div className="w-full p-3 box-sizing:border-box">
+      <div className="gap-3 p-0 grid">
+        <div className="grid grid-cols-2 gap-4 mb-2">
+          <div className=" gap-0 w-full flex-col">
             <InputField
               type="text"
               value={formData.orderNumber}
@@ -137,7 +137,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
             />
           </div>
 
-          <div className="order-details">
+          <div className="gap-0 w-full flex-col">
             <InputField
               type="text"
               value={formData.email}
@@ -151,7 +151,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
           </div>
         </div>
 
-        <div className="date-details">
+        <div className="flex flex-col">
           <InputField
             type="date"
             value={formData.purchaseDate}
@@ -201,12 +201,12 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
           options={stepConfig.radios.options}
         />
       )}
-      <div className="optional-text">
+      <div className="flex flex-col mt-2">
         {stepConfig.textareas?.map((ta) => {
           const fieldName = nameToFieldName(ta.name);
 
           return (
-            <div key={ta.name} className="textbox">
+            <div key={ta.name} className="flex flex-col">
               <label htmlFor={fieldName}>{ta.label}</label>
               <textarea
                 key={ta.name}
@@ -233,7 +233,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
         })}
       </div>
 
-      <div className="navigation">
+      <div className="flex mt-6 justify-between">
         {currentStep > 0 && <button onClick={prevStep}>Prev</button>}
 
         {currentStep < RATING_CONFIG.length - 1 && <button onClick={handleNext}>Next</button>}

@@ -67,14 +67,14 @@ const steps: Step[] = [
 
 const RatingStepper = ({ currentStep }: RatingStepperProps) => {
   return (
-    <div className="rating-stepper">
+    <div className="flex justify-center relative">
       {steps.map((step) => (
         <div
           key={step.id}
-          className={`step ${currentStep === step.id ? 'active' : ''}`}
+          className={` bg-transparent rounder-3 w-11 p-0 text-center text-3 cursor-pointer z-1 ${currentStep === step.id ? 'text-(--text-primary)' : ''}`}
           data-step={step.id}
         >
-          <div className={`icon ${currentStep === step.id ? 'active' : ''}`}>{step.icon}</div>
+          <div className={`bg-[linear-gradient(180deg, var(--accent-warm), var(--bg-panel))] z-100 text-(--text-primary) ${currentStep === step.id ? 'text-green-500' : ''}`}>{step.icon}</div>
 
           <small>{step.label}</small>
         </div>

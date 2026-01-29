@@ -28,16 +28,16 @@ const RatingGroup = ({ category, label }: Props) => {
   };
 
   return (
-    <div className={`rating-group ${hasError ? 'error-field' : ''}`}>
+    <div className={`p-0 mb-0 ${hasError ? 'error-field' : ''}`}>
       <p>
-        {label} <span className="required">*</span>
+        {label} <span className="text-(--danger)">*</span>
       </p>
 
-      <div className="stars">
+      <div className="flex gap-1.25 h-17.5  w-[90%] justify-between items-center pl-3">
         {[1, 2, 3, 4, 5].map((star) => (
           <span
             key={star}
-            className={star <= displayValue ? 'star active' : 'star'}
+            className={star <= displayValue ? 'w-6.25 h-6.25 rounded-[1px] flex items-center font-[4.5rem] justify-center flex-col p-px cursor-pointer transition-[0.2] select-none text-(--primary-500)' : 'w-6.25 h-6.25 rounded-[1px] flex items-center font-[4.5rem] justify-center flex-col p-px cursor-pointer transition-[0.2] select-none text-(--star-color)'}
             onMouseEnter={() => setHoverValue(star)}
             onMouseLeave={() => setHoverValue(0)}
             onClick={() => handleClick(star)}

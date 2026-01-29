@@ -41,13 +41,13 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className="flex p-5">
       <ThemeToggle/>
-      <div className="left-container">
+      <div className="bg-[linear-gradient(180deg,var(--accent-warm),var(--bg-panel))] p-6  border border-green-600 w-[40%] rounded-l-[18px]">
         <Form onSubmit={handleSubmit} editingRow={editingRow} />
       </div>
 
-      <div className="right-container">
+      <div className="bg-(--bg-card) p-6 border border-green-600 w-[60%]">
         <Table
           rows={rows}
           onView={(row) => setViewRow(row)}
