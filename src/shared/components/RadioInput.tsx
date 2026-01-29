@@ -23,12 +23,12 @@ const RadioGroup = ({ name, label, options }: Props) => {
   console.log(hasError);
   const handleChange = (value: string) => {
     console.log(value);
-    setFormData((prev: Record<string, string>) => ({
+    setFormData((prev) => ({
       ...prev,
       [fieldName]: value,
     }));
 
-    setErrors((prev: Record<string, string>) => {
+    setErrors((prev) => {
       const updated = { ...prev };
       delete updated[fieldName];
       return updated;

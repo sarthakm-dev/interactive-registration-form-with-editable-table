@@ -214,13 +214,13 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
                 maxLength={ta.maxlength}
                 value={formData[fieldName] || ''}
                 onChange={(e) => {
-                  setFormData((prev: typeof errors) => ({
+                  setFormData((prev) => ({
                     ...prev,
                     [fieldName]: e.target.value,
                   }));
 
                   if (errors[fieldName]) {
-                    setErrors((prev: typeof errors) => {
+                    setErrors((prev) => {
                       const updated = { ...prev };
                       delete updated[fieldName];
                       return updated;

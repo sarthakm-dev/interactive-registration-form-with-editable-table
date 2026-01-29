@@ -16,10 +16,10 @@ const RatingGroup = ({ category, label }: Props) => {
   const hasError = Boolean(errors[category]);
 
   const handleClick = (value: number) => {
-    setRating((prev: typeof errors) => ({ ...prev, [category]: value }));
+    setRating((prev) => ({ ...prev, [category]: value }));
 
     if (hasError) {
-      setErrors((prev: typeof errors) => {
+      setErrors((prev) => {
         const copy = { ...prev };
         delete copy[category];
         return copy;
