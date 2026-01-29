@@ -381,7 +381,7 @@ textarea {
 
 .modal {
   background: var(--bg-card);
-  width: 520px;
+  width: 360px;
   max-height: 80vh;
   overflow-y: auto;
   border-radius: 14px;
