@@ -4,8 +4,6 @@ import type { Props } from '../types/rating-modal-prop';
 
 const { Text } = Typography;
 
-
-
 const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
   const dataSource = Object.entries(row.ratings).map(([category, value]) => ({
     key: category,
@@ -27,20 +25,9 @@ const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
   ];
 
   return (
-    <Modal
-      open
-      title="Ratings Details"
-      onCancel={onClose}
-      footer={null}
-      width={700}
-    >
+    <Modal open title="Ratings Details" onCancel={onClose} footer={null} width={700}>
       {/* Ratings Table */}
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={false}
-        size="middle"
-      />
+      <Table dataSource={dataSource} columns={columns} pagination={false} size="middle" />
 
       {/* Optional text sections */}
       {(row.whatDidYouLike || row.whatToImprove || row.additionalComment) && (

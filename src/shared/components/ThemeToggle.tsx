@@ -1,4 +1,4 @@
-import { useUIStore } from "../../store/useUiStore";
+import { useUIStore } from "../../store/useUIStore";
 
 const ThemeToggle = () => {
   const theme = useUIStore((s) => s.theme);
