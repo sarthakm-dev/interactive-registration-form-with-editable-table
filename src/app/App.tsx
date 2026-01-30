@@ -1,122 +1,87 @@
 import '../App.css';
-import { useState } from 'react';
 import Form from '../features/survey/components/Form';
 import Table from '../features/survey/components/Table';
 import RatingsModal from '../features/survey/components/RatingsModal';
-import type { TableRow } from '../features/survey/types/table';
-import Modal from '../shared/components/Modal';
 import ThemeToggle from '../shared/components/ThemeToggle';
-import { ConfigProvider } from 'antd';
-
+import { ConfigProvider, Modal, Button } from 'antd';
+import { useTableStore } from '../store/useTableStore';
+import { useUIStore } from '../store/useUiStore';
+import { useEffect } from 'react';
 function App() {
-  const [rows, setRows] = useState<TableRow[]>([]);
-  const [editingRow, setEditingRow] = useState<TableRow | null>(null);
-  const [viewRow, setViewRow] = useState<TableRow | null>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
-  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
-
-  const handleSubmit = (row: TableRow) => {
-    const isDuplicate = rows.some((r) => {
-      if (editingRow && r.id === editingRow.id) return false;
-      return r.orderNumber === row.orderNumber && r.email === row.email;
-    });
-    if (isDuplicate) {
-      setShowDuplicateModal(true);
-      return;
-    }
-    setRows((prev) => {
-      const exists = prev.find((r) => r.id === row.id);
-      return exists ? prev.map((r) => (r.id === row.id ? row : r)) : [...prev, row];
-    });
-    setEditingRow(null);
-    setShowSuccess(true);
-  };
-
-  const handleDeleteRequest = (id: string) => {
-    setDeleteTarget(id);
-  };
-  const handleConfirmDelete = () => {
-    setRows((prev) => prev.filter((r) => r.id !== deleteTarget));
-    setDeleteTarget(null);
-  };
-
+  const { viewRow, setViewRow, deleteTarget, confirmDelete, setDeleteTarget } = useTableStore();
+  const { showSuccess, closeSuccess, successType, showError, errorMessage, closeError } =
+    useUIStore();
+  const theme = useUIStore((s) => s.theme);
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
   return (
     <ConfigProvider
       theme={{
         components: {
-          Radio: {
-            colorPrimary: 'green',
-          },
-          Button: {
-            colorPrimary: "green"
-          }
+          Radio: { colorPrimary: 'green' },
+          Button: { colorPrimary: 'green' },
         },
       }}
     >
       <div className="app-container">
         <ThemeToggle />
+
         <div className="left-container">
-          <Form onSubmit={handleSubmit} editingRow={editingRow} />
+          <Form />
         </div>
 
         <div className="right-container">
-          <Table
-            rows={rows}
-            onView={(row) => setViewRow(row)}
-            onEdit={(row) => setEditingRow(row)}
-            onDelete={(id) => handleDeleteRequest(id)}
-          />
+          <Table />
         </div>
 
         {viewRow && <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />}
 
-        {showSuccess && (
-          <Modal
-            title="Success"
-            onClose={() => setShowSuccess(false)}
-            actions={
-              <button className="primary-btn" onClick={() => setShowSuccess(false)}>
-                OK
-              </button>
-            }
-          >
-            <p>Your feedback has been submitted successfully</p>
-          </Modal>
-        )}
+        <Modal
+          title="Success"
+          open={showSuccess}
+          onCancel={closeSuccess}
+          footer={[
+            <Button key="ok" type="primary" onClick={closeSuccess}>
+              Ok
+            </Button>,
+          ]}
+        >
+          <p>
+            {successType === 'create'
+              ? 'Your feedback has been submitted successfully.'
+              : 'Form has been updated successfully'}
+          </p>
+        </Modal>
 
-        {deleteTarget && (
-          <Modal
-            title="Confirm Delete"
-            onClose={() => setDeleteTarget(null)}
-            actions={
-              <>
-                <button onClick={() => setDeleteTarget(null)}>Cancel</button>
-                <button className="danger-btn" onClick={handleConfirmDelete}>
-                  Delete
-                </button>
-              </>
-            }
-          >
-            <p>Are you sure you want to delete this record?</p>
-          </Modal>
-        )}
-        {showDuplicateModal && (
-          <Modal
-            title="Duplicate Entry"
-            onClose={() => setShowDuplicateModal(false)}
-            actions={
-              <button className="danger-btn" onClick={() => setShowDuplicateModal(false)}>
-                Ok
-              </button>
-            }
-          >
-            <p>
-              This <strong>Order Number</strong> and <strong>Email</strong> combination already
-              exists.
-            </p>
-          </Modal>
-        )}
+        <Modal
+          title="Duplicate Entry"
+          open={showError}
+          onCancel={closeError}
+          footer={[
+            <Button key="ok" type="primary" danger onClick={closeError}>
+              Ok
+            </Button>,
+          ]}
+        >
+          <p>{errorMessage}</p>
+        </Modal>
+
+        <Modal
+          title="Confirm Delete"
+          open={Boolean(deleteTarget)}
+          onCancel={() => setDeleteTarget(null)}
+          footer={[
+            <Button key="cancel" onClick={() => setDeleteTarget(null)}>
+              Cancel
+            </Button>,
+            <Button key="delete" danger type="primary" onClick={confirmDelete}>
+              Delete
+            </Button>,
+          ]}
+        >
+          <p>Are you sure you want to delete this record?</p>
+        </Modal>
       </div>
     </ConfigProvider>
   );

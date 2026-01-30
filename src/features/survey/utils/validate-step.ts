@@ -38,9 +38,6 @@ export function validateStep(step: number, formData: FormValues, ratings: Record
   if (config?.conditionalRatings) {
     const { dependsOn, value, ratings: conditional } = config.conditionalRatings;
     const dependsOnKey = nameToFieldName(dependsOn);
-    console.log('DependsOn value:', formData[dependsOnKey]);
-    console.log('expected value', value);
-    console.log('conditional errors', errors);
     if (formData[dependsOnKey as keyof FormValues] === value) {
       conditional.forEach((rating) => {
         if (!ratings[rating] || ratings[rating] === 0) {

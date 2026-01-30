@@ -1,11 +1,12 @@
-import { useTheme } from "../theme/ThemeContext";
+import { useUIStore } from "../../store/useUiStore";
 
 const ThemeToggle = () => {
-  const { theme, toggleTheme } = useTheme();
+  const theme = useUIStore((s) => s.theme);
+  const toggleTheme = useUIStore((s) => s.toggleTheme);
 
   return (
-    <button onClick={toggleTheme} className="theme-toggle">
-      {theme === "light" ? "☽︎" : "☀︎"}
+    <button className="theme-toggle" onClick={toggleTheme}>
+      {theme === 'dark' ? '☀︎' : '☽︎'}
     </button>
   );
 };

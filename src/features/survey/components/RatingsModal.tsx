@@ -1,5 +1,8 @@
-import React from 'react';
+import { Modal, Table, Typography, Divider } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import type { TableRow } from '../types/table';
+
+const { Text } = Typography;
 
 type Props = {
   row: TableRow;
@@ -7,55 +10,69 @@ type Props = {
 };
 
 const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
+  const dataSource = Object.entries(row.ratings).map(([category, value]) => ({
+    key: category,
+    category: category.replace(/-/g, ' '),
+    rating: value === 0 ? 'N/A' : value,
+  }));
+
+  const columns: ColumnsType<{ key: string; category: string; rating: string | number }> = [
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category',
+    },
+    {
+      title: 'Rating',
+      dataIndex: 'rating',
+      key: 'rating',
+    },
+  ];
+
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="modal-header">
-          <h3>Ratings Details</h3>
-          <button className="close-btn" onClick={onClose}>
-            ×
-          </button>
-        </div>
+    <Modal
+      open
+      title="Ratings Details"
+      onCancel={onClose}
+      footer={null}
+      width={700}
+    >
+      {/* Ratings Table */}
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        pagination={false}
+        size="middle"
+      />
 
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(row.ratings).map(([category, value]) => (
-              <tr key={category}>
-                <td>{category.replace(/-/g, ' ')}</td>
-                <td>{value === 0 ? 'N/A' : value}</td>
-              </tr>
-            ))}
-          </tbody>
-          <div className="ratings-textareas">
-            {row.whatDidYouLike && (
-              <div className="textarea-block">
-                <label>What Did You Like?</label>
-                <p>{row.whatDidYouLike}</p>
-              </div>
-            )}
+      {/* Optional text sections */}
+      {(row.whatDidYouLike || row.whatToImprove || row.additionalComment) && (
+        <>
+          <Divider />
 
-            {row.whatToImprove && (
-              <div className="textarea-block">
-                <label>What To Improve?</label>
-                <p>{row.whatToImprove}</p>
-              </div>
-            )}
-            {row.additionalComment && (
-              <div className="textarea-block">
-                <label>Additional Comments:</label>
-                <p>{row.additionalComment}</p>
-              </div>
-            )}
-          </div>
-        </table>
-      </div>
-    </div>
+          {row.whatDidYouLike && (
+            <div className="textarea-block">
+              <Text strong>What did you like?</Text>
+              <p>{row.whatDidYouLike}</p>
+            </div>
+          )}
+
+          {row.whatToImprove && (
+            <div className="textarea-block">
+              <Text strong>What to improve?</Text>
+              <p>{row.whatToImprove}</p>
+            </div>
+          )}
+
+          {row.additionalComment && (
+            <div className="textarea-block">
+              <Text strong>Additional comments</Text>
+              <p>{row.additionalComment}</p>
+            </div>
+          )}
+        </>
+      )}
+    </Modal>
   );
 };
 

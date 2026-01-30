@@ -1,70 +1,40 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import InputField from '../../../shared/components/Input';
 import RadioGroup from '../../../shared/components/RadioInput';
 import RatingGroup from './RatingGroup';
 import RatingStepper from './RatingStepper';
 import { RATING_CONFIG } from '../constants/rating-config';
 import { validateStep } from '../utils/validate-step';
-import { useFormContext } from '../context/FormContext';
 import { nameToFieldName } from '../utils/name-to-field';
-import { validators } from '../utils/field-validator';
 import type { TableRow } from '../types/table';
 import { Button } from 'antd';
-type FormProps = {
-  onSubmit: (row: TableRow) => void;
-  editingRow: TableRow | null;
-};
+import { useFormStore } from '../../../store/useFormStore';
+import { useTableStore } from '../../../store/useTableStore';
+import { useUIStore } from '../../../store/useUiStore';
+import { validators } from '../utils/field-validator';
 
-const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
+const Form = () => {
   const {
     formData,
     rating,
     errors,
     currentStep,
-    setFormData,
-    resetStep,
+    setField,
+    clearError,
     setErrors,
     nextStep,
     prevStep,
-    setRating,
     resetForm,
-  } = useFormContext();
+    hydrateFromRow,
+  } = useFormStore();
+  const openSuccess = useUIStore((s) => s.openSuccess);
 
   const stepConfig = RATING_CONFIG[currentStep];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setFormData((prev: typeof formData) => ({ ...prev, [name]: value }));
-
-    if (errors[name]) {
-      setErrors((prev: typeof errors) => {
-        const copy = { ...prev };
-        delete copy[name];
-        return copy;
-      });
-    }
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    let fieldName = name;
-    if(name=='purchaseDate'){
-      fieldName='date';
-    }
-    console.log('name',name,"fieldname",fieldName);
-    const validate = validators[fieldName as keyof typeof validators];
-    if (!validate) return;
-
-    const message = validate(value);
-    if (message) {
-      setErrors((prev: typeof errors) => ({ ...prev, [name]: message }));
-    }
-  };
+  const { addOrUpdateRow, editingRow } = useTableStore();
 
   const handleNext = () => {
     const result = validateStep(currentStep, formData, rating);
-
     if (!result.valid) {
       setErrors(result.errors);
       return;
@@ -73,10 +43,24 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
     setErrors({});
     nextStep();
   };
-
+  const validateField = (name: string, value: string) => {
+    let fieldName = name;
+    if(name=='purchaseDate'){
+      fieldName = 'date';
+    }
+    const validator = validators[fieldName as keyof typeof validators];
+    
+    if (!validator) return;
+    const error = validator(value);
+    if (error) {
+      setErrors({ ...errors, [name]: error });
+    } else {
+      clearError(name);
+    }
+  };
   const handleSubmit = () => {
+    const isEdit = Boolean(editingRow);
     const result = validateStep(currentStep, formData, rating);
-
     if (!result.valid) {
       setErrors(result.errors);
       return;
@@ -84,46 +68,22 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
 
     const row: TableRow = {
       id: editingRow?.id ?? crypto.randomUUID(),
-      orderNumber: formData.orderNumber,
-      email: formData.email,
-      purchaseDate: formData.purchaseDate,
-      shoppingMethod: formData.shoppingMethod,
-      supportContacted: formData.supportContacted,
-      packageContentExperience: formData.packageContentExperience,
-      recommendationExperience: formData.recommendationExperience,
-      whatDidYouLike: formData.whatDidYouLike,
-      whatToImprove: formData.whatToImprove,
-      additionalComment: formData.additionalComment,
-      review: formData.review,
+      ...formData,
       ratings: rating,
     };
-
-    onSubmit(row);
+    const success = addOrUpdateRow(row);
+    if (!success) {
+      return;
+    }
+    addOrUpdateRow(row);
+    openSuccess(isEdit ? 'update' : 'create');
     resetForm();
-    resetStep();
   };
-
   useEffect(() => {
-    if (!editingRow) return;
-
-    setFormData({
-      orderNumber: editingRow.orderNumber,
-      email: editingRow.email,
-      purchaseDate: editingRow.purchaseDate,
-      shoppingMethod: editingRow.shoppingMethod,
-      supportContacted: editingRow.supportContacted === 'yes' ? 'yes' : 'no',
-      packageContentExperience: editingRow.packageContentExperience,
-      recommendationExperience: editingRow.recommendationExperience,
-      whatDidYouLike: editingRow.whatDidYouLike,
-      whatToImprove: editingRow.whatToImprove,
-      additionalComment: editingRow.additionalComment,
-      review: editingRow.review,
-    });
-
-    setRating(editingRow.ratings);
-    setErrors({});
-    resetStep();
-  }, [editingRow]);
+    if (editingRow) {
+      hydrateFromRow(editingRow);
+    }
+  }, [editingRow, hydrateFromRow]);
 
   return (
     <div className="form-container">
@@ -136,21 +96,21 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
               placeholder="eg. ORD-XXXXXX"
               label="Order Number:"
               name="orderNumber"
-              onChange={handleInputChange}
-              onBlur={handleBlur}
+              onChange={(e) => setField('orderNumber', e.target.value)}
+              onBlur={(e) => validateField('orderNumber', e.target.value)}
               error={errors.orderNumber}
             />
           </div>
 
-          <div className="order-details">
+          <div className="email">
             <InputField
               type="text"
               value={formData.email}
               placeholder="Enter email"
               label="Email:"
               name="email"
-              onChange={handleInputChange}
-              onBlur={handleBlur}
+              onChange={(e) => setField('email', e.target.value)}
+              onBlur={(e) => validateField('email', e.target.value)}
               error={errors.email}
             />
           </div>
@@ -162,8 +122,8 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
             value={formData.purchaseDate}
             label="Purchase Date:"
             name="purchaseDate"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
+            onChange={(e) => setField('purchaseDate', e.target.value)}
+            onBlur={(e) => validateField('purchaseDate', e.target.value)}
             error={errors.purchaseDate}
             max={new Date().toISOString().split('T')[0]}
           />
@@ -218,20 +178,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, editingRow }) => {
                 placeholder={ta.label}
                 maxLength={ta.maxlength}
                 value={formData[fieldName] || ''}
-                onChange={(e) => {
-                  setFormData((prev) => ({
-                    ...prev,
-                    [fieldName]: e.target.value,
-                  }));
-
-                  if (errors[fieldName]) {
-                    setErrors((prev) => {
-                      const updated = { ...prev };
-                      delete updated[fieldName];
-                      return updated;
-                    });
-                  }
-                }}
+                onChange={(e) => setField(fieldName, e.target.value)}
               />
             </div>
           );

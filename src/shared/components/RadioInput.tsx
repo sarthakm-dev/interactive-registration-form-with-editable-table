@@ -1,6 +1,7 @@
-import { useFormContext } from '../../features/survey/context/FormContext';
-import { nameToFieldName } from '../../features/survey/utils/name-to-field';
 import { ConfigProvider, Radio } from 'antd';
+import { useFormStore } from '../../store/useFormStore';
+import { nameToFieldName } from '../../features/survey/utils/name-to-field';
+
 type Option = {
   id: string;
   value: string;
@@ -14,60 +15,49 @@ type Props = {
 };
 
 const RadioGroup = ({ name, label, options }: Props) => {
-  const { formData, setFormData, errors, setErrors } = useFormContext();
-
   const fieldName = nameToFieldName(name);
 
-  const selectedValue = formData[fieldName];
-  const hasError = Boolean(errors[fieldName]);
-  console.log(hasError);
-  const handleChange = (value: string) => {
-    console.log(value);
-    setFormData((prev) => ({
-      ...prev,
-      [fieldName]: value,
-    }));
+  const selectedValue = useFormStore((s) => s.formData[fieldName]);
+  const error = useFormStore((s) => s.errors[fieldName]);
+  const setField = useFormStore((s) => s.setField);
+  const clearError = useFormStore((s) => s.clearError);
 
-    setErrors((prev) => {
-      const updated = { ...prev };
-      delete updated[fieldName];
-      return updated;
-    });
+  const handleChange = (value: string) => {
+    setField(fieldName, value);  
+    clearError(fieldName);        
   };
 
   return (
-    <div className={`radio-container ${hasError ? 'error-field' : ''}`}>
+    <div className={`radio-container ${error ? 'error-field' : ''}` }>
       <label className="radio-label">
         {label} <span className="required">*</span>
       </label>
 
       <div className="radio-content">
-        {options.map((opt) => (
-          <label key={opt.id} className="radio-option">
-            <ConfigProvider
-              theme={{
-                components: {
-                  Radio: {
-                    colorPrimary: 'green',
-                  },
-                },
-              }}
-            >
+        <ConfigProvider
+          theme={{
+            components: {
+              Radio: {
+                colorPrimary: 'green',
+              },
+            },
+          }}
+        >
+          {options.map((opt) => (
+            <label key={opt.id} className="radio-option">
               <Radio
-                type="radio"
                 name={fieldName}
                 value={opt.value}
                 checked={selectedValue === opt.value}
                 onChange={() => handleChange(opt.value)}
               />
-            </ConfigProvider>
-
-            {opt.label}
-          </label>
-        ))}
+              {opt.label}
+            </label>
+          ))}
+        </ConfigProvider>
       </div>
 
-      {hasError && <small className="error show">{errors[fieldName]}</small>}
+      {error && <small className="error show">{error}</small>}
     </div>
   );
 };
