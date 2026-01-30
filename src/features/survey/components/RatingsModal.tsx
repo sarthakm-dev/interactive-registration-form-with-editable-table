@@ -1,13 +1,10 @@
 import { Modal, Table, Typography, Divider } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import type { TableRow } from '../types/table';
+import type { Props } from '../types/rating-modal-prop';
 
 const { Text } = Typography;
 
-type Props = {
-  row: TableRow;
-  onClose: () => void;
-};
+
 
 const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
   const dataSource = Object.entries(row.ratings).map(([category, value]) => ({

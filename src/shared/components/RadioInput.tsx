@@ -2,19 +2,19 @@ import { ConfigProvider, Radio } from 'antd';
 import { useFormStore } from '../../store/useFormStore';
 import { nameToFieldName } from '../../features/survey/utils/name-to-field';
 
-type Option = {
-  id: string;
-  value: string;
-  label: string;
-};
-
-type Props = {
+const RadioGroup = ({
+  name,
+  label,
+  options,
+}: {
   name: string;
   label: string;
-  options: Option[];
-};
-
-const RadioGroup = ({ name, label, options }: Props) => {
+  options: {
+    id: string;
+    value: string;
+    label: string;
+  }[];
+}) => {
   const fieldName = nameToFieldName(name);
 
   const selectedValue = useFormStore((s) => s.formData[fieldName]);
@@ -23,12 +23,12 @@ const RadioGroup = ({ name, label, options }: Props) => {
   const clearError = useFormStore((s) => s.clearError);
 
   const handleChange = (value: string) => {
-    setField(fieldName, value);  
-    clearError(fieldName);        
+    setField(fieldName, value);
+    clearError(fieldName);
   };
 
   return (
-    <div className={`radio-container ${error ? 'error-field' : ''}` }>
+    <div className={`radio-container ${error ? 'error-field' : ''}`}>
       <label className="radio-label">
         {label} <span className="required">*</span>
       </label>

@@ -12,7 +12,7 @@ function App() {
   const { showSuccess, closeSuccess, successType, showError, errorMessage, closeError } =
     useUIStore();
   const { isFormOpen, openForm, closeForm } = useUIStore();
-  const { rows, setEditingRow } = useTableStore();
+  const {  setEditingRow } = useTableStore();
   const theme = useUIStore((s) => s.theme);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -28,7 +28,7 @@ function App() {
     >
       <div className="app-container">
         
-
+        
         <Table />
         <Button
           type="primary"
@@ -97,6 +97,7 @@ function App() {
         >
           <p>Are you sure you want to delete this record?</p>
         </Modal>
+        <ThemeToggle />
       </div>
     </ConfigProvider>
   );

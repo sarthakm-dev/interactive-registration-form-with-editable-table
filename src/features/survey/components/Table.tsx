@@ -5,23 +5,69 @@ import { useTableStore } from '../../../store/useTableStore';
 import { useIsMobile } from '../../../store/useMobile';
 import MobileCards from './MobileCard';
 import { useUIStore } from '../../../store/useUiStore';
+import { Input } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import type { ColumnType, FilterDropdownProps } from 'antd/es/table/interface';
+import type { InputRef } from 'antd';
+import { useRef } from 'react';
+
 const Table = () => {
   const { rows, setViewRow, requestDelete } = useTableStore();
-  const openForm = useUIStore((s)=>s.openForm);
-  const setEditingRow = useTableStore((s)=>s.setEditingRow);
+  const openForm = useUIStore((s) => s.openForm);
+  const setEditingRow = useTableStore((s) => s.setEditingRow);
   const isMobile = useIsMobile();
+  const searchInput = useRef<InputRef | null>(null);
+
+  const getColumnSearchProps = (dataIndex: keyof TableRow): ColumnType<TableRow> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+    }: FilterDropdownProps) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${String(dataIndex)}`}
+          value={selectedKeys[0] as string}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => confirm()}
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button type="primary" size="small" onClick={() => confirm()} icon={<SearchOutlined />}>
+            Search
+          </Button>
+          <Button size="small" onClick={() => clearFilters?.()}>
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>{
+      const recordValue = record[dataIndex];
+      console.log(recordValue);
+      if(!recordValue) return false;
+      return recordValue.toString().toLowerCase().includes(String(value).toLocaleLowerCase().trim());
+    }
+  });
   const columns: ColumnsType<TableRow> = [
     {
       title: '#',
-      render: (_value, _record, index) => index + 1,
+      render: (_v, _r, index) => index + 1,
     },
     {
       title: 'Order',
       dataIndex: 'orderNumber',
+      ...getColumnSearchProps('orderNumber'),
     },
     {
       title: 'Email',
       dataIndex: 'email',
+      ...getColumnSearchProps('email'),
     },
     {
       title: 'Purchase Date',
@@ -30,6 +76,11 @@ const Table = () => {
     {
       title: 'Method',
       dataIndex: 'shoppingMethod',
+      filters: [
+        { text: 'Online', value: 'online' },
+        { text: 'Offline', value: 'offline' },
+      ],
+      onFilter: (value, record) => record.shoppingMethod.toLowerCase().includes(String(value).toLowerCase()),
     },
     {
       title: 'Actions',
@@ -47,7 +98,12 @@ const Table = () => {
               <path d="M13.5 12c-.83 0-1.5-.67-1.5-1.5 0-.6.36-1.12.87-1.35-.28-.09-.56-.15-.87-.15-1.64 0-3 1.36-3 3s1.36 3 3 3 3-1.36 3-3c0-.3-.06-.59-.15-.87-.24.51-.75.87-1.35.87"></path>
             </svg>
           </Button>
-          <Button onClick={() => {setEditingRow(record); openForm();}}>
+          <Button
+            onClick={() => {
+              setEditingRow(record);
+              openForm();
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -72,21 +128,20 @@ const Table = () => {
           </Button>
         </Space>
       ),
+      align: 'center',
     },
   ];
   if (isMobile) {
     return <MobileCards rows={rows} />;
   }
   return (
-    
-      <AntTable
-        rowKey="id"
-        columns={columns}
-        dataSource={rows}
-        pagination={{ pageSize: 5 }}
-        locale={{ emptyText: 'No records' }}
-      />
-      
+    <AntTable
+      rowKey="id"
+      columns={columns}
+      dataSource={rows}
+      pagination={{ pageSize: 5 }}
+      locale={{ emptyText: 'No records' }}
+    />
   );
 };
 

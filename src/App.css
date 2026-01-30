@@ -468,15 +468,17 @@ textarea {
   color: var(--danger);
 }
 .theme-toggle {
-  position: absolute;
-  left: 96.5%;
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  color: var(--primary-700);
-  font-weight: 600;
-  cursor: pointer;
-}
+    position: absolute;
+    top: 3%;
+    left: 96.5%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 180;
+    color: var(--primary-700);
+    font-weight: 600;
+  }
 label {
   color: var(--text-primary);
 }
@@ -623,7 +625,7 @@ p {
   .app-container {
     flex-direction: column;
     justify-content: center;
-    padding: 0;
+    padding: 15px;
   }
 
   .left-container {
@@ -643,18 +645,35 @@ p {
   .table-panel {
     padding: 5px;
   }
-
+  .star-container {
+    gap: 5px;
+  }
   .error {
     margin-left: 0;
+  }
+  .stars{
+    margin-bottom: 8px;
   }
   .theme-toggle {
     position: absolute;
     top: 2%;
-    left: 100%;
+    left: 94%;
     background: transparent;
     border: none;
     font-size: 20px;
     color: var(--primary-700);
     font-weight: 600;
   }
+}
+@media (max-width: 550px) {
+    .theme-toggle {
+        position: absolute;
+        top: 2%;
+        left: 91%;
+        background: transparent;
+        border: none;
+        font-size: 20px;
+        color: var(--primary-700);
+        font-weight: 600;
+    }
 }

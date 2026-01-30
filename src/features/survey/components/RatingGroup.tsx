@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { useFormStore } from '../../../store/useFormStore';
+import type { Props } from '../types/rating-prop';
 
-type Props = {
-  category: string;
-  label: string;
-};
+
 
 const RatingGroup = ({ category, label }: Props) => {
   const rating = useFormStore((s) => s.rating);
