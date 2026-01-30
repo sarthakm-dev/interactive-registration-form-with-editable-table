@@ -2,7 +2,7 @@
   --bg-page: #f6faf7;
   --bg-card: #ffffff;
   --bg-panel: #eef7f1;
-
+  --icon: white;
   --primary-900: #1f4d3a;
   --primary-700: #2f6f55;
   --primary-500: #4f9b7a;
@@ -30,7 +30,7 @@
   --bg-page: #0b1220;
   --bg-card: #111827;
   --bg-panel: #1f2937;
-
+  --icon: #212121;
   --primary-900: #4f9b7a;
   --primary-700: #6fb7a0;
   --primary-500: #23d865;
@@ -87,11 +87,7 @@ body {
 .ant-radio-inner:focus {
   color: var(--primary-500);
 }
-table, tr {
-  background: var(--bg-table);
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 24px;
-  color: var(--text-primary);
-}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -220,7 +216,7 @@ input[type='date'] {
   transition: all 0.2s ease;
 }
 .icon {
-  background: white;
+  background: var(--icon);
   z-index: 100;
   color: var(--text-primary);
 }
@@ -491,7 +487,7 @@ textarea {
 }
 
 .mobile-card {
-  background: var(--bg-table);
+  background: var(--icon);
   border: 1px solid var(--border-light);
   border-radius: 8px;
   padding: 12px;
@@ -673,7 +669,7 @@ textarea {
     .theme-toggle {
         position: absolute;
         top: 2%;
-        left: 91%;
+        left: 89%;
         background: transparent;
         border: none;
         font-size: 20px;

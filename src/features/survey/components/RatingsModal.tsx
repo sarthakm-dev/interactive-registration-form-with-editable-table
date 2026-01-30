@@ -21,6 +21,7 @@ const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
       title: 'Rating',
       dataIndex: 'rating',
       key: 'rating',
+      align: 'center'
     },
   ];
 
