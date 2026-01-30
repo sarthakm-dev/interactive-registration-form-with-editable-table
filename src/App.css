@@ -100,8 +100,11 @@ input[type='text'] {
   border-radius: 12px;
   padding: 4px 4px;
   border: 2px solid var(--primary-700);
-  width: 180px;
+  width: 220px;
   text-align: center;
+}
+input[type='text']::placeholder {
+  text-transform: capitalize;
 }
 input[type='radio'] {
   accent-color: var(--primary-500);
