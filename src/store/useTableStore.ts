@@ -1,19 +1,6 @@
 import { create } from 'zustand';
-import type { TableRow } from '../features/survey/types/table';
 import { useUIStore } from './useUIStore';
-
-type TableState = {
-  rows: TableRow[];
-  editingRow: TableRow | null;
-  viewRow: TableRow | null;
-  deleteTarget: string | null;
-  addOrUpdateRow: (row: TableRow) => boolean;
-  setEditingRow: (row: TableRow | null) => void;
-  setViewRow: (row: TableRow | null) => void;
-  requestDelete: (id: string) => void;
-  setDeleteTarget: (id: string | null) => void;
-  confirmDelete: () => void;
-};
+import type { TableState } from '../shared/types/table-state';
 
 export const useTableStore = create<TableState>((set, get) => ({
   rows: [],

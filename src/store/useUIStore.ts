@@ -1,22 +1,5 @@
 import { create } from 'zustand';
-
-type SuccessType = 'create' | 'update';
-type Theme = 'light' | 'dark';
-type UIState = {
-  showSuccess: boolean;
-  successType: SuccessType;
-  theme: Theme;
-  showError: boolean;
-  errorMessage: string;
-  openSuccess: (type: SuccessType) => void;
-  closeSuccess: () => void;
-  openError: (message: string) => void;
-  isFormOpen: boolean;
-  openForm: () => void;
-  closeForm: () => void;
-  closeError: () => void;
-  toggleTheme: () => void;
-};
+import type { UIState } from '../shared/types/ui-state';
 
 export const useUIStore = create<UIState>((set) => ({
   showSuccess: false,

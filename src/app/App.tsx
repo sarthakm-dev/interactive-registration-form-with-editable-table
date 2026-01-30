@@ -21,7 +21,6 @@ function App() {
   }, [theme]);
 
   return (
-    
     <ConfigProvider
       theme={{
         components: {
@@ -31,7 +30,9 @@ function App() {
         algorithm: themeMode === 'dark' ? t.darkAlgorithm : t.defaultAlgorithm,
       }}
     >
+      <h3 className='header'> Customer Feedback And Survey Form</h3>
       <div className="app-container">
+        
         <Table />
         <Button
           type="primary"
@@ -48,7 +49,7 @@ function App() {
           open={isFormOpen}
           footer={null}
           onCancel={closeForm}
-          destroyOnClose
+          destroyOnHidden
         >
           <Form />
         </Modal>
