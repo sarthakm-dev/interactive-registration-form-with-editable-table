@@ -144,9 +144,8 @@ input[type='radio'] {
 }
 
 .personal-details {
-  display: grid;
-
-  gap: 16px;
+  display: flex;
+  justify-content: space-between;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 8px;
 }
@@ -588,7 +587,8 @@ textarea {
   }
 
   .personal-details {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 0;
     width: 100%;
     justify-content: center;
