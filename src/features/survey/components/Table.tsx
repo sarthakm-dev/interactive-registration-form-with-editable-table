@@ -62,16 +62,19 @@ const Table = () => {
     {
       title: 'Order',
       dataIndex: 'orderNumber',
+      align: 'center',
       ...getColumnSearchProps('orderNumber'),
     },
     {
       title: 'Email',
       dataIndex: 'email',
+      align: 'center',
       ...getColumnSearchProps('email'),
     },
     {
       title: 'Purchase Date',
       dataIndex: 'purchaseDate',
+      align: 'center',
     },
     {
       title: 'Method',
@@ -80,6 +83,7 @@ const Table = () => {
         { text: 'Online', value: 'online' },
         { text: 'Offline', value: 'offline' },
       ],
+      align: 'center',
       onFilter: (value, record) => record.shoppingMethod.toLowerCase().includes(String(value).toLowerCase()),
     },
     {

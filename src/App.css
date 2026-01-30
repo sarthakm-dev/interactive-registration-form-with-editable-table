@@ -54,7 +54,7 @@
   --hue-rotage-percentage: 90deg;
 }
 body {
-  background: var(--accent-soft);
+  background: var(--bg-panel);
   color: var(--text-primary);
   width: 100%;
   min-height: 100vh;
@@ -86,6 +86,11 @@ body {
 .ant-radio-checked,
 .ant-radio-inner:focus {
   color: var(--primary-500);
+}
+table, tr {
+  background: var(--bg-table);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 8px 24px;
+  color: var(--text-primary);
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -216,7 +221,7 @@ input[type='date'] {
   transition: all 0.2s ease;
 }
 .icon {
-  background: var(--bg-card);
+  background: white;
   z-index: 100;
   color: var(--text-primary);
 }
@@ -228,9 +233,7 @@ input[type='date'] {
   color: var(--primary-500);
 }
 
-.step.active {
-  color: var(--text-primary);
-}
+
 
 .stars {
   display: flex;
@@ -355,6 +358,7 @@ textarea {
 
 .data-table tr:hover {
   background: var(--bg-page);
+  color: black;
 }
 .table-actions button {
   background-color: transparent;
@@ -479,12 +483,8 @@ textarea {
     color: var(--primary-700);
     font-weight: 600;
   }
-label {
-  color: var(--text-primary);
-}
-p {
-  color: var(--text-primary);
-}
+
+
 .mobile-cards {
   display: flex;
   flex-direction: column;
@@ -492,7 +492,7 @@ p {
 }
 
 .mobile-card {
-  background: var(--bg-card);
+  background: var(--bg-table);
   border: 1px solid var(--border-light);
   border-radius: 8px;
   padding: 12px;
@@ -503,6 +503,10 @@ p {
   display: flex;
   gap: 8px;
   margin-top: 10px;
+}
+.card-actions button {
+ background: transparent;
+ color: var(--primary-700);
 }
 @media (max-width: 1050px) {
   body {
@@ -530,11 +534,11 @@ p {
   }
   .form-container {
     width: 100%;
-
     padding: 12px;
     box-sizing: border-box;
-  }
 
+  }
+ 
   .product-details {
     display: grid;
     gap: 12px;
