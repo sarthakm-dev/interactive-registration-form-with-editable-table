@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useFormStore } from '../../../store/useFormStore';
 import type { Props } from '../types/rating-prop';
+import { hint } from '../constants/star-hint';
 
 const RatingGroup = ({ category, label }: Props) => {
   const rating = useFormStore((s) => s.rating);
@@ -26,13 +27,7 @@ const RatingGroup = ({ category, label }: Props) => {
       </p>
 
       <div className="stars">
-        {[
-          { value: 1, text: 'Very Poor' },
-          { value: 2, text: 'Poor' },
-          { value: 3, text: 'Average' },
-          { value: 4, text: 'Good' },
-          { value: 5, text: 'Excellent' },
-        ].map((star) => (
+        {hint.map((star) => (
           <div className="star-container" key={star.value}>
             <span
               className={star.value <= displayValue ? 'star active' : 'star'}
