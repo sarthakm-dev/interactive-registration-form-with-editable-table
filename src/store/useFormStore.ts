@@ -1,32 +1,48 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { validateStep } from '../features/survey/utils/validate-step';
+import type { FormValues } from '../features/survey/types/form';
 
 type FormState = {
-  formData: Record<string, any>;
+  formData: FormValues;
   rating: Record<string, number>;
   errors: Record<string, string>;
   currentStep: number;
 
-  setField: (name: string, value: any) => void;
+  setField: <K extends keyof FormValues>(name: K, value: FormValues[K]) => void;
   setRating: (category: string, value: number) => void;
   setErrors: (errors: Record<string, string>) => void;
   clearError: (name: string) => void;
 
-  nextStep: () => void;
+  nextStep: () => boolean;
   prevStep: () => void;
-  resetForm: () => void;
-};
+  submit: () => boolean;
 
+  resetForm: () => void;
+  hydrateFromRow: (row: any) => void;
+};
+const initialFormData: FormValues = {
+  orderNumber: '',
+  email: '',
+  purchaseDate: '',
+  shoppingMethod: '',
+  supportContacted: 'no',
+  recommendationExperience: '',
+  whatDidYouLike: '',
+  whatToImprove: '',
+  additionalComment: '',
+  review: false,
+};
 export const useFormStore = create<FormState>()(
-  immer((set) => ({
-    formData: {},
+  immer((set, get) => ({
+    formData: initialFormData,
     rating: {},
     errors: {},
     currentStep: 0,
 
     setField: (name, value) =>
       set((state) => {
-        state.formData[name] = value;
+        (state.formData as FormValues)[name] = value;
         delete state.errors[name];
       }),
 
@@ -46,20 +62,56 @@ export const useFormStore = create<FormState>()(
         delete state.errors[name];
       }),
 
-    nextStep: () =>
+    nextStep: () => {
+      const { currentStep, formData, rating } = get();
+      const result = validateStep(currentStep, formData, rating);
+
+      if (!result.valid) {
+        set((state) => {
+          state.errors = result.errors;
+        });
+        return false;
+      }
+
       set((state) => {
         state.currentStep += 1;
-      }),
+        state.errors = {};
+      });
+
+      return true;
+    },
 
     prevStep: () =>
       set((state) => {
-        state.currentStep -= 1;
+        state.currentStep = Math.max(0, state.currentStep - 1);
       }),
+
+    submit: () => {
+      const { currentStep, formData, rating } = get();
+      const result = validateStep(currentStep, formData, rating);
+
+      if (!result.valid) {
+        set((state) => {
+          state.errors = result.errors;
+        });
+        return false;
+      }
+
+      return true;
+    },
 
     resetForm: () =>
       set((state) => {
-        state.formData = {};
+        state.formData = initialFormData;
         state.rating = {};
+        state.errors = {};
+        state.currentStep = 0;
+      }),
+
+    hydrateFromRow: (row) =>
+      set((state) => {
+        state.formData = { ...row };
+        state.rating = row.ratings || {};
         state.errors = {};
         state.currentStep = 0;
       }),

@@ -81,7 +81,6 @@ const Table = () => {
       dataSource={rows}
       pagination={{ pageSize: 5 }}
       locale={{ emptyText: 'No records' }}
-      scroll={{x:'max-content'}}
     />
   );
 };
