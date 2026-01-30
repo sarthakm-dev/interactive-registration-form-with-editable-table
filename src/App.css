@@ -70,7 +70,14 @@ body {
 .ant-input:hover {
   border-color: var(--primary-500);
 }
-
+ .floating-add-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    width: 30px;
+    border-radius: 60px;
+  }
 .ant-input:focus {
   border-color: var(--primary-500);
   -webkit-box-shadow: 0 0 0 2px var(--primary-500);
@@ -101,6 +108,7 @@ input[type='radio'] {
 
 .app-container {
   display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
@@ -208,7 +216,7 @@ input[type='date'] {
   transition: all 0.2s ease;
 }
 .icon {
-  background: linear-gradient(180deg, var(--accent-warm), var(--bg-panel));
+  background: var(--bg-card);
   z-index: 100;
   color: var(--text-primary);
 }
@@ -552,7 +560,7 @@ p {
     font-weight: 600;
     color: var(--primary-900);
   }
-
+ 
   .star {
     width: 12px;
     height: 44px;

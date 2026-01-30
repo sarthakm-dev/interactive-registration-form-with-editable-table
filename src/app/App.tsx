@@ -11,6 +11,8 @@ function App() {
   const { viewRow, setViewRow, deleteTarget, confirmDelete, setDeleteTarget } = useTableStore();
   const { showSuccess, closeSuccess, successType, showError, errorMessage, closeError } =
     useUIStore();
+  const { isFormOpen, openForm, closeForm } = useUIStore();
+  const { rows, setEditingRow } = useTableStore();
   const theme = useUIStore((s) => s.theme);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -25,15 +27,28 @@ function App() {
       }}
     >
       <div className="app-container">
-        <ThemeToggle />
+        
 
-        <div className="left-container">
-          <Form />
-        </div>
-
-        <div className="right-container">
-          <Table />
-        </div>
+        <Table />
+        <Button
+          type="primary"
+          className="floating-add-btn"
+          onClick={() => {
+            setEditingRow(null);
+            openForm();
+          }}
+        >
+          +
+        </Button>
+        <Modal
+        title="Feedback Form"
+        open={isFormOpen}
+        footer={null}
+        onCancel={closeForm}
+        destroyOnClose
+      >
+        <Form />
+      </Modal>
 
         {viewRow && <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />}
 

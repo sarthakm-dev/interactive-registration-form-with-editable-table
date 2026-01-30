@@ -11,6 +11,9 @@ type UIState = {
   openSuccess: (type: SuccessType) => void;
   closeSuccess: () => void;
   openError: (message: string) => void;
+  isFormOpen: boolean;
+  openForm: () => void;
+  closeForm: () => void;
   closeError: () => void;
   toggleTheme: () => void;
 };
@@ -25,6 +28,10 @@ export const useUIStore = create<UIState>((set) => ({
   closeSuccess: () => set({ showSuccess: false }),
   openError: (message) => set({ showError: true, errorMessage: message }),
   closeError: () => set({ showError: false, errorMessage: '' }),
+  isFormOpen: false,
+
+  openForm: () => set({ isFormOpen: true }),
+  closeForm: () => set({ isFormOpen: false }),
   toggleTheme: () =>
     set((state) => ({
       theme: state.theme === 'light' ? 'dark' : 'light',

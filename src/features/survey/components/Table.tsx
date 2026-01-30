@@ -4,8 +4,11 @@ import type { TableRow } from '../types/table';
 import { useTableStore } from '../../../store/useTableStore';
 import { useIsMobile } from '../../../store/useMobile';
 import MobileCards from './MobileCard';
+import { useUIStore } from '../../../store/useUiStore';
 const Table = () => {
-  const { rows, setViewRow, setEditingRow, requestDelete } = useTableStore();
+  const { rows, setViewRow, requestDelete } = useTableStore();
+  const openForm = useUIStore((s)=>s.openForm);
+  const setEditingRow = useTableStore((s)=>s.setEditingRow);
   const isMobile = useIsMobile();
   const columns: ColumnsType<TableRow> = [
     {
@@ -44,7 +47,7 @@ const Table = () => {
               <path d="M13.5 12c-.83 0-1.5-.67-1.5-1.5 0-.6.36-1.12.87-1.35-.28-.09-.56-.15-.87-.15-1.64 0-3 1.36-3 3s1.36 3 3 3 3-1.36 3-3c0-.3-.06-.59-.15-.87-.24.51-.75.87-1.35.87"></path>
             </svg>
           </Button>
-          <Button onClick={() => setEditingRow(record)}>
+          <Button onClick={() => {setEditingRow(record); openForm();}}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -71,17 +74,19 @@ const Table = () => {
       ),
     },
   ];
-  if(isMobile){
-    return <MobileCards rows={rows}/>
+  if (isMobile) {
+    return <MobileCards rows={rows} />;
   }
   return (
-    <AntTable
-      rowKey="id"
-      columns={columns}
-      dataSource={rows}
-      pagination={{ pageSize: 5 }}
-      locale={{ emptyText: 'No records' }}
-    />
+    
+      <AntTable
+        rowKey="id"
+        columns={columns}
+        dataSource={rows}
+        pagination={{ pageSize: 5 }}
+        locale={{ emptyText: 'No records' }}
+      />
+      
   );
 };
 

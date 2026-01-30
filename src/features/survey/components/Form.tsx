@@ -28,7 +28,7 @@ const Form = () => {
     hydrateFromRow,
   } = useFormStore();
   const openSuccess = useUIStore((s) => s.openSuccess);
-
+  const closeForm = useUIStore((s) => s.closeForm);
   const stepConfig = RATING_CONFIG[currentStep];
 
   const { addOrUpdateRow, editingRow } = useTableStore();
@@ -77,6 +77,7 @@ const Form = () => {
     }
     addOrUpdateRow(row);
     openSuccess(isEdit ? 'update' : 'create');
+    closeForm(); 
     resetForm();
   };
   useEffect(() => {
