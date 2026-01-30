@@ -5,7 +5,7 @@ import RatingsModal from '../features/survey/components/RatingsModal';
 import ThemeToggle from '../shared/components/ThemeToggle';
 import { ConfigProvider, Modal, Button } from 'antd';
 import { useTableStore } from '../store/useTableStore';
-import { useUIStore } from '../store/useUiStore';
+import { useUIStore } from '../store/useUIStore';
 import { useEffect } from 'react';
 function App() {
   const { viewRow, setViewRow, deleteTarget, confirmDelete, setDeleteTarget } = useTableStore();

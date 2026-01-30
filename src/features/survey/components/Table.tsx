@@ -4,7 +4,7 @@ import type { TableRow } from '../types/table';
 import { useTableStore } from '../../../store/useTableStore';
 import { useIsMobile } from '../../../store/useMobile';
 import MobileCards from './MobileCard';
-import { useUIStore } from '../../../store/useUiStore';
+import { useUIStore } from '../../../store/useUIStore';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import type { ColumnType, FilterDropdownProps } from 'antd/es/table/interface';
@@ -47,12 +47,15 @@ const Table = () => {
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
     ),
-    onFilter: (value, record) =>{
+    onFilter: (value, record) => {
       const recordValue = record[dataIndex];
       console.log(recordValue);
-      if(!recordValue) return false;
-      return recordValue.toString().toLowerCase().includes(String(value).toLocaleLowerCase().trim());
-    }
+      if (!recordValue) return false;
+      return recordValue
+        .toString()
+        .toLowerCase()
+        .includes(String(value).toLocaleLowerCase().trim());
+    },
   });
   const columns: ColumnsType<TableRow> = [
     {
@@ -84,7 +87,8 @@ const Table = () => {
         { text: 'Offline', value: 'offline' },
       ],
       align: 'center',
-      onFilter: (value, record) => record.shoppingMethod.toLowerCase().includes(String(value).toLowerCase()),
+      onFilter: (value, record) =>
+        record.shoppingMethod.toLowerCase().includes(String(value).toLowerCase()),
     },
     {
       title: 'Actions',

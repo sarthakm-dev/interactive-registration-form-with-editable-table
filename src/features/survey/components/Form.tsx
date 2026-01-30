@@ -10,7 +10,7 @@ import type { TableRow } from '../types/table';
 import { Button } from 'antd';
 import { useFormStore } from '../../../store/useFormStore';
 import { useTableStore } from '../../../store/useTableStore';
-import { useUIStore } from '../../../store/useUiStore';
+import { useUIStore } from '../../../store/useUIStore';
 import { validators } from '../utils/field-validator';
 
 const Form = () => {
@@ -45,11 +45,11 @@ const Form = () => {
   };
   const validateField = (name: string, value: string) => {
     let fieldName = name;
-    if(name=='purchaseDate'){
+    if (name == 'purchaseDate') {
       fieldName = 'date';
     }
     const validator = validators[fieldName as keyof typeof validators];
-    
+
     if (!validator) return;
     const error = validator(value);
     if (error) {
@@ -77,7 +77,7 @@ const Form = () => {
     }
     addOrUpdateRow(row);
     openSuccess(isEdit ? 'update' : 'create');
-    closeForm(); 
+    closeForm();
     resetForm();
   };
   useEffect(() => {

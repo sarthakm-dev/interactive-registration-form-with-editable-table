@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useFormStore } from '../../../store/useFormStore';
 import type { Props } from '../types/rating-prop';
 
-
-
 const RatingGroup = ({ category, label }: Props) => {
   const rating = useFormStore((s) => s.rating);
   const errors = useFormStore((s) => s.errors);
@@ -17,8 +15,8 @@ const RatingGroup = ({ category, label }: Props) => {
   const hasError = Boolean(errors[category]);
 
   const handleClick = (value: number) => {
-    setRating(category, value); 
-    clearError(category);         
+    setRating(category, value);
+    clearError(category);
   };
 
   return (
