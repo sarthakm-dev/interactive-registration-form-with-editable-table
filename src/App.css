@@ -120,6 +120,8 @@ input[type='radio'] {
   box-shadow: var(--shadow-soft);
   width: 100%;
   max-width: 100%;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
 }
 
 .required {
