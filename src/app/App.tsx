@@ -3,22 +3,25 @@ import Form from '../features/survey/components/Form';
 import Table from '../features/survey/components/Table';
 import RatingsModal from '../features/survey/components/RatingsModal';
 import ThemeToggle from '../shared/components/ThemeToggle';
-import { ConfigProvider, Modal, Button,theme as t } from 'antd';
+import { ConfigProvider, Modal, Button, theme as t } from 'antd';
 import { useTableStore } from '../store/useTableStore';
 import { useUIStore } from '../store/useUIStore';
 import { useEffect } from 'react';
+
 function App() {
   const { viewRow, setViewRow, deleteTarget, confirmDelete, setDeleteTarget } = useTableStore();
   const { showSuccess, closeSuccess, successType, showError, errorMessage, closeError } =
     useUIStore();
   const { isFormOpen, openForm, closeForm } = useUIStore();
-  const {  setEditingRow } = useTableStore();
+  const { setEditingRow } = useTableStore();
   const theme = useUIStore((s) => s.theme);
   const themeMode = useUIStore((s) => s.theme);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
   return (
+    
     <ConfigProvider
       theme={{
         components: {
@@ -29,8 +32,6 @@ function App() {
       }}
     >
       <div className="app-container">
-        
-        
         <Table />
         <Button
           type="primary"
@@ -43,14 +44,14 @@ function App() {
           +
         </Button>
         <Modal
-        title="Feedback Form"
-        open={isFormOpen}
-        footer={null}
-        onCancel={closeForm}
-        destroyOnClose
-      >
-        <Form />
-      </Modal>
+          title="Feedback Form"
+          open={isFormOpen}
+          footer={null}
+          onCancel={closeForm}
+          destroyOnClose
+        >
+          <Form />
+        </Modal>
 
         {viewRow && <RatingsModal row={viewRow} onClose={() => setViewRow(null)} />}
 

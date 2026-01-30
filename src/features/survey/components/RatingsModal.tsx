@@ -27,10 +27,10 @@ const RatingsModal: React.FC<Props> = ({ row, onClose }) => {
 
   return (
     <Modal open title="Ratings Details" onCancel={onClose} footer={null} width={700}>
-      {/* Ratings Table */}
+    
       <Table dataSource={dataSource} columns={columns} pagination={false} size="middle" />
 
-      {/* Optional text sections */}
+  
       {(row.whatDidYouLike || row.whatToImprove || row.additionalComment) && (
         <>
           <Divider />

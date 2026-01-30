@@ -43,6 +43,7 @@ const Form = () => {
     setErrors({});
     nextStep();
   };
+
   const validateField = (name: string, value: string) => {
     let fieldName = name;
     if (name == 'purchaseDate') {
@@ -58,6 +59,7 @@ const Form = () => {
       clearError(name);
     }
   };
+
   const handleSubmit = () => {
     const isEdit = Boolean(editingRow);
     const result = validateStep(currentStep, formData, rating);
@@ -80,6 +82,7 @@ const Form = () => {
     closeForm();
     resetForm();
   };
+  
   useEffect(() => {
     if (editingRow) {
       hydrateFromRow(editingRow);
