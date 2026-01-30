@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { TableRow } from '../features/survey/types/table';
-import { useUIStore } from './useUiStore';
+import { useUIStore } from './useUIStore';
 
 type TableState = {
   rows: TableRow[];

@@ -10,7 +10,7 @@ import type { TableRow } from '../types/table';
 import { Button } from 'antd';
 import { useFormStore } from '../../../store/useFormStore';
 import { useTableStore } from '../../../store/useTableStore';
-import { useUIStore } from '../../../store/useUiStore';
+import { useUIStore } from '../../../store/useUIStore';
 import { validators } from '../utils/field-validator';
 
 const Form = () => {
