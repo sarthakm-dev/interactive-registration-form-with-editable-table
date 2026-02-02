@@ -1,10 +1,11 @@
 import { Button, ConfigProvider } from 'antd';
 import type { TableRow } from '../types/table';
 import { useTableStore } from '../../../store/useTableStore';
+import { useUIStore } from '../../../store/useUIStore';
 
 const MobileCards = ({ rows }: { rows: TableRow[] }) => {
   const { setViewRow, setEditingRow, requestDelete } = useTableStore();
-
+  const {openForm} = useUIStore();
   return (
     <div className="mobile-cards">
       {rows.map((row) => (
@@ -38,7 +39,7 @@ const MobileCards = ({ rows }: { rows: TableRow[] }) => {
               </Button>
             </ConfigProvider>
 
-            <Button size="small" onClick={() => setEditingRow(row)}>
+            <Button size="small" onClick={() => {setEditingRow(row);openForm()}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
