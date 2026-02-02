@@ -66,9 +66,9 @@ body {
     Roboto,
     sans-serif;
 }
-.header{
+.header {
   text-align: center;
- 
+  font-weight: 500;
   padding-top: 5px;
   letter-spacing: 3px;
   width: 100%;
@@ -79,14 +79,22 @@ body {
 .ant-input:hover {
   border-color: var(--primary-500);
 }
- .floating-add-btn {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 1000;
-    width: 30px;
-    border-radius: 60px;
-  }
+.floating-add-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  z-index: 1000;
+  width: 30px;
+  border-radius: 60px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.floating-add-btn span {
+  height: 36px;
+}
 .ant-input:focus {
   border-color: var(--primary-500);
   -webkit-box-shadow: 0 0 0 2px var(--primary-500);
@@ -115,8 +123,13 @@ input[type='text'] {
 input[type='text']::placeholder {
   text-transform: capitalize;
 }
+
+.ant-radio-wrapper .ant-radio {
+  margin-right: 8px !important;
+}
 input[type='radio'] {
   accent-color: var(--primary-500);
+  gap: 4px;
 }
 
 .app-container {
@@ -239,8 +252,6 @@ input[type='date'] {
 .icon.active {
   color: var(--primary-500);
 }
-
-
 
 .stars {
   display: flex;
@@ -479,18 +490,17 @@ textarea {
   color: var(--danger);
 }
 .theme-toggle {
-    position: absolute;
-    top: 1%;
-    left: 96.5%;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 20px;
-    z-index: 180;
-    color: var(--primary-700);
-    font-weight: 600;
-  }
-
+  position: absolute;
+  top: 1%;
+  left: 96.5%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 180;
+  color: var(--primary-700);
+  font-weight: 600;
+}
 
 .mobile-cards {
   display: flex;
@@ -512,8 +522,8 @@ textarea {
   margin-top: 10px;
 }
 .card-actions button {
- background: transparent;
- color: var(--primary-700);
+  background: transparent;
+  color: var(--primary-700);
 }
 @media (max-width: 1050px) {
   body {
@@ -543,9 +553,8 @@ textarea {
     width: 100%;
     padding: 12px;
     box-sizing: border-box;
-
   }
- 
+
   .product-details {
     display: grid;
     gap: 12px;
@@ -573,7 +582,7 @@ textarea {
     font-weight: 600;
     color: var(--primary-900);
   }
- 
+
   .star {
     width: 12px;
     height: 44px;
@@ -663,7 +672,7 @@ textarea {
   .error {
     margin-left: 0;
   }
-  .stars{
+  .stars {
     margin-bottom: 8px;
   }
   .theme-toggle {
@@ -678,14 +687,14 @@ textarea {
   }
 }
 @media (max-width: 550px) {
-    .theme-toggle {
-        position: absolute;
-        top: 0.5%;
-        left: 89%;
-        background: transparent;
-        border: none;
-        font-size: 20px;
-        color: var(--primary-700);
-        font-weight: 600;
-    }
+  .theme-toggle {
+    position: absolute;
+    top: 0.5%;
+    left: 89%;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: var(--primary-700);
+    font-weight: 600;
+  }
 }

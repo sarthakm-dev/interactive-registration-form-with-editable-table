@@ -46,7 +46,7 @@ const Form = () => {
 
   const validateField = (name: string, value: string) => {
     let fieldName = name;
-    if (name == 'purchaseDate') {
+    if (name === 'purchaseDate') {
       fieldName = 'date';
     }
     const validator = validators[fieldName as keyof typeof validators];
@@ -77,7 +77,6 @@ const Form = () => {
     if (!success) {
       return;
     }
-    addOrUpdateRow(row);
     openSuccess(isEdit ? 'update' : 'create');
     closeForm();
     resetForm();
